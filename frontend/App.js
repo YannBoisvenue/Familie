@@ -4,6 +4,7 @@ import { AppLoading, Asset, Font, Icon } from "expo";
 import { createStore } from "redux";
 import devToolsEnhancer from "remote-redux-devtools";
 import { Provider } from "react-redux";
+import { MapView } from "expo";
 
 import rootReducer from "./reducers";
 import AppNavigator from "./navigation/AppNavigator";
@@ -28,6 +29,17 @@ export default class App extends React.Component {
       return (
         <Provider store={store}>
           <View style={styles.container}>
+            <MapView
+              style={{
+                flex: 1
+              }}
+              initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421
+              }}
+            />
             {Platform.OS === "ios" && <StatusBar barStyle="default" />}
             <AppNavigator />
           </View>
