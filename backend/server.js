@@ -1,13 +1,13 @@
 // server for final project
-const express = require("express");
-const cors = require("cors");
-const sha256 = require("sha256");
-const fs = require("fs");
-const MongoClient = require("mongodb").MongoClient;
-const ObjectID = require("mongodb").ObjectID;
-const bodyParser = require("body-parser");
-const stripe = require("stripe")("sk_test_ARpzQb6KqDa2TWVSTSlh9SQf");
-const url = "mongodb://admin:password1@ds119930.mlab.com:19930/finalproject";
+const express = require('express');
+const cors = require('cors');
+const sha256 = require('sha256');
+const fs = require('fs');
+const MongoClient = require('mongodb').MongoClient;
+const ObjectID = require('mongodb').ObjectID;
+const bodyParser = require('body-parser');
+// const stripe = require("stripe")("sk_test_ARpzQb6KqDa2TWVSTSlh9SQf");
+const url = 'mongodb://admin:password1@ds119930.mlab.com:19930/finalproject';
 
 let dbs = undefined;
 MongoClient.connect(url, { useNewUrlParser: true }, (err, allDbs) => {
@@ -17,7 +17,7 @@ MongoClient.connect(url, { useNewUrlParser: true }, (err, allDbs) => {
 
 let app = express();
 app.use(cors());
-app.use(bodyParser.raw({ type: "*/*" }));
+app.use(bodyParser.raw({ type: '*/*' }));
 
 app.use((req, res, next) => {
   try {
@@ -28,9 +28,9 @@ app.use((req, res, next) => {
   }
 });
 
-app.post("/signup", (req, res) => {
-  let db = dbs.db("finalproject");
-  db.collection("users").findOne(
+app.post('/signup', (req, res) => {
+  let db = dbs.db('finalproject');
+  db.collection('users').findOne(
     { username: req.body.username },
     (err, result) => {
       if (err) return res.status(500).send(err);
@@ -41,7 +41,7 @@ app.post("/signup", (req, res) => {
           username: req.body.username,
           password: sha256(req.body.password)
         };
-        db.collection("users").insertOne(user, (err, result) => {
+        db.collection('users').insertOne(user, (err, result) => {
           if (err) {
             if (err) return res.status(500).send(err);
           }
@@ -52,9 +52,9 @@ app.post("/signup", (req, res) => {
   );
 });
 
-app.post("/login", (req, res) => {
-  let db = dbs.db("finalproject");
-  db.collection("users").findOne(
+app.post('/login', (req, res) => {
+  let db = dbs.db('finalproject');
+  db.collection('users').findOne(
     { username: req.body.username },
     (err, result) => {
       if (err) return res.status(500).send(err);
@@ -81,5 +81,5 @@ app.post("/login", (req, res) => {
 });
 
 app.listen(4000, function() {
-  console.log("Server started on port 4000");
+  console.log('Server started on port 4000');
 });
