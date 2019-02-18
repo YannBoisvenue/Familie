@@ -15,6 +15,7 @@ import {
   Card,
   CardItem
 } from 'native-base';
+import { LOGIN_SUCCESS } from '../../constants/ActionTypes';
 
 class Signup extends Component {
   constructor(props) {
@@ -22,27 +23,46 @@ class Signup extends Component {
     this.state = {
       username: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      userSigningUp: false
     };
   }
 
-  onLoginPress = event => {
+  userSigningUp = () => {
+    this.setState({ userSigningUp: true });
+  };
+
+  handleUsernameChange = username => {
+    this.setState({ username });
+    console.log('state.username', this.state.username);
+  };
+
+  handlePasswordChange = password => {
+    this.setState({ password });
+  };
+
+  handleConfirmPassword = confirmPassword => {
+    this.setState({ confirmPassword });
+  };
+
+  onSignupPress = event => {
     event.preventDefault();
+    console.log('LOGIN BUTTON PRESSED');
     if (this.state.password === this.state.confirmPassword) {
-      let requestBody = {
+      let requestBody = JSON.stringify({
         username: this.state.username,
-        password: this.state.password,
-        confirmPassword: this.state.confirmPassword
-      };
+        password: this.state.password
+      });
       fetch('http://localhost:4000/signup', {
         method: 'POST',
         body: requestBody
       })
         .then(function(x) {
-          x.text();
+          return x.text();
         })
         .then(responseBody => {
           let body = JSON.parse(responseBody);
+          console.log('parseBody', body);
           if (!body.success) {
             return;
           }
@@ -60,6 +80,7 @@ class Signup extends Component {
     //if (this.props.loginStatus) {
     //     return <HomePage></HomePage>
     // }
+
     return (
       <Container>
         <Header>
@@ -71,32 +92,38 @@ class Signup extends Component {
         <Form>
           <FormItem floatingLabel>
             <Label>Email</Label>
-            <Input onChangeText={username => this.setState({ username })} />
+            <Input
+              autoCapitalize="none"
+              onChangeText={this.handleUsernameChange}
+              value={this.state.username}
+            />
           </FormItem>
           <FormItem floatingLabel last>
             <Label>Password</Label>
             <Input
+              autoCapitalize="none"
               secureTextEntry={true}
-              onChangeText={password => this.setState({ password })}
+              onChangeText={this.handlePasswordChange}
+              value={this.state.password}
             />
           </FormItem>
           <FormItem floatingLabel last>
             <Label>Confirm password</Label>
             <Input
+              autoCapitalize="none"
               secureTextEntry={true}
-              onChangeText={confirmPassword =>
-                this.setState({ confirmPassword })
-              }
-              onSubmitEditing={this.userLoggingIn}
+              onChangeText={this.handleConfirmPassword}
+              value={this.state.confirmPassword}
+              onSubmitEditing={this.userSigningUp}
             />
           </FormItem>
           <Button
             full
             primary
             style={{ paddingBottom: 4 }}
-            onPress={this.props.onSignupPress}
+            onPress={this.onSignupPress}
             disabled={
-              this.state.isLoggingIn ||
+              this.state.userSigningUp ||
               !this.state.username ||
               !this.state.password ||
               !this.state.confirmPassword

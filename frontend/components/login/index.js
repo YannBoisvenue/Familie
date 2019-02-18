@@ -15,6 +15,7 @@ import {
   Card,
   CardItem
 } from 'native-base';
+import { LOGIN_SUCCESS } from '../../constants/ActionTypes';
 
 class Login extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
-      isLoggingIn: false
+      userLoggingIn: false
     };
   }
 
@@ -32,16 +33,16 @@ class Login extends Component {
 
   onLoginPress = event => {
     event.preventDefault();
-    let requestBody = {
+    let requestBody = JSON.stringify({
       username: this.state.username,
       password: this.state.password
-    };
+    });
     fetch('http://localhost:4000/login', {
       method: 'POST',
       body: requestBody
     })
       .then(function(x) {
-        x.text();
+        return x.text();
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
@@ -69,12 +70,16 @@ class Login extends Component {
         <Form>
           <FormItem floatingLabel>
             <Label>Email</Label>
-            <Input onChangeText={username => this.setState({ username })} />
+            <Input
+              autoCapitalize="none"
+              onChangeText={username => this.setState({ username })}
+            />
           </FormItem>
           <FormItem floatingLabel last>
             <Label>Password</Label>
             <Input
               secureTextEntry={true}
+              autoCapitalize="none"
               onChangeText={password => this.setState({ password })}
               onSubmitEditing={this.userLoggingIn}
             />
@@ -83,9 +88,9 @@ class Login extends Component {
             full
             primary
             style={{ paddingBottom: 4 }}
-            onPress={this.props.onLoginPress}
+            onPress={this.onLoginPress}
             disabled={
-              this.state.isLoggingIn ||
+              this.state.userLoggingIn ||
               !this.state.username ||
               !this.state.password
             }
