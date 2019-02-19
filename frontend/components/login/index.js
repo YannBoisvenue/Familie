@@ -107,7 +107,7 @@ class Login extends Component {
                 !this.state.username ||
                 !this.state.password
               }
-              color={Colors.cadetBlue}
+              color={Colors.queenBlue}
             />
             {/* <Button full light primary>
             <Text> Sign Up </Text>

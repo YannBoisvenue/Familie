@@ -134,9 +134,7 @@ AddEventFormStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
   StyleStack,
-  SettingsStack,
   LoginStack,
   MapStack,
   AddEventFormStack
