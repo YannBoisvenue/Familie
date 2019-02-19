@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Header, Button, Left, Right, Body, Title, Icon } from "native-base";
+import { Footer, Button, Icon, FooterTab, Text } from "native-base";
 
-export const StyledHeader = props => (
+export const StyledFooter = props => (
   <React.Fragment>
     <Footer>
       <FooterTab>

@@ -14,7 +14,7 @@ export default class StyleScreen extends React.Component {
   render() {
     return (
       <Container>
-        <StyledTabs color="#F2F4F7">
+        <StyledTabs>
           <Tab heading="1e choix">
             <Login />
           </Tab>

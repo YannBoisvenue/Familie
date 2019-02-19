@@ -13,6 +13,7 @@ import Login from "../components/login/index.js";
 import Map from "../components/map/index.js";
 import AddEventForm from "../components/addEventForm/addEventForm";
 import Signup from "../components/signup";
+import StyleScreen from "../screens/StyleScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -32,12 +33,12 @@ HomeStack.navigationOptions = {
   )
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen
+const StyleStack = createStackNavigator({
+  Links: StyleScreen
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: "Links",
+StyleStack.navigationOptions = {
+  tabBarLabel: "Style Test",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -134,7 +135,7 @@ AddEventFormStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
+  StyleStack,
   SettingsStack,
   LoginStack,
   MapStack,
