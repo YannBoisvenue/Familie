@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19003,
-  "expoServerPort": 19001,
-  "packagerPort": 19004,
-  "packagerPid": 19944,
-  "expoServerNgrokUrl": "https://er-5vk.beardlord.frontend.exp.direct",
-  "packagerNgrokUrl": "https://packager.er-5vk.beardlord.frontend.exp.direct",
-  "ngrokPid": 5024
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 17865,
+  "expoServerNgrokUrl": "https://er-5vk.nisois.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.er-5vk.nisois.frontend.exp.direct",
+  "ngrokPid": 17883
 }

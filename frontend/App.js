@@ -49,7 +49,6 @@ export default class App extends React.Component {
                 longitudeDelta: 0.0421
               }}
             /> */}
-            <Map />
             {Platform.OS === "ios" && <StatusBar barStyle="default" />}
             <AppNavigator />
           </View>

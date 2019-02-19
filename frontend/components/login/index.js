@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Container,
   Header,
@@ -14,15 +14,16 @@ import {
   View,
   Card,
   CardItem
-} from 'native-base';
-import { LOGIN_SUCCESS } from '../../constants/ActionTypes';
+} from "native-base";
+import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
+import { StyledButton } from "../../StyledComponents/button.js";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       userLoggingIn: false
     };
   }
@@ -37,8 +38,8 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     });
-    fetch('http://localhost:4000/login', {
-      method: 'POST',
+    fetch("http://localhost:4000/login", {
+      method: "POST",
       body: requestBody
     })
       .then(function(x) {
@@ -84,19 +85,15 @@ class Login extends Component {
               onSubmitEditing={this.userLoggingIn}
             />
           </FormItem>
-          <Button
-            full
-            primary
-            style={{ paddingBottom: 4 }}
+          <StyledButton
             onPress={this.onLoginPress}
+            content="Login"
             disabled={
               this.state.userLoggingIn ||
               !this.state.username ||
               !this.state.password
             }
-          >
-            <Text> Login </Text>
-          </Button>
+          />
           {/* <Button full light primary>
             <Text> Sign Up </Text>
           </Button> */}
