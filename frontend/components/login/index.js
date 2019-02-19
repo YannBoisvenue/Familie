@@ -17,6 +17,7 @@ import {
 } from "native-base";
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
+import Colors from "../../constants/Colors";
 
 class Login extends Component {
   constructor(props) {
@@ -93,6 +94,7 @@ class Login extends Component {
               !this.state.username ||
               !this.state.password
             }
+            color={Colors.cadetBlue}
           />
           {/* <Button full light primary>
             <Text> Sign Up </Text>
