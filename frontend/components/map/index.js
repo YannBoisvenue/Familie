@@ -13,6 +13,10 @@ class Map extends Component {
     };
   }
 
+  static navigationOptions = {
+    header: null
+  };
+
   fetchMarkerData() {
     fetch("https://feeds.citibikenyc.com/stations/stations.json")
       .then(response => response.json())

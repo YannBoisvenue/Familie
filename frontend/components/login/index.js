@@ -38,6 +38,10 @@ class Login extends Component {
     };
   }
 
+  static navigationOptions = {
+    header: null
+  };
+
   userLoggingIn = () => {
     this.setState({ userLoggingIn: true });
   };
