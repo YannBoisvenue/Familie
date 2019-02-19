@@ -23,7 +23,7 @@
     "android": {
       "package": "com.decode.helloworld",
       "config": {
-        "googleMaps": { "apikey": "AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8" }
+        // "googleMaps": { "apikey": "AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8" }
       }
     }
   }
