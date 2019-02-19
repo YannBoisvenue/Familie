@@ -5,13 +5,13 @@ import {
   createBottomTabNavigator
 } from 'react-navigation';
 
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import Login from '../components/login/index.js';
-import Signup from '../components/signup';
-import Map from '../components/map/index.js';
+import TabBarIcon from "../components/TabBarIcon";
+import HomeScreen from "../screens/HomeScreen";
+import LinksScreen from "../screens/LinksScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import login from "../components/login/index.js";
+import Map from "../components/map/index.js";
+import AddEventForm from "../components/addEventForm/addEventForm";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -113,11 +113,29 @@ MapStack.navigationOptions = {
   )
 };
 
+const AddEventFormStack = createStackNavigator({
+  AddEventForm: AddEventForm
+});
+
+AddEventFormStack.navigationOptions = {
+  tabBarLabel: "AddEventForm",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === "ios"
+          ? `ios-information-circle${focused ? "" : "-outline"}`
+          : "md-information-circle"
+      }
+    />
+  )
+};
+
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
   LoginStack,
   MapStack,
-  SignupStack
+  AddEventFormStack
 });

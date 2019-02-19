@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MapView } from "expo";
 import { Marker } from "react-native-maps";
+import Geolocation from "react-native-geolocation-service";
 
 class Map extends Component {
   constructor(props) {
@@ -10,10 +11,6 @@ class Map extends Component {
       isLoading: true,
       markers: []
     };
-  }
-
-  componentDidMount() {
-    this.fetchMarkerData();
   }
 
   fetchMarkerData() {
