@@ -6,13 +6,8 @@ const fs = require("fs");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectID = require("mongodb").ObjectID;
 const bodyParser = require("body-parser");
-<<<<<<< Updated upstream
 const url = "mongodb://admin:password1@ds119930.mlab.com:19930/finalproject";
 // const fs = require("fs");
-=======
-// const stripe = require("stripe")("sk_test_ARpzQb6KqDa2TWVSTSlh9SQf");
-const url = "mongodb://admin:password1@ds119930.mlab.com:19930/finalproject";
->>>>>>> Stashed changes
 
 let dbs = undefined;
 MongoClient.connect(url, { useNewUrlParser: true }, (err, allDbs) => {
@@ -24,7 +19,6 @@ let app = express();
 app.use(cors());
 app.use(bodyParser.raw({ type: "*/*" }));
 
-<<<<<<< Updated upstream
 // this parse everything received. not usefull right now
 // app.use((req, res, next) => {
 //   try {
@@ -35,19 +29,6 @@ app.use(bodyParser.raw({ type: "*/*" }));
 //   }
 // });
 
-=======
-app.use((req, res, next) => {
-  try {
-    req.body = JSON.parse(req.body.toString());
-    next();
-  } catch (error) {
-    next();
-  }
-});
-
-/******** Sign Up *********/
-
->>>>>>> Stashed changes
 app.post("/signup", (req, res) => {
   let db = dbs.db("finalproject");
   db.collection("users").findOne(
@@ -72,17 +53,11 @@ app.post("/signup", (req, res) => {
   );
 });
 
-<<<<<<< Updated upstream
-app.post("/login", (req, res) => {
-  let db = dbs.db("finalproject");
-  db.collection("events").findOne(
-=======
 /******** Login *********/
 
 app.post("/login", (req, res) => {
   let db = dbs.db("finalproject");
   db.collection("users").findOne(
->>>>>>> Stashed changes
     { username: req.body.username },
     (err, result) => {
       if (err) return res.status(500).send(err);
@@ -108,6 +83,10 @@ app.post("/login", (req, res) => {
   );
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//EVENTS
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // events should have 7 components:
 // 1- the Image
 // 2-the name of the event
@@ -117,7 +96,7 @@ app.post("/login", (req, res) => {
 // 6- description : a text description of the event
 // 7- creator: the user who created the event
 
-//{"name":"Bearded park walkie!","time":"23,02,2019", "coordinate":{},"guests":[],"description":"who does not like beards???","creator":"Vincent"}
+//{"name":"Bearded park walkie!","time":"23,02,2019","location":"1515 rue de mencon, a Bruti, j2h 4u8","coordinate":{"lat":40.741895,"lon":-73.989308},"guests":["Bob"],"description":"who does not like beards???","creator":"Vincent"}
 
 app.post("/addevent", (req, res) => {
   console.log("req.body", req.body.toString());
@@ -145,7 +124,7 @@ app.post("/addevent", (req, res) => {
   db.collection("events").insertOne(event, (err, ress) => {
     if (err) throw err;
     let response = {
-      status: true,
+      success: true,
       message: "Event successfully inserted"
     };
     res.send(JSON.stringify(response));
@@ -160,7 +139,7 @@ app.get("/allEvents", (req, res) => {
     .toArray(function(err, result) {
       if (err) throw err;
       let response = {
-        status: true,
+        success: true,
         reviews: result
       };
       res.send(JSON.stringify(response));
@@ -184,7 +163,7 @@ app.post("/attendingEvents", (req, res) => {
     .toArray(function(err, result) {
       if (err) throw err;
       let response = {
-        status: true,
+        success: true,
         reviews: result
       };
       res.send(JSON.stringify(response));
@@ -198,15 +177,17 @@ app.post("/hostingEvents", (req, res) => {
   let db = dbs.db("finalproject");
   let request = JSON.parse(req.body);
   let user = request.user;
+  console.log("user", user);
+
   db.collection("events")
     .find({
-      creator //get me all events with this creator
+      creator: user
     })
     .toArray(function(err, result) {
       if (err) throw err;
       let response = {
-        status: true,
-        reviews: result
+        success: true,
+        attending: result
       };
       res.send(JSON.stringify(response));
       console.log("response", response);
@@ -214,26 +195,76 @@ app.post("/hostingEvents", (req, res) => {
     });
 });
 
-// app.post("/attendEvent", (req, res) => {
-//   console.log("you made it to attendEvent");
-//   let db = dbs.db("finalproject");
-//   let request = JSON.parse(req.body);
-//   let user = request.user;
-//   let chosenEvent = request.event;
-//   db.collection("events")
-//     .find({
-//       chosenEvent //search the event picked by the user
-//     })
-//     .incertOne({eventattendee = event.attendee + user}, (err, ress) => {
-//       if (err) throw err;
-//       let response = {
-//         message: "User successfully added to event"
-//       };
-//       res.send(JSON.stringify(response));
-//       console.log("response", response);
-//       console.log("success at /attendEvent!!!!!");
-//     });
-// }); // where do i go to add to the attendees?
+app.post("/attendEvent", (req, res) => {
+  console.log("you made it to attendEvent");
+  let db = dbs.db("finalproject");
+  let request = JSON.parse(req.body);
+  let user = request.user;
+  let chosenEvent = request.event;
+  db.collection("events")
+    .find({
+      chosenEvent
+    })
+    .incertOne({ guests: event.guests + user }, (err, ress) => {
+      if (err) throw err;
+      let response = {
+        message: "User successfully added to event"
+      };
+      res.send(JSON.stringify(response));
+      console.log("response", response);
+      console.log("success at /attendEvent!!!!!");
+    });
+});
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//PROFILE
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Profile should have 9 components:
+// 1- the Image
+// 2-firstName
+// 3-lastName
+// 4-sex
+// 5-relationshipStatus
+// 6- occupation
+// 7- dateOfBirth
+// 8- location
+// 9- interest
+
+//{"firstname":"bob","lastname":"Dabob","sex":"male","relationshipStatus":"single","occupation":"burocrat","dateOfBirth":"14,03,1974","location":"1 rue de mencon, a bruti","interest":"nose picking"}
+
+app.post("/addProfile", (req, res) => {
+  console.log("req.body", req.body.toString());
+  let profile = JSON.parse(req.body);
+  console.log("profiles", profile);
+  let db = dbs.db("finalproject");
+
+  //image to string and then to the database here
+
+  // const fileType = req.body.pictureType;
+  // const extension = fileType.substring(
+  //   fileType.indexOf("/") + 1,
+  //   fileType.length
+  // );
+  // let replaceBase64 = new RegExp(`^data:image\/${extension};base64,`);
+  // var base64Data = req.body.picture.replace(replaceBase64, "");
+  // var eventId = new ObjectID();
+  // let fileName = `image_${eventId}.${extension}`;
+  // let filePath = `${__dirname}/pictures/${fileName}`;
+
+  // fs.writeFileSync(filePath, base64Data, "base64");
+
+  // end of the input of the image in the db
+
+  db.collection("profiles").insertOne(profile, (err, ress) => {
+    if (err) throw err;
+    let response = {
+      success: true,
+      message: "Profile successfully created"
+    };
+    res.send(JSON.stringify(response));
+  });
+});
 
 app.listen(4000, function() {
   console.log("Server started on port 4000");
