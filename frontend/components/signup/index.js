@@ -75,6 +75,7 @@ class Signup extends Component {
           this.props.dispatch({
             type: LOGIN_SUCCESS
           });
+          this.props.navigation.navigate('CreateProfile');
         });
     } else {
       Toast.show({
@@ -82,7 +83,6 @@ class Signup extends Component {
         buttonText: 'Okay'
       });
     }
-    //passwords do not match
   };
 
   render() {

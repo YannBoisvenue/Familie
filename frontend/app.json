@@ -19,6 +19,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
+      // "infoPlist": {
+      //   "NSCameraUsageDescription": "This app uses the camera to take a profile picture.",
+      //   "NSPhotoLibraryUsageDescription": "This app uses the camera to upload a profile picture."
+      // }
     },
     "android": {
       "package": "com.decode.helloworld",

@@ -4,7 +4,6 @@ import {
   createStackNavigator,
   createBottomTabNavigator
 } from 'react-navigation';
-
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
@@ -12,6 +11,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import Login from '../components/login/index.js';
 import Signup from '../components/signup';
 import Map from '../components/map/index.js';
+import CreateProfile from '../components/createProfile';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -95,6 +95,24 @@ SignupStack.navigationOptions = {
   )
 };
 
+const CreateProfileStack = createStackNavigator({
+  CreateProfile: CreateProfile
+});
+
+CreateProfileStack.navigationOptions = {
+  tabBarLabel: 'Create Profile',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  )
+};
+
 const MapStack = createStackNavigator({
   Map: Map
 });
@@ -119,5 +137,6 @@ export default createBottomTabNavigator({
   SettingsStack,
   LoginStack,
   MapStack,
-  SignupStack
+  SignupStack,
+  CreateProfileStack
 });
