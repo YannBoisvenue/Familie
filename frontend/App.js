@@ -1,6 +1,14 @@
 import React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
-import { AppLoading, Asset, Font, Icon } from "expo";
+import {
+  AppLoading,
+  Asset,
+  Font,
+  Icon,
+  Constants,
+  Location,
+  Permissions
+} from "expo";
 import { createStore } from "redux";
 import devToolsEnhancer from "remote-redux-devtools";
 import { Provider } from "react-redux";
@@ -14,7 +22,9 @@ import getTheme from "./native-base-theme/components";
 import custom from "./native-base-theme/variables/custom";
 import { StyleProvider } from "native-base";
 import { StyledHeader } from "./components/mainHeader/header";
+import GetLocation from "./components/GetLocation/GetLocation";
 
+console.log("root reducers", rootReducer);
 let store = createStore(rootReducer, devToolsEnhancer());
 
 export default class App extends React.Component {
@@ -23,6 +33,7 @@ export default class App extends React.Component {
   };
 
   async UNSAFE_componentWillMount() {
+    console.log("in wfunc");
     await Font.loadAsync({
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
@@ -42,6 +53,7 @@ export default class App extends React.Component {
       return (
         <StyleProvider style={getTheme(custom)}>
           <Provider store={store}>
+            <GetLocation />
             <View style={styles.container}>
               <StyledHeader />
               <AppNavigator />

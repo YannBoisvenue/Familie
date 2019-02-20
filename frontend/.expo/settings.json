@@ -3,5 +3,9 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
+<<<<<<< Updated upstream
   "urlRandomness": "ei-yyk"
+=======
+  "urlRandomness": "6t-igq"
+>>>>>>> Stashed changes
 }

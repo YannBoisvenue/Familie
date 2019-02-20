@@ -1,15 +1,26 @@
-import React, { Component } from "react";
 import { MapView } from "expo";
 import { Marker } from "react-native-maps";
-import Geolocation from "react-native-geolocation-service";
+import React, { Component } from "react";
+import { Platform, Text, View, StyleSheet } from "react-native";
+import { Constants, Location, Permissions } from "expo";
+import LocationClass from "./getLocTest";
+import { connect } from "react-redux";
 
-class Map extends Component {
+class UnconnectedMap extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isLoading: true,
-      markers: []
+      markers: [],
+      location: {
+        coords: {
+          latitude: 0,
+          longitude: 0
+        }
+      },
+      errorMessage: null,
+      getLoc: new LocationClass()
     };
   }
 
@@ -17,6 +28,7 @@ class Map extends Component {
     header: null
   };
 
+  //
   fetchMarkerData() {
     fetch("https://feeds.citibikenyc.com/stations/stations.json")
       .then(response => response.json())
@@ -46,7 +58,16 @@ class Map extends Component {
     }
   };
 
+  getLon = () => {
+    return this.state.getLoc.state.curLon;
+  };
+
+  getLat = () => {
+    return this.state.getLoc.state.curLat;
+  };
+
   render() {
+    console.log("THE props :", this.props);
     return (
       <MapView
         onPress={x => {
@@ -56,8 +77,9 @@ class Map extends Component {
         }}
         style={{ flex: 1 }}
         region={{
-          latitude: 40.76727216,
-          longitude: -73.99392888,
+          // RICHORE: redux state au lieu de this.state
+          latitude: this.props.location.coordinates.latitude,
+          longitude: this.props.location.coordinates.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }}
@@ -94,8 +116,14 @@ class Map extends Component {
     );
   }
 }
+//  RICHORE: Map state to pros
 
-export default Map;
+const mapStateToProps = state => {
+  console.log("state", state);
+  return { location: state.location }; //maploc = moi qui decide le nom. => .location, faut ca match le nom dans le state global (dans le reducer, voir *k1)
+};
+
+export default connect(mapStateToProps)(UnconnectedMap);
 
 /** Original render before taking everything apart
  * 
