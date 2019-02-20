@@ -1,1 +1,9 @@
-{}
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19003,
+  "packagerPid": 43507,
+  "expoServerNgrokUrl": "https://ay-7jy.nisois.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.ay-7jy.nisois.frontend.exp.direct",
+  "ngrokPid": 43530
+}

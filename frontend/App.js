@@ -14,6 +14,7 @@ import getTheme from "./native-base-theme/components";
 import custom from "./native-base-theme/variables/custom";
 import { StyleProvider } from "native-base";
 import { StyledHeader } from "./components/mainHeader/header";
+import { StyledFooter } from "./StyledComponents/footer";
 
 let store = createStore(rootReducer, devToolsEnhancer());
 
@@ -43,17 +44,6 @@ export default class App extends React.Component {
         <StyleProvider style={getTheme(custom)}>
           <Provider store={store}>
             <View style={styles.container}>
-              {/* <MapView
-              style={{
-                flex: 1
-              }}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
-              }}
-            /> */}
               {Platform.OS === "ios" && <StyledHeader />}
               <AppNavigator />
             </View>

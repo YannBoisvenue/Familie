@@ -41,6 +41,10 @@ class addEventForm extends Component {
     this.setDate = this.setDate.bind(this);
   }
 
+  static navigationOptions = {
+    header: null
+  };
+
   setDate(newDate) {
     this.setState({ time: newDate });
   }
@@ -106,11 +110,6 @@ class addEventForm extends Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>The Social Family</Title>
-          </Body>
-        </Header>
         <Title>Add Event Form</Title>
         <Form>
           <Item floatingLabel>
