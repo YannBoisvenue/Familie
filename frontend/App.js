@@ -43,7 +43,7 @@ export default class App extends React.Component {
         <StyleProvider style={getTheme(custom)}>
           <Provider store={store}>
             <View style={styles.container}>
-              {Platform.OS === "ios" && <StyledHeader />}
+              <StyledHeader />
               <AppNavigator />
             </View>
           </Provider>
