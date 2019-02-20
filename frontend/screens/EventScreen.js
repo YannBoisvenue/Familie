@@ -11,7 +11,7 @@ import { StyledForm } from "../StyledComponents/form";
 import { StyledItem } from "../StyledComponents/formItem";
 import { StyledContent } from "../StyledComponents/mainContainer";
 
-export default class StyleScreen extends React.Component {
+export default class EventScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
@@ -20,7 +20,7 @@ export default class StyleScreen extends React.Component {
     return (
       <Container>
         <StyledTabs>
-          <Tab heading="1e choix">
+          <Tab heading="All Events">
             <StyledContent>
               <StyledSectionTitle content="Hello World" width={150} />
               <StyledLink content="Click here for more info" />
@@ -34,11 +34,19 @@ export default class StyleScreen extends React.Component {
               </StyledForm>
             </StyledContent>
           </Tab>
-          <Tab heading="2e choix">
-            <Login />
+
+          <Tab heading="Attending">
+            <StyledContent>
+              {/* Put the page component here instead of Login*/}
+              <Login />
+            </StyledContent>
           </Tab>
-          <Tab heading="3e choix">
-            <Login />
+
+          <Tab heading="Hosting">
+            <StyledContent>
+              {/* Put the page component here instead of Login*/}
+              <Login />
+            </StyledContent>
           </Tab>
         </StyledTabs>
       </Container>

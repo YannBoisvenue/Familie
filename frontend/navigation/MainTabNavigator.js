@@ -3,16 +3,16 @@ import { Platform } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator
-} from 'react-navigation';
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import Login from '../components/login/index.js';
-import Signup from '../components/signup';
-import Map from '../components/map/index.js';
-import CreateProfile from '../components/createProfile';
-import StyleScreen from "../screens/StyleScreen";
+} from "react-navigation";
+import TabBarIcon from "../components/TabBarIcon";
+import HomeScreen from "../screens/HomeScreen";
+import Login from "../components/login/index.js";
+import Signup from "../components/signup";
+import Map from "../components/map/index.js";
+import CreateProfile from "../components/createProfile";
 import Colors from "../constants/Colors";
 import AddEventForm from "../components/addEventForm/addEventForm";
+import EventScreen from "../screens/EventScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -33,12 +33,12 @@ HomeStack.navigationOptions = {
   )
 };
 
-const StyleStack = createStackNavigator({
-  Links: StyleScreen
+const EventStack = createStackNavigator({
+  Links: EventScreen
 });
 
-StyleStack.navigationOptions = {
-  tabBarLabel: "Style Test",
+EventStack.navigationOptions = {
+  tabBarLabel: "Events",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -83,14 +83,14 @@ const CreateProfileStack = createStackNavigator({
 });
 
 CreateProfileStack.navigationOptions = {
-  tabBarLabel: 'Create Profile',
+  tabBarLabel: "Create Profile",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+        Platform.OS === "ios"
+          ? `ios-information-circle${focused ? "" : "-outline"}`
+          : "md-information-circle"
       }
     />
   )
@@ -130,7 +130,7 @@ AddEventFormStack.navigationOptions = {
 
 export default createBottomTabNavigator(
   {
-    StyleStack,
+    EventStack,
     LoginStack,
     MapStack,
     AddEventFormStack
