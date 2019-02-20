@@ -13,6 +13,7 @@ import CreateProfile from "../components/createProfile";
 import Colors from "../constants/Colors";
 import AddEventForm from "../components/addEventForm/addEventForm";
 import EventScreen from "../screens/EventScreen";
+import FriendScreen from "../screens/FriendScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -48,12 +49,12 @@ EventStack.navigationOptions = {
   )
 };
 
-const LoginStack = createStackNavigator({
-  Login: Login
+const FriendStack = createStackNavigator({
+  Login: FriendScreen
 });
 
-LoginStack.navigationOptions = {
-  tabBarLabel: "Login",
+FriendStack.navigationOptions = {
+  tabBarLabel: "Friends",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -131,7 +132,7 @@ AddEventFormStack.navigationOptions = {
 export default createBottomTabNavigator(
   {
     EventStack,
-    LoginStack,
+    FriendStack,
     MapStack,
     AddEventFormStack
   },

@@ -23,6 +23,8 @@ import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
+import { Alert } from "react-native";
+import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import { fetchUrl } from "../../fetchUrl";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
@@ -122,7 +124,29 @@ class addEventForm extends Component {
   render() {
     return (
       <Container>
-        <Title>Add Event Form</Title>
+        <StyledSubHeader
+          title="Add Event Form"
+          linkText="Cancel"
+          onPress={() => {
+            Alert.alert(
+              "Alert Title",
+              "My Alert Msg",
+              [
+                {
+                  text: "Ask me later",
+                  onPress: () => console.log("Ask me later pressed")
+                },
+                {
+                  text: "Cancel",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
+          }}
+        />
         <Form>
           <Item floatingLabel>
             <Label>Image</Label>
@@ -182,7 +206,7 @@ class addEventForm extends Component {
           <StyledButton
             onPress={this.onCreateEventPress}
             content="Create Event"
-            color={Colors.cadetBlue}
+            color={Colors.queenBlue}
           />
         </View>
       </Container>

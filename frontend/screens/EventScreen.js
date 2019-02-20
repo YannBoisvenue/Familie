@@ -10,6 +10,7 @@ import { StyledLink } from "../StyledComponents/link";
 import { StyledForm } from "../StyledComponents/form";
 import { StyledItem } from "../StyledComponents/formItem";
 import { StyledContent } from "../StyledComponents/mainContainer";
+import { StyledSubHeader } from "../StyledComponents/textSubHeader";
 
 export default class EventScreen extends React.Component {
   static navigationOptions = {
@@ -36,6 +37,11 @@ export default class EventScreen extends React.Component {
           </Tab>
 
           <Tab heading="Attending">
+            <StyledSubHeader
+              title="Choose a friend"
+              linkText="Alert me"
+              onPress={this.handleOnPress}
+            />
             <StyledContent>
               {/* Put the page component here instead of Login*/}
               <Login />
