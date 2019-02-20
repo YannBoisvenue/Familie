@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MapView } from "expo";
 import { Marker } from "react-native-maps";
+import Geolocation from "react-native-geolocation-service";
 
 class Map extends Component {
   constructor(props) {
@@ -12,9 +13,9 @@ class Map extends Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchMarkerData();
-  }
+  static navigationOptions = {
+    header: null
+  };
 
   fetchMarkerData() {
     fetch("https://feeds.citibikenyc.com/stations/stations.json")
@@ -35,7 +36,7 @@ class Map extends Component {
       return (
         <Marker
           title="hello"
-          description="penis"
+          description="desc"
           coordinate={{
             latitude: this.state._lat_pos,
             longitude: this.state._lon_pos

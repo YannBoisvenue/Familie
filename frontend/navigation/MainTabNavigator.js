@@ -1,60 +1,49 @@
-import React from 'react';
-import { Platform } from 'react-native';
+import React from "react";
+import { Platform } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator
 } from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import Login from '../components/login/index.js';
 import Signup from '../components/signup';
 import Map from '../components/map/index.js';
 import CreateProfile from '../components/createProfile';
+import StyleScreen from "../screens/StyleScreen";
+import Colors from "../constants/Colors";
+import AddEventForm from "../components/addEventForm/addEventForm";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: "Home",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
+      type="AntDesign"
       name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+        Platform.OS === "ios"
+          ? `ios-information-circle${focused ? "" : "calendar"}`
+          : "calendar"
       }
     />
   )
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen
+const StyleStack = createStackNavigator({
+  Links: StyleScreen
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+StyleStack.navigationOptions = {
+  tabBarLabel: "Style Test",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
-    />
-  )
-};
-
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen
-});
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      type="AntDesign"
+      name={Platform.OS === "ios" ? "calendar" : "calendar"}
     />
   )
 };
@@ -64,15 +53,12 @@ const LoginStack = createStackNavigator({
 });
 
 LoginStack.navigationOptions = {
-  tabBarLabel: 'Login',
+  tabBarLabel: "Login",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      type="Feather"
+      name={Platform.OS === "ios" ? "users" : "users"}
     />
   )
 };
@@ -82,15 +68,12 @@ const SignupStack = createStackNavigator({
 });
 
 SignupStack.navigationOptions = {
-  tabBarLabel: 'Signup',
+  tabBarLabel: "Signup",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      type="Feather"
+      name={Platform.OS === "ios" ? "user" : "user"}
     />
   )
 };
@@ -118,25 +101,43 @@ const MapStack = createStackNavigator({
 });
 
 MapStack.navigationOptions = {
-  tabBarLabel: 'MapTest',
+  tabBarLabel: "MapTest",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
+      type="MaterialIcons"
       name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+        Platform.OS === "ios" ? "chat-bubble-outline" : "chat-bubble-outline"
       }
     />
   )
 };
 
-export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
-  LoginStack,
-  MapStack,
-  SignupStack,
-  CreateProfileStack
+const AddEventFormStack = createStackNavigator({
+  AddEventForm: AddEventForm
 });
+
+AddEventFormStack.navigationOptions = {
+  tabBarLabel: "AddEventForm",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      type="Feather"
+      name={Platform.OS === "ios" ? "user" : "user"}
+    />
+  )
+};
+
+export default createBottomTabNavigator(
+  {
+    StyleStack,
+    LoginStack,
+    MapStack,
+    AddEventFormStack
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.desire
+    }
+  }
+);

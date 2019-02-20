@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Container,
   Header,
@@ -16,10 +16,10 @@ import {
   CardItem,
   Toast,
   Root
-} from 'native-base';
-import { LOGIN_SUCCESS } from '../../constants/ActionTypes';
-import { StyledButton } from '../../StyledComponents/button.js';
-import Colors from '../../constants/Colors';
+} from "native-base";
+import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
+import { StyledButton } from "../../StyledComponents/button.js";
+import Colors from "../../constants/Colors";
 // import firebase from '../login/loginGoogle.js';
 // import {
 //   GoogleSignin,
@@ -31,12 +31,16 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       userLoggingIn: false,
       showToast: false
     };
   }
+
+  static navigationOptions = {
+    header: null
+  };
 
   userLoggingIn = () => {
     this.setState({ userLoggingIn: true });
@@ -48,8 +52,8 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     });
-    fetch('http://localhost:4000/login', {
-      method: 'POST',
+    fetch("http://localhost:4000/login", {
+      method: "POST",
       body: requestBody
     })
       .then(function(x) {
@@ -59,8 +63,8 @@ class Login extends Component {
         let body = JSON.parse(responseBody);
         if (!body.success) {
           Toast.show({
-            text: 'Wrong password',
-            buttonText: 'Okay'
+            text: "Wrong password",
+            buttonText: "Okay"
           });
           return;
         }
@@ -77,11 +81,6 @@ class Login extends Component {
     return (
       <Root>
         <Container>
-          <Header>
-            <Body>
-              <Title>The Social Family</Title>
-            </Body>
-          </Header>
           <Title>Login</Title>
           <Form>
             <FormItem floatingLabel>
@@ -108,7 +107,7 @@ class Login extends Component {
                 !this.state.username ||
                 !this.state.password
               }
-              color={Colors.cadetBlue}
+              color={Colors.queenBlue}
             />
             {/* <Button full light primary>
             <Text> Sign Up </Text>
@@ -122,7 +121,7 @@ class Login extends Component {
           </Form>
           <Card>
             <CardItem footer>
-              <Text onPress={() => this.props.navigation.navigate('Signup')}>
+              <Text onPress={() => this.props.navigation.navigate("Signup")}>
                 Don't have an account? Sign up
               </Text>
             </CardItem>
