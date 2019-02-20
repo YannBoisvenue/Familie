@@ -1,19 +1,6 @@
 {
-  "devToolsPort": 19002,
-<<<<<<< Updated upstream
-  "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 46568,
-  "expoServerNgrokUrl": "https://ay-7jy.nisois.frontend.exp.direct",
-  "packagerNgrokUrl": "https://packager.ay-7jy.nisois.frontend.exp.direct",
-  "ngrokPid": 46592
-}
-=======
   "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
   "expoServerNgrokUrl": null,
   "packagerNgrokUrl": null,
   "ngrokPid": null
 }
->>>>>>> Stashed changes
