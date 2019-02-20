@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Form, Item, Input, Label } from "native-base";
 import Colors from "../constants/Colors";
 
-export const StyledItem = ({ label, type }) => {
+export const StyledItem = ({ label, type, children }) => {
   let paddingBot = 0;
   if (type === "floatingLabel") {
     paddingBot = 5;
@@ -14,9 +14,10 @@ export const StyledItem = ({ label, type }) => {
       fixedLabel={type === "fixedLabel" ? true : false}
       inlineLabel={type === "inlineLabel" ? true : false}
       style={{ ...styles.item, paddingBottom: paddingBot }}
+      last
     >
       <Label style={{ ...styles.label }}>{label}</Label>
-      <Input style={styles.input} />
+      {children}
     </Item>
   );
 };

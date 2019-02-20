@@ -20,6 +20,8 @@ import {
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
+import { StyledForm } from "../../StyledComponents/form";
+import { StyledItem } from "../../StyledComponents/formItem";
 // import firebase from '../login/loginGoogle.js';
 // import {
 //   GoogleSignin,
@@ -82,23 +84,21 @@ class Login extends Component {
       <Root>
         <Container>
           <Title>Login</Title>
-          <Form>
-            <FormItem floatingLabel>
-              <Label>Email</Label>
+          <StyledForm>
+            <StyledItem type="floatingLabel" label="Email">
               <Input
                 autoCapitalize="none"
                 onChangeText={username => this.setState({ username })}
               />
-            </FormItem>
-            <FormItem floatingLabel last>
-              <Label>Password</Label>
+            </StyledItem>
+            <StyledItem type="floatingLabel" label="Password">
               <Input
                 secureTextEntry={true}
                 autoCapitalize="none"
                 onChangeText={password => this.setState({ password })}
                 onSubmitEditing={this.userLoggingIn}
               />
-            </FormItem>
+            </StyledItem>
             <StyledButton
               onPress={this.onLoginPress}
               content="Login"
@@ -118,7 +118,7 @@ class Login extends Component {
             onPress={this._signIn}
             disabled={this.state.isSigninInProgress}
           /> */}
-          </Form>
+          </StyledForm>
           <Card>
             <CardItem footer>
               <Text onPress={() => this.props.navigation.navigate("Signup")}>

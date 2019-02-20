@@ -23,7 +23,7 @@ import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
-import { fetchUrl } from "../../fetchUrl";
+// import { fetchUrl } from "../../fetchUrl";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 

@@ -23,8 +23,12 @@ export default class StyleScreen extends React.Component {
             <StyledSectionTitle content="Hello World" width={150} />
             <StyledLink content="Click here for more info" />
             <StyledForm>
-              <StyledItem type="floatingLabel" label="Something" />
-              <StyledItem type="inlineLabel" label="Another Something" />
+              <StyledItem type="floatingLabel" label="Something">
+                <Input />
+              </StyledItem>
+              <StyledItem type="inlineLabel" label="Another Something">
+                <Input />
+              </StyledItem>
             </StyledForm>
           </Tab>
           <Tab heading="2e choix">
