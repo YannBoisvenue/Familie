@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Container,
   Header,
@@ -16,16 +16,16 @@ import {
   CardItem,
   Toast,
   Root
-} from 'native-base';
-import { LOGIN_SUCCESS } from '../../constants/ActionTypes';
+} from "native-base";
+import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 
 class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
-      confirmPassword: '',
+      username: "",
+      password: "",
+      confirmPassword: "",
       userSigningUp: false,
       showToast: false
     };
@@ -49,14 +49,14 @@ class Signup extends Component {
 
   onSignupPress = event => {
     event.preventDefault();
-    console.log('SIGNUP BUTTON PRESSED');
+    console.log("SIGNUP BUTTON PRESSED");
     if (this.state.password === this.state.confirmPassword) {
       let requestBody = JSON.stringify({
         username: this.state.username,
         password: this.state.password
       });
-      fetch('http://localhost:4000/signup', {
-        method: 'POST',
+      fetch("http://192.168.56.1:4000/signup", {
+        method: "POST",
         body: requestBody
       })
         .then(function(x) {
@@ -64,11 +64,11 @@ class Signup extends Component {
         })
         .then(responseBody => {
           let body = JSON.parse(responseBody);
-          console.log('parseBody', body);
+          console.log("parseBody", body);
           if (!body.success) {
             Toast.show({
-              text: 'An account for this user already exists',
-              buttonText: 'Okay'
+              text: "An account for this user already exists",
+              buttonText: "Okay"
             });
             return;
           }
@@ -79,8 +79,8 @@ class Signup extends Component {
         });
     } else {
       Toast.show({
-        text: 'Passwords do not match',
-        buttonText: 'Okay'
+        text: "Passwords do not match",
+        buttonText: "Okay"
       });
     }
   };
@@ -144,7 +144,7 @@ class Signup extends Component {
           </Form>
           <Card>
             <CardItem footer>
-              <Text onPress={() => this.props.navigation.navigate('Login')}>
+              <Text onPress={() => this.props.navigation.navigate("Login")}>
                 Go back to login
               </Text>
             </CardItem>

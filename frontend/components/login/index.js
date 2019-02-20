@@ -52,7 +52,7 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     });
-    fetch("http://localhost:4000/login", {
+    fetch("http://192.168.56.1:4000/login", {
       method: "POST",
       body: requestBody
     })

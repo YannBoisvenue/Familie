@@ -35,8 +35,8 @@ class Map extends Component {
     if (this.state._lat_pos && this.state._lon_pos) {
       return (
         <Marker
-          title="hello"
-          description="desc"
+          title="Test title"
+          description="Test description"
           coordinate={{
             latitude: this.state._lat_pos,
             longitude: this.state._lon_pos
@@ -63,8 +63,8 @@ class Map extends Component {
         }}
       >
         <Marker
-          title="Hello"
-          description="It is NOT kid friendly"
+          title="Test title"
+          description="Test description"
           coordinate={{
             latitude: 37.78825,
             longitude: -122.4324

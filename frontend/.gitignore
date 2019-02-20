@@ -1,5 +1,6 @@
 /node_modules
 package-lock.json
+fetchUrl.js
 
 # General
 .DS_Store

@@ -23,6 +23,7 @@ import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
+import { fetchUrl } from "../../fetchUrl";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
@@ -58,8 +59,8 @@ class addEventForm extends Component {
       response => {
         const { lat, lng } = response.results[0].geometry.location;
         this.setState({ coordinate: { lat: lat, lng: lng } });
-        console.log(lat, lng);
-        console.log(this.state.coordinate);
+        console.log("lat+lon", lat, lng);
+        console.log("state.coordinate :", this.state.coordinate);
         console.log("Location entered: ", this.state.location);
       },
       error => {
@@ -69,20 +70,44 @@ class addEventForm extends Component {
   };
 
   onCreateEventPress = event => {
-    alert("Event was created");
     console.log("address :", this.state.location);
     this.getSpag();
 
     /******************* Fetch the shit *******************/
     let requestBody = JSON.stringify({
-      image: this.state.image,
+      // image: this.state.image,
       name: this.state.name,
+      guests: this.state.guests,
       time: this.state.time,
       location: this.state.location,
       desc: this.state.desc,
       coordinate: this.state.coordinate
     });
-    fetch("http://localhost:4000/addevent", {
+    // fetch("http://192.168.56.1:4000/addevent", {
+    //   method: "POST",
+    //   body: requestBody
+    // })
+    //   .then(function(x) {
+    //     return x.text();
+    //   })
+    //   .then(responseBody => {
+    //     let body = JSON.parse(responseBody);
+    //     console.log("parseBody", body);
+    //     if (!body.success) {
+    //       Toast.show({
+    //         text: "Oh oh spagetthi oh",
+    //         buttonText: "Fuck"
+    //       });
+    //       return;
+    //     } else {
+    //       Toast.show({
+    //         text: "Event created",
+    //         buttonText: "Yay!"
+    //       });
+    //     }
+    //   });
+
+    fetch(fetchUrl + "/addevent", {
       method: "POST",
       body: requestBody
     })
@@ -90,20 +115,7 @@ class addEventForm extends Component {
         return x.text();
       })
       .then(responseBody => {
-        let body = JSON.parse(responseBody);
-        console.log("parseBody", body);
-        if (!body.success) {
-          Toast.show({
-            text: "Oh oh spagetthi oh",
-            buttonText: "Fuck"
-          });
-          return;
-        } else {
-          Toast.show({
-            text: "Event created",
-            buttonText: "Yay!"
-          });
-        }
+        console.log(JSON.parse(responseBody));
       });
   };
 

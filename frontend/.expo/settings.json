@@ -1,7 +1,11 @@
 {
-  "hostType": "lan",
+  "hostType": "tunnel",
   "lanType": "ip",
   "dev": true,
   "minify": false,
+<<<<<<< Updated upstream
   "urlRandomness": "ay-7jy"
+=======
+  "urlRandomness": "jw-aqg"
+>>>>>>> Stashed changes
 }
