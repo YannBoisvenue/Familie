@@ -23,11 +23,7 @@
     "android": {
       "package": "com.decode.helloworld",
       "config": {
-<<<<<<< Updated upstream
-        // "googleMaps": { "apikey": "AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8" }
-=======
         "googleMaps": { "apikey": "AIzaSyAEV5dCEc0FdSkrJoz0o2KI-opfok_Rtr4" }
->>>>>>> Stashed changes
       }
     }
   }

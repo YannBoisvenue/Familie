@@ -12,6 +12,7 @@ import Map from "../components/map/index.js";
 import AddEventForm from "../components/addEventForm/addEventForm";
 import Signup from "../components/signup";
 import StyleScreen from "../screens/StyleScreen";
+import Colors from "../constants/Colors";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -56,11 +57,8 @@ LoginStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === "ios"
-          ? `ios-information-circle${focused ? "" : "-outline"}`
-          : "md-information-circle"
-      }
+      type="Feather"
+      name={Platform.OS === "ios" ? "users" : "users"}
     />
   )
 };
@@ -74,11 +72,8 @@ SignupStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === "ios"
-          ? `ios-information-circle${focused ? "" : "-outline"}`
-          : "md-information-circle"
-      }
+      type="Feather"
+      name={Platform.OS === "ios" ? "user" : "user"}
     />
   )
 };
@@ -92,10 +87,9 @@ MapStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
+      type="MaterialIcons"
       name={
-        Platform.OS === "ios"
-          ? `ios-information-circle${focused ? "" : "-outline"}`
-          : "md-information-circle"
+        Platform.OS === "ios" ? "chat-bubble-outline" : "chat-bubble-outline"
       }
     />
   )
@@ -110,18 +104,22 @@ AddEventFormStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === "ios"
-          ? `ios-information-circle${focused ? "" : "-outline"}`
-          : "md-information-circle"
-      }
+      type="Feather"
+      name={Platform.OS === "ios" ? "user" : "user"}
     />
   )
 };
 
-export default createBottomTabNavigator({
-  StyleStack,
-  LoginStack,
-  MapStack,
-  AddEventFormStack
-});
+export default createBottomTabNavigator(
+  {
+    StyleStack,
+    LoginStack,
+    MapStack,
+    AddEventFormStack
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.desire
+    }
+  }
+);

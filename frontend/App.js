@@ -14,7 +14,6 @@ import getTheme from "./native-base-theme/components";
 import custom from "./native-base-theme/variables/custom";
 import { StyleProvider } from "native-base";
 import { StyledHeader } from "./components/mainHeader/header";
-import { StyledFooter } from "./StyledComponents/footer";
 
 let store = createStore(rootReducer, devToolsEnhancer());
 
