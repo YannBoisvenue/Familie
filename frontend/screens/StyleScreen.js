@@ -5,6 +5,8 @@ import { Container, Text, Tab } from "native-base";
 import { StyledTabs } from "../StyledComponents/tabs";
 import Login from "../components/login";
 import Colors from "../constants/Colors.js";
+import { StyledSectionTitle } from "../StyledComponents/title";
+import { StyledLink } from "../StyledComponents/link";
 
 export default class StyleScreen extends React.Component {
   static navigationOptions = {
@@ -16,7 +18,8 @@ export default class StyleScreen extends React.Component {
       <Container>
         <StyledTabs>
           <Tab heading="1e choix">
-            <Login />
+            <StyledSectionTitle content="Hello World" width={150} />
+            <StyledLink content="Click here for more info" />
           </Tab>
           <Tab heading="2e choix">
             <Login />

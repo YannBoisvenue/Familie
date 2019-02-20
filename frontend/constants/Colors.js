@@ -14,6 +14,6 @@ export default {
   antiFlashWhite: "#F2F4F7",
   lightBlue: "#A8DADC",
   queenBlue: "#3F708F",
-  darkGunmetal: "101D30",
+  darkGunmetal: "#101D30",
   desire: "#E63946"
 };

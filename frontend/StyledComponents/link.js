@@ -5,7 +5,9 @@ import Colors from "../constants/Colors";
 
 export const StyledLink = ({ content, onPress }) => (
   <Button hasText transparent style={styles.url} onPress={onPress}>
-    <Text style={{ paddingLeft: 0, paddingRight: 0 }}>{content}</Text>
+    <Text style={{ paddingLeft: 0, paddingRight: 0, color: Colors.queenBlue }}>
+      {content}
+    </Text>
   </Button>
 );
 
