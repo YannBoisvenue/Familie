@@ -6,8 +6,13 @@ const fs = require("fs");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectID = require("mongodb").ObjectID;
 const bodyParser = require("body-parser");
+<<<<<<< Updated upstream
 const url = "mongodb://admin:password1@ds119930.mlab.com:19930/finalproject";
 // const fs = require("fs");
+=======
+// const stripe = require("stripe")("sk_test_ARpzQb6KqDa2TWVSTSlh9SQf");
+const url = "mongodb://admin:password1@ds119930.mlab.com:19930/finalproject";
+>>>>>>> Stashed changes
 
 let dbs = undefined;
 MongoClient.connect(url, { useNewUrlParser: true }, (err, allDbs) => {
@@ -19,6 +24,7 @@ let app = express();
 app.use(cors());
 app.use(bodyParser.raw({ type: "*/*" }));
 
+<<<<<<< Updated upstream
 // this parse everything received. not usefull right now
 // app.use((req, res, next) => {
 //   try {
@@ -29,6 +35,19 @@ app.use(bodyParser.raw({ type: "*/*" }));
 //   }
 // });
 
+=======
+app.use((req, res, next) => {
+  try {
+    req.body = JSON.parse(req.body.toString());
+    next();
+  } catch (error) {
+    next();
+  }
+});
+
+/******** Sign Up *********/
+
+>>>>>>> Stashed changes
 app.post("/signup", (req, res) => {
   let db = dbs.db("finalproject");
   db.collection("users").findOne(
@@ -53,9 +72,17 @@ app.post("/signup", (req, res) => {
   );
 });
 
+<<<<<<< Updated upstream
 app.post("/login", (req, res) => {
   let db = dbs.db("finalproject");
   db.collection("events").findOne(
+=======
+/******** Login *********/
+
+app.post("/login", (req, res) => {
+  let db = dbs.db("finalproject");
+  db.collection("users").findOne(
+>>>>>>> Stashed changes
     { username: req.body.username },
     (err, result) => {
       if (err) return res.status(500).send(err);

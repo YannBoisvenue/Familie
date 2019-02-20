@@ -36,7 +36,7 @@ class Map extends Component {
       return (
         <Marker
           title="hello"
-          description="penis"
+          description="desc"
           coordinate={{
             latitude: this.state._lat_pos,
             longitude: this.state._lon_pos
