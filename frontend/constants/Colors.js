@@ -15,5 +15,6 @@ export default {
   lightBlue: "#A8DADC",
   queenBlue: "#3F708F",
   darkGunmetal: "#101D30",
-  desire: "#E63946"
+  desire: "#E63946",
+  paleDarkGunMetal: "#5A6C84"
 };

@@ -1,12 +1,14 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { ExpoLinksView } from "@expo/samples";
-import { Container, Text, Tab } from "native-base";
+import { Container, Text, Tab, Item, Label, Input } from "native-base";
 import { StyledTabs } from "../StyledComponents/tabs";
 import Login from "../components/login";
 import Colors from "../constants/Colors.js";
 import { StyledSectionTitle } from "../StyledComponents/title";
 import { StyledLink } from "../StyledComponents/link";
+import { StyledForm } from "../StyledComponents/form";
+import { StyledItem } from "../StyledComponents/formItem";
 
 export default class StyleScreen extends React.Component {
   static navigationOptions = {
@@ -20,6 +22,10 @@ export default class StyleScreen extends React.Component {
           <Tab heading="1e choix">
             <StyledSectionTitle content="Hello World" width={150} />
             <StyledLink content="Click here for more info" />
+            <StyledForm>
+              <StyledItem type="floatingLabel" label="Something" />
+              <StyledItem type="inlineLabel" label="Another Something" />
+            </StyledForm>
           </Tab>
           <Tab heading="2e choix">
             <Login />
