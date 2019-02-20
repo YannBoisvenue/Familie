@@ -5,12 +5,12 @@ import { Header, Button, Left, Right, Body, Title, Icon } from "native-base";
 export const StyledHeader = props => (
   <React.Fragment>
     <Header>
-      <Left>
+      {/* <Left>
         <Button transparent>
           <Icon type="AntDesign" name="arrowleft" />
         </Button>
-      </Left>
-      <Body>
+      </Left> */}
+      <Body style={{ paddingLeft: 15 }}>
         <Title>Familie</Title>
       </Body>
       <Right>
