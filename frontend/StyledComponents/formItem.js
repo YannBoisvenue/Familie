@@ -8,13 +8,13 @@ export const StyledItem = ({ label, type, children }) => {
   if (type === "floatingLabel") {
     paddingBot = 5;
   }
+
   return (
     <Item
       floatingLabel={type === "floatingLabel" ? true : false}
       fixedLabel={type === "fixedLabel" ? true : false}
       inlineLabel={type === "inlineLabel" ? true : false}
       style={{ ...styles.item, paddingBottom: paddingBot }}
-      last
     >
       <Label style={{ ...styles.label }}>{label}</Label>
       {children}
@@ -25,16 +25,17 @@ export const StyledItem = ({ label, type, children }) => {
 const styles = StyleSheet.create({
   label: {
     color: Colors.darkGunmetal,
-    fontSize: 20
+    fontSize: 17
   },
   item: {
+    paddingLeft: 0,
     marginBottom: 15,
     marginLeft: 0,
     borderColor: Colors.darkGunmetal,
     borderBottomWidth: 1
   },
   input: {
-    fontSize: 20,
+    fontSize: 17,
     color: Colors.darkGunmetal,
     opacity: 0.75
   }

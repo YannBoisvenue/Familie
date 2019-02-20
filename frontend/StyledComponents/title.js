@@ -1,11 +1,11 @@
 import React from "react";
-import { Item, H2 } from "native-base";
+import { Item, H2, H3 } from "native-base";
 import { StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 
 export const StyledSectionTitle = ({ content, width }) => (
   <Item underline style={{ ...styles.Title, width: width }}>
-    <H2 style={{ color: Colors.darkGunmetal }}>{content}</H2>
+    <H3 style={{ color: Colors.darkGunmetal }}>{content}</H3>
   </Item>
 );
 
