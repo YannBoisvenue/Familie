@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
@@ -6,4 +7,13 @@
   "expoServerNgrokUrl": "https://ew-def.anonymous.frontend.exp.direct",
   "packagerNgrokUrl": "https://packager.ew-def.anonymous.frontend.exp.direct",
   "ngrokPid": 14636
+=======
+  "devToolsPort": 19003,
+  "expoServerPort": 19004,
+  "packagerPort": 19005,
+  "packagerPid": 21296,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
+>>>>>>> Stashed changes
 }

@@ -88,30 +88,6 @@ class addEventForm extends Component {
       desc: this.state.desc,
       coordinate: this.state.coordinate
     });
-    // fetch("http://192.168.56.1:4000/addevent", {
-    //   method: "POST",
-    //   body: requestBody
-    // })
-    //   .then(function(x) {
-    //     return x.text();
-    //   })
-    //   .then(responseBody => {
-    //     let body = JSON.parse(responseBody);
-    //     console.log("parseBody", body);
-    //     if (!body.success) {
-    //       Toast.show({
-    //         text: "Oh oh spagetthi oh",
-    //         buttonText: "Fuck"
-    //       });
-    //       return;
-    //     } else {
-    //       Toast.show({
-    //         text: "Event created",
-    //         buttonText: "Yay!"
-    //       });
-    //     }
-    //   });
-
     fetch(fetchUrl + "/addevent", {
       method: "POST",
       body: requestBody
@@ -120,8 +96,32 @@ class addEventForm extends Component {
         return x.text();
       })
       .then(responseBody => {
-        console.log(JSON.parse(responseBody));
+        let body = JSON.parse(responseBody);
+        console.log("parseBody", body);
+        if (!body.success) {
+          Toast.show({
+            text: "Oh oh spagetthi oh",
+            buttonText: "Fuck"
+          });
+          return;
+        } else {
+          Toast.show({
+            text: "Event created",
+            buttonText: "Yay!"
+          });
+        }
       });
+
+    // fetch(fetchUrl + "/addevent", {
+    //   method: "POST",
+    //   body: requestBody
+    // })
+    //   .then(function(x) {
+    //     return x.text();
+    //   })
+    //   .then(responseBody => {
+    //     console.log(JSON.parse(responseBody));
+    //   });
   };
 
   render() {

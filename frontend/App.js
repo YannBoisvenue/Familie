@@ -23,6 +23,7 @@ import custom from "./native-base-theme/variables/custom";
 import { StyleProvider } from "native-base";
 import { StyledHeader } from "./components/mainHeader/header";
 import GetLocation from "./components/GetLocation/GetLocation";
+import AllEvent from "../frontend/components/AllEvents/AllEvents";
 
 console.log("root reducers", rootReducer);
 let store = createStore(rootReducer, devToolsEnhancer());

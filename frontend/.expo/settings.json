@@ -3,5 +3,9 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
+<<<<<<< Updated upstream
   "urlRandomness": "ew-def"
+=======
+  "urlRandomness": "82-u8m"
+>>>>>>> Stashed changes
 }
