@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Image } from 'react-native';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { Image } from "react-native";
+import { connect } from "react-redux";
 import {
   Container,
   Header,
@@ -16,25 +16,24 @@ import {
   Icon,
   DatePicker,
   Content
-} from 'native-base';
-import { StyledButton } from '../../StyledComponents/button.js';
-import { ImagePicker, Permissions } from 'expo';
+} from "native-base";
+import { StyledButton } from "../../StyledComponents/button.js";
+import { ImagePicker, Permissions } from "expo";
 
 class CreateProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      cameraRollPicture: '',
-      newTakenPicture: '',
-      gender: undefined,
-      relationshipStatus: undefined,
-      occupation: '',
-      dateOfBirth: new Date(),
-      location: '',
-      interests: []
-      //   userID: ''
+      firstName: "",
+      lastName: "",
+      picture: "",
+      pictureType: "",
+      gender: "",
+      relationshipStatus: "",
+      occupation: "",
+      dateOfBirth: "",
+      location: ""
+      // interests: [""]
     };
   }
 
@@ -46,32 +45,30 @@ class CreateProfile extends Component {
     this.setState({ lastName });
   };
 
-  pickPicture = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  getPicture = async type => {
+    const { status } = await Permissions.askAsync(type);
 
-    if (status === 'granted') {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [4, 3]
-      });
+    if (status === "granted") {
+      const options = { allowsEditing: true, aspect: [4, 3] };
+      let result = null;
+      if (type === Permissions.CAMERA_ROLL) {
+        result = await ImagePicker.launchImageLibraryAsync(options);
+      } else {
+        result = await ImagePicker.launchCameraAsync(options);
+      }
+
       if (!result.cancelled) {
-        this.setState({ cameraRollPicture: '' + result.uri });
+        this.setState({ picture: result.uri, pictureType: type });
       }
     }
   };
 
-  takePicture = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+  pickPicture = async () => {
+    this.getPicture(Permissions.CAMERA_ROLL);
+  };
 
-    if (status === 'granted') {
-      let result = await ImagePicker.launchCameraAsync({
-        allowsEditing: true,
-        aspect: [4, 3]
-      });
-      if (!result.cancelled) {
-        this.setState({ newTakenPicture: result.uri });
-      }
-    }
+  takePicture = async () => {
+    this.getPicture(Permissions.CAMERA);
   };
 
   onValueChangeGender = gender => {
@@ -94,9 +91,44 @@ class CreateProfile extends Component {
     this.setState({ location });
   };
 
+  onNextCreateProfilePress = event => {
+    event.preventDefault();
+
+    const h = {};
+    let formData = new FormData();
+    formData.append("profilePicture", this.state.picture),
+      formData.append("firstName", this.state.firstName),
+      formData.append("lastName", this.state.lastName),
+      formData.append("gender", this.state.gender),
+      formData.append("relationshipStatus", this.state.relationshipStatus),
+      formData.append("occupation", this.state.occupation),
+      formData.append("dateOfBirth", this.state.dateOfBirth),
+      formData.append("location", this.state.location);
+    // formData.append("interests", this.state.interests)
+    console.log("formData", formData);
+
+    h.Accept = "application/json";
+
+    fetch("http://localhost:4000//addProfile", {
+      method: "POST",
+      headers: h,
+      body: formData
+    })
+      .then(function(x) {
+        return x.text();
+      })
+      .then(responseBody => {
+        let body = JSON.parse(responseBody);
+        if (!body.success) {
+          return;
+        }
+        this.props.navigation.navigate("CreateProfileAddFamily");
+      });
+  };
+
   render() {
-    let cameraRollPicture = this.state.cameraRollPicture;
-    let newTakenPicture = this.state.newTakenPicture;
+    let picture = this.state.picture;
+    let pictureType = this.state.pictureType;
 
     return (
       <Root>
@@ -130,9 +162,9 @@ class CreateProfile extends Component {
                   content="Pick a picture from camera roll"
                   onPress={this.pickPicture}
                 />
-                {!!cameraRollPicture && (
+                {!!picture && pictureType === Permissions.CAMERA_ROLL && (
                   <Image
-                    source={{ uri: cameraRollPicture }}
+                    source={{ uri: picture }}
                     style={{ width: 100, height: 100 }}
                   />
                 )}
@@ -142,9 +174,9 @@ class CreateProfile extends Component {
                   content="Take a picture"
                   onPress={this.takePicture}
                 />
-                {!!newTakenPicture && (
+                {!!picture && pictureType === Permissions.CAMERA && (
                   <Image
-                    source={{ uri: newTakenPicture }}
+                    source={{ uri: picture }}
                     style={{ width: 100, height: 100 }}
                   />
                 )}
@@ -190,8 +222,8 @@ class CreateProfile extends Component {
                   minimumDate={new Date(1900, 1, 1)}
                   maximumDate={new Date(2018, 12, 31)}
                   modalTransparent={false}
-                  animationType={'fade'}
-                  androidMode={'default'}
+                  animationType={"fade"}
+                  androidMode={"default"}
                   placeHolderText="Select date"
                   onDateChange={this.setBirthDate}
                   disabled={false}
@@ -205,10 +237,14 @@ class CreateProfile extends Component {
                   value={this.state.location}
                 />
               </FormItem>
-              <FormItem>
+              {/* <FormItem>
                 <Label>Interests</Label>
                 <Input placeHolderText="To be added" />
-              </FormItem>
+              </FormItem> */}
+              <StyledButton
+                content="Next"
+                onPress={this.onNextCreateProfilePress}
+              />
             </Form>
           </Content>
         </Container>

@@ -49,13 +49,12 @@ class Signup extends Component {
 
   onSignupPress = event => {
     event.preventDefault();
-    console.log("SIGNUP BUTTON PRESSED");
     if (this.state.password === this.state.confirmPassword) {
       let requestBody = JSON.stringify({
         username: this.state.username,
         password: this.state.password
       });
-      fetch("http://192.168.56.1:4000/signup", {
+      fetch("http://localhost:4000/signup", {
         method: "POST",
         body: requestBody
       })
@@ -64,7 +63,6 @@ class Signup extends Component {
         })
         .then(responseBody => {
           let body = JSON.parse(responseBody);
-          console.log("parseBody", body);
           if (!body.success) {
             Toast.show({
               text: "An account for this user already exists",
@@ -75,7 +73,7 @@ class Signup extends Component {
           this.props.dispatch({
             type: LOGIN_SUCCESS
           });
-          this.props.navigation.navigate('CreateProfile');
+          this.props.navigation.navigate("CreateProfile");
         });
     } else {
       Toast.show({

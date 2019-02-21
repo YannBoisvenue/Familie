@@ -54,7 +54,7 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     });
-    fetch("http://192.168.56.1:4000/login", {
+    fetch("http://localhost:4000/login", {
       method: "POST",
       body: requestBody
     })
@@ -63,6 +63,8 @@ class Login extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
+        console.log("body", body);
+        //implement logic for user does not exist
         if (!body.success) {
           Toast.show({
             text: "Wrong password",
@@ -73,6 +75,7 @@ class Login extends Component {
         this.props.dispatch({
           type: LOGIN_SUCCESS
         });
+        this.props.navigation.navigate("Links");
       });
   };
 
