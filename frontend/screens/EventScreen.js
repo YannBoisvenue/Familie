@@ -11,6 +11,7 @@ import { StyledForm } from "../StyledComponents/form";
 import { StyledItem } from "../StyledComponents/formItem";
 import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledSubHeader } from "../StyledComponents/textSubHeader";
+import { HostingScreen } from "./HostingScreen";
 
 export default class EventScreen extends React.Component {
   constructor(props) {
@@ -51,18 +52,8 @@ export default class EventScreen extends React.Component {
               <Login {...this.props} />
             </StyledContent>
           </Tab>
-
           <Tab heading="Hosting">
-            {/* Put the page component here instead of Login*/}
-            <StyledContent>
-              <StyledLink
-                {...this.props}
-                content="Add an event"
-                onPress={() => {
-                  this.props.navigation.navigate("AddEvent");
-                }}
-              />
-            </StyledContent>
+            <HostingScreen {...this.props} />
           </Tab>
         </StyledTabs>
       </Container>

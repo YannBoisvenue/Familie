@@ -132,7 +132,7 @@ class addEventForm extends Component {
           title="Add Event Form"
           linkText="Cancel"
           onPress={() => {
-            this.props.navigation.goBack();
+            this.props.navigation.navigate("Events");
           }}
         />
         <StyledContent>

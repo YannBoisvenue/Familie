@@ -35,7 +35,7 @@ HomeStack.navigationOptions = {
 };
 
 const EventStack = createStackNavigator({
-  Links: EventScreen
+  Events: EventScreen
 });
 
 EventStack.navigationOptions = {
