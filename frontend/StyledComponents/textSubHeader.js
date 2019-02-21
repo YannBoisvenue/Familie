@@ -4,7 +4,7 @@ import { Header, Body, Title, Right } from "native-base";
 import Colors from "../constants/Colors";
 import { StyledLink } from "./link";
 
-export const StyledSubHeader = ({ title, linkText, onPress }) => (
+export const StyledSubHeader = ({ linkText, title, onPress }) => (
   <React.Fragment>
     <Header
       hasText

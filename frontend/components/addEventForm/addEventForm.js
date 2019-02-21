@@ -25,7 +25,10 @@ import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
 import { Alert } from "react-native";
 import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
-import { fetchUrl } from "../../fetchUrl";
+import { StyledContent } from "../../StyledComponents/mainContainer";
+import { ScrollView } from "react-native-gesture-handler";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+// import { fetchUrl } from "../../fetchUrl";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
@@ -85,30 +88,6 @@ class addEventForm extends Component {
       desc: this.state.desc,
       coordinate: this.state.coordinate
     });
-    // fetch("http://192.168.56.1:4000/addevent", {
-    //   method: "POST",
-    //   body: requestBody
-    // })
-    //   .then(function(x) {
-    //     return x.text();
-    //   })
-    //   .then(responseBody => {
-    //     let body = JSON.parse(responseBody);
-    //     console.log("parseBody", body);
-    //     if (!body.success) {
-    //       Toast.show({
-    //         text: "Oh oh spagetthi oh",
-    //         buttonText: "Fuck"
-    //       });
-    //       return;
-    //     } else {
-    //       Toast.show({
-    //         text: "Event created",
-    //         buttonText: "Yay!"
-    //       });
-    //     }
-    //   });
-
     fetch(fetchUrl + "/addevent", {
       method: "POST",
       body: requestBody
@@ -117,105 +96,112 @@ class addEventForm extends Component {
         return x.text();
       })
       .then(responseBody => {
-        console.log(JSON.parse(responseBody));
+        let body = JSON.parse(responseBody);
+        console.log("parseBody", body);
+        if (!body.success) {
+          Toast.show({
+            text: "Oh oh spagetthi oh",
+            buttonText: "Fuck"
+          });
+          return;
+        } else {
+          Toast.show({
+            text: "Event created",
+            buttonText: "Yay!"
+          });
+        }
       });
+
+    // fetch(fetchUrl + "/addevent", {
+    //   method: "POST",
+    //   body: requestBody
+    // })
+    //   .then(function(x) {
+    //     return x.text();
+    //   })
+    //   .then(responseBody => {
+    //     console.log(JSON.parse(responseBody));
+    //   });
   };
 
   render() {
     return (
       <Container>
         <StyledSubHeader
+          {...this.props}
           title="Add Event Form"
           linkText="Cancel"
           onPress={() => {
-            Alert.alert(
-              "Alert Title",
-              "My Alert Msg",
-              [
-                {
-                  text: "Ask me later",
-                  onPress: () => console.log("Ask me later pressed")
-                },
-                {
-                  text: "Cancel",
-                  onPress: () => console.log("Cancel Pressed"),
-                  style: "cancel"
-                },
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-              ],
-              { cancelable: false }
-            );
+            this.props.navigation.navigate("Events");
           }}
         />
-        <Form>
-          <Item floatingLabel>
-            <Label>Image</Label>
-            <Input
-              autoCapitalize="none"
-              onChangeText={image => this.setState({ image })}
+        <StyledContent>
+          <Form>
+            <Item floatingLabel>
+              <Label>Image</Label>
+              <Input
+                autoCapitalize="none"
+                onChangeText={image => this.setState({ image })}
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Guests</Label>
+              <Input
+                autoCapitalize="none"
+                onChangeText={guests => this.setState({ guests })}
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Event name</Label>
+              <Input
+                autoCapitalize="none"
+                onChangeText={name => this.setState({ name })}
+              />
+            </Item>
+            <Item>
+              <DatePicker
+                defaultDate={new Date(2019, 1, 1)}
+                minimumDate={new Date(2018, 2, 20)}
+                maximumDate={new Date(2021, 12, 31)}
+                locale={"en"}
+                timeZoneOffsetInMinutes={undefined}
+                modalTransparent={false}
+                animationType={"fade"}
+                androidMode={"default"}
+                placeHolderText="Select date"
+                textStyle={{ color: "green" }}
+                placeHolderTextStyle={{ color: "#d3d3d3" }}
+                onDateChange={this.setDate}
+                disabled={false}
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Address</Label>
+              <Input
+                autoCapitalize="none"
+                onChangeText={location => this.setState({ location })}
+              />
+            </Item>
+            <Item>
+              <Textarea
+                rowSpan={5}
+                bordered
+                placeholder="Description of the event                                "
+                onChangeText={desc => this.setState({ desc })}
+              />
+            </Item>
+          </Form>
+          <ScrollView>
+            <StyledButton
+              onPress={this.onCreateEventPress}
+              content="Create Event"
+              color={Colors.queenBlue}
             />
-          </Item>
-          <Item floatingLabel>
-            <Label>Guests</Label>
-            <Input
-              autoCapitalize="none"
-              onChangeText={guests => this.setState({ guests })}
-            />
-          </Item>
-          <Item floatingLabel>
-            <Label>Event name</Label>
-            <Input
-              autoCapitalize="none"
-              onChangeText={name => this.setState({ name })}
-            />
-          </Item>
-          <Item>
-            <DatePicker
-              defaultDate={new Date(2019, 1, 1)}
-              minimumDate={new Date(2018, 2, 20)}
-              maximumDate={new Date(2021, 12, 31)}
-              locale={"en"}
-              timeZoneOffsetInMinutes={undefined}
-              modalTransparent={false}
-              animationType={"fade"}
-              androidMode={"default"}
-              placeHolderText="Select date"
-              textStyle={{ color: "green" }}
-              placeHolderTextStyle={{ color: "#d3d3d3" }}
-              onDateChange={this.setDate}
-              disabled={false}
-            />
-          </Item>
-          <Item floatingLabel>
-            <Label>Address</Label>
-            <Input
-              autoCapitalize="none"
-              onChangeText={location => this.setState({ location })}
-            />
-          </Item>
-          <Item>
-            <Textarea
-              rowSpan={5}
-              bordered
-              placeholder="Description of the event                                "
-              onChangeText={desc => this.setState({ desc })}
-            />
-          </Item>
-        </Form>
-        <View>
-          <StyledButton
-            onPress={this.onCreateEventPress}
-            content="Create Event"
-            color={Colors.queenBlue}
-          />
-        </View>
+          </ScrollView>
+        </StyledContent>
       </Container>
     );
   }
 }
 
 export default connect()(addEventForm);
-
-// export default connect(function(state) {
-//   return { someKey: state.someValue };
-// })(addEventForm);

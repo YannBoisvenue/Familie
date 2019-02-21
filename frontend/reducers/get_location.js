@@ -8,7 +8,6 @@ const initialState = {
 };
 
 export default function authentication(state = initialState, action) {
-  console.log("in redux");
   switch (action.type) {
     case "get_location":
       return { ...state, coordinates: action.payload.coords };

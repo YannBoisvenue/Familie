@@ -18,6 +18,7 @@ import {
   Root
 } from "native-base";
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
+import { StyledLink } from "../../StyledComponents/link";
 
 class Signup extends Component {
   constructor(props) {
@@ -142,9 +143,10 @@ class Signup extends Component {
           </Form>
           <Card>
             <CardItem footer>
-              <Text onPress={() => this.props.navigation.navigate("Login")}>
-                Go back to login
-              </Text>
+              <StyledLink
+                content="Go back to login"
+                onPress={() => this.props.navigation.navigate("Login")}
+              />
             </CardItem>
           </Card>
         </Container>
