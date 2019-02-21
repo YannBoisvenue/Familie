@@ -64,21 +64,6 @@ FriendStack.navigationOptions = {
   )
 };
 
-const SignupStack = createStackNavigator({
-  Signup: Signup
-});
-
-SignupStack.navigationOptions = {
-  tabBarLabel: "Signup",
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      type="Feather"
-      name={Platform.OS === "ios" ? "user" : "user"}
-    />
-  )
-};
-
 const CreateProfileStack = createStackNavigator({
   CreateProfile: CreateProfile
 });
@@ -114,27 +99,11 @@ MapStack.navigationOptions = {
   )
 };
 
-const AddEventFormStack = createStackNavigator({
-  AddEventForm: AddEventForm
-});
-
-AddEventFormStack.navigationOptions = {
-  tabBarLabel: "AddEventForm",
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      type="Feather"
-      name={Platform.OS === "ios" ? "user" : "user"}
-    />
-  )
-};
-
 export default createBottomTabNavigator(
   {
     EventStack,
     FriendStack,
-    MapStack,
-    AddEventFormStack
+    MapStack
   },
   {
     tabBarOptions: {

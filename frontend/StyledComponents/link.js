@@ -3,7 +3,7 @@ import { Button, Text } from "native-base";
 import { StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 
-export const StyledLink = ({ content, onPress }) => (
+export const StyledLink = ({ onPress, content }) => (
   <Button hasText transparent style={styles.url} onPress={onPress}>
     <Text style={{ paddingLeft: 0, paddingRight: 0, color: Colors.queenBlue }}>
       {content}

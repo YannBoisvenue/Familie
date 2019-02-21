@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { ExpoLinksView } from "@expo/samples";
-import { Container, Text, Tab, Item, Label, Input } from "native-base";
+import { Container, Text, Tab, Item, Label, Input, Body } from "native-base";
 import { StyledTabs } from "../StyledComponents/tabs";
 import Login from "../components/login";
 import Colors from "../constants/Colors.js";
@@ -13,6 +13,10 @@ import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledSubHeader } from "../StyledComponents/textSubHeader";
 
 export default class EventScreen extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   static navigationOptions = {
     header: null
   };
@@ -43,15 +47,21 @@ export default class EventScreen extends React.Component {
               onPress={this.handleOnPress}
             />
             <StyledContent>
-              {/* Put the page component here instead of Login*/}
-              <Login />
+              {/* Put the page component here*/}
+              <Login {...this.props} />
             </StyledContent>
           </Tab>
 
           <Tab heading="Hosting">
+            {/* Put the page component here instead of Login*/}
             <StyledContent>
-              {/* Put the page component here instead of Login*/}
-              <Login />
+              <StyledLink
+                {...this.props}
+                content="Add an event"
+                onPress={() => {
+                  this.props.navigation.navigate("AddEvent");
+                }}
+              />
             </StyledContent>
           </Tab>
         </StyledTabs>
