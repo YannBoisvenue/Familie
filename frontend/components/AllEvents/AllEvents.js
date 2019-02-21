@@ -18,7 +18,6 @@ import {
   Root
 } from "native-base";
 import Colors from "../../constants/Colors";
-import { fdatasyncSync } from "fs";
 
 export default class AllEvents extends Component {
   constructor(props) {
