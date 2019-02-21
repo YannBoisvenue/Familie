@@ -19,7 +19,7 @@ let app = express();
 app.use(cors());
 app.use(bodyParser.raw({ type: "*/*" }));
 
-// this parse everything received. not usefull right now
+// this parse everything received.
 app.use((req, res, next) => {
   try {
     req.body = JSON.parse(req.body.toString());
@@ -201,35 +201,25 @@ app.post("/attendEvent", (req, res) => {
   let db = dbs.db("finalproject");
   let request = req.body;
   let user = request.user;
-  let chosenEvent = request.event;
-  db.collection("events")
-    .find({
-      chosenEvent
-    })
-    .incertOne({ guests: event.guests + user }, (err, ress) => {
-      if (err) throw err;
-      let response = {
-        message: "User successfully added to event"
-      };
-      res.send(JSON.stringify(response));
-      console.log("response", response);
-      console.log("success at /attendEvent!!!!!");
-    });
+  let chosenEvent = request._id;
+
+  let bob = "";
+  db.collection("events").findOne({ _id: ObjectID(chosenEvent) }, function(
+    err,
+    result
+  ) {
+    if (err) throw err;
+    bob = result.guests;
+    bob.push(user);
+    //console.log("bob", bob);
+    db.collection("events").updateOne(
+      { _id: ObjectID(chosenEvent) },
+      { $set: { guests: bob } }
+    );
+  });
+
+  console.log("success at /attendEvent!!!!!");
 });
-
-// addEventListener.post("/oneEvent", (req, res) => {
-//   console.log("you made it to /oneEvent");
-//   let db = dbs.db("finalproject");
-//   let request = req.body;
-//   let chosenEvent = request.event;
-//   db.collection("event").find({ chosenEvent });
-
-//   if (err) throw err;
-//   let response = { message: "event sucessfully picked.", event };
-//   res.send(JSON.stringify(response));
-//   console.log("response", response);
-//   console.log("success at /oneEvent!");
-// });
 
 // addEventListener.post("/oneEvent", (req, res) => {
 //   console.log("you made it to /oneEvent");
@@ -255,7 +245,7 @@ app.post("/attendEvent", (req, res) => {
 //PROFILE
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Profile should have 9 components:S
+// Profile should have these components:S
 // 1- firstName
 // 2- lastName
 // 3- cameraRollPicture
@@ -290,8 +280,6 @@ app.post("/addProfile", (req, res) => {
   // let filePath = `${__dirname}/pictures/${fileName}`;
 
   // fs.writeFileSync(filePath, base64Data, "base64");
-
-  // end of the input of the image in the db
 
   db.collection("profiles").insertOne(profile, (err, ress) => {
     if (err) throw err;
