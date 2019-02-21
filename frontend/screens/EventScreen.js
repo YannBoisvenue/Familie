@@ -29,15 +29,6 @@ export default class EventScreen extends React.Component {
           <Tab heading="All Events">
             <StyledContent>
               <StyledSectionTitle content="Hello World" width={150} />
-              <StyledLink content="Click here for more info" />
-              <StyledForm>
-                <StyledItem type="floatingLabel" label="Something">
-                  <Input />
-                </StyledItem>
-                <StyledItem type="inlineLabel" label="Another Something">
-                  <Input />
-                </StyledItem>
-              </StyledForm>
             </StyledContent>
           </Tab>
 
