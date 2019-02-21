@@ -20,14 +20,14 @@ app.use(cors());
 app.use(bodyParser.raw({ type: "*/*" }));
 
 // this parse everything received. not usefull right now
-// app.use((req, res, next) => {
-//   try {
-//     req.body = JSON.parse(req.body.toString());
-//     next();
-//   } catch (error) {
-//     next();
-//   }
-// });
+app.use((req, res, next) => {
+  try {
+    req.body = JSON.parse(req.body.toString());
+    next();
+  } catch (error) {
+    next();
+  }
+});
 
 app.post("/signup", (req, res) => {
   let db = dbs.db("finalproject");
@@ -97,10 +97,11 @@ app.post("/login", (req, res) => {
 // 7- creator: the user who created the event
 
 //{"name":"Bearded park walkie!","time":"23,02,2019","location":"1515 rue de mencon, a Bruti, j2h 4u8","coordinate":{"lat":40.741895,"lon":-73.989308},"guests":["Bob"],"description":"who does not like beards???","creator":"Vincent"}
+//{name:"Beard trimming",time:"22,02,2019",location:"centre de coiffure quelconque",coordinate:{"lat":40.741895,"lon":-73.989308},guests:["Bearded Bill"],description:"for the beard!",creator:"Vincent"}
 
 app.post("/addevent", (req, res) => {
   console.log("req.body", req.body.toString());
-  let event = JSON.parse(req.body);
+  let event = req.body;
   console.log("event", event);
   let db = dbs.db("finalproject");
 
@@ -140,7 +141,7 @@ app.get("/allEvents", (req, res) => {
       if (err) throw err;
       let response = {
         success: true,
-        reviews: result
+        events: result
       };
       res.send(JSON.stringify(response));
       console.log("response", response);
@@ -150,7 +151,7 @@ app.get("/allEvents", (req, res) => {
 
 app.post("/attendingEvents", (req, res) => {
   console.log("you made it to attendingEvents");
-  let event = JSON.parse(req.body);
+  let event = req.body;
   console.log("event", event);
   let db = dbs.db("finalproject");
   let user = event.user;
@@ -175,7 +176,7 @@ app.post("/attendingEvents", (req, res) => {
 app.post("/hostingEvents", (req, res) => {
   console.log("you made it to hostingEvents");
   let db = dbs.db("finalproject");
-  let request = JSON.parse(req.body);
+  let request = req.body;
   let user = request.user;
   console.log("user", user);
 
@@ -198,7 +199,7 @@ app.post("/hostingEvents", (req, res) => {
 app.post("/attendEvent", (req, res) => {
   console.log("you made it to attendEvent");
   let db = dbs.db("finalproject");
-  let request = JSON.parse(req.body);
+  let request = req.body;
   let user = request.user;
   let chosenEvent = request.event;
   db.collection("events")
@@ -216,26 +217,62 @@ app.post("/attendEvent", (req, res) => {
     });
 });
 
+// addEventListener.post("/oneEvent", (req, res) => {
+//   console.log("you made it to /oneEvent");
+//   let db = dbs.db("finalproject");
+//   let request = req.body;
+//   let chosenEvent = request.event;
+//   db.collection("event").find({ chosenEvent });
+
+//   if (err) throw err;
+//   let response = { message: "event sucessfully picked.", event };
+//   res.send(JSON.stringify(response));
+//   console.log("response", response);
+//   console.log("success at /oneEvent!");
+// });
+
+// addEventListener.post("/oneEvent", (req, res) => {
+//   console.log("you made it to /oneEvent");
+//   let db = dbs.db("finalproject");
+//   db.collection("events").createIndex({
+//     name: "text",
+//     time: "text",
+//     location: "text",
+//     coordinate: {},
+//     guests: [],
+//     description: "text",
+//     creator: "text"
+//   });
+//   db.collection("events")
+//     .find({ $text: { $search: req.body.query } })
+//     .toArray((err, result) => {
+//       if (err) return res.status(500).send(err);
+//       res.send(JSON.stringify({ success: true, event: result }));
+//     });
+// });
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PROFILE
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Profile should have 9 components:
-// 1- the Image
-// 2-firstName
-// 3-lastName
-// 4-sex
-// 5-relationshipStatus
-// 6- occupation
-// 7- dateOfBirth
-// 8- location
-// 9- interest
+// Profile should have 9 components:S
+// 1- firstName
+// 2- lastName
+// 3- cameraRollPicture
+// 4- newTakenPicture
+// 5- gender
+// 6- relationshipStatus
+// 7- occupation
+// 8- dateOfBirth
+// 9- location
+// 10-interests
+// 11-userID
 
-//{"firstname":"bob","lastname":"Dabob","sex":"male","relationshipStatus":"single","occupation":"burocrat","dateOfBirth":"14,03,1974","location":"1 rue de mencon, a bruti","interest":"nose picking"}
+//{"firstName":"bob","lastName":"Dabob","gender":"male","relationshipStatus":"single","occupation":"burocrat","dateOfBirth":"14,03,1974","location":"1 rue de mencon, a bruti","interest":"nose picking"}
 
 app.post("/addProfile", (req, res) => {
   console.log("req.body", req.body.toString());
-  let profile = JSON.parse(req.body);
+  let profile = req.body;
   console.log("profiles", profile);
   let db = dbs.db("finalproject");
 

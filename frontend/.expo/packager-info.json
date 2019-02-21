@@ -3,7 +3,13 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
+<<<<<<< Updated upstream
   "expoServerNgrokUrl": "https://ew-def.anonymous.frontend.exp.direct",
   "packagerNgrokUrl": "https://packager.ew-def.anonymous.frontend.exp.direct",
   "ngrokPid": 7172
+=======
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
+>>>>>>> Stashed changes
 }
