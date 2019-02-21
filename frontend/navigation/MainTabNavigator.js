@@ -82,19 +82,17 @@ CreateProfileStack.navigationOptions = {
   )
 };
 
-const MapStack = createStackNavigator({
-  Map: Map
+const ProfileStack = createStackNavigator({
+  Profile: Map
 });
 
-MapStack.navigationOptions = {
-  tabBarLabel: "MapTest",
+ProfileStack.navigationOptions = {
+  tabBarLabel: "Profile",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      type="MaterialIcons"
-      name={
-        Platform.OS === "ios" ? "chat-bubble-outline" : "chat-bubble-outline"
-      }
+      type="Feather"
+      name={Platform.OS === "ios" ? "user" : "user"}
     />
   )
 };
@@ -103,7 +101,7 @@ export default createBottomTabNavigator(
   {
     EventStack,
     FriendStack,
-    MapStack
+    ProfileStack
   },
   {
     tabBarOptions: {

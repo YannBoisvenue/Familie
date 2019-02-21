@@ -10,7 +10,6 @@ export const StyledForm = ({ children }) => (
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: 10,
     marginBottom: 10
   }
 });

@@ -1,1 +1,9 @@
-{}
+{
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://3a-vnn.nisois.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.3a-vnn.nisois.frontend.exp.direct",
+  "ngrokPid": 51876,
+  "devToolsPort": 19002,
+  "packagerPort": 19004,
+  "packagerPid": 51859
+}

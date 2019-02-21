@@ -11,7 +11,7 @@ import { StyledForm } from "../StyledComponents/form";
 import { StyledItem } from "../StyledComponents/formItem";
 import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledSubHeader } from "../StyledComponents/textSubHeader";
-import { HostingScreen } from "./HostingScreen";
+import HostingScreen from "./HostingScreen";
 
 export default class EventScreen extends React.Component {
   constructor(props) {

@@ -9,7 +9,7 @@ import MainTabNavigator from "./MainTabNavigator";
 import addEventForm from "../components/addEventForm/addEventForm";
 import signup from "../components/signup";
 import login from "../components/login";
-import { HostingScreen } from "../screens/HostingScreen";
+import HostingScreen from "../screens/HostingScreen";
 
 const AppNavigator = createStackNavigator({
   HostingEvent: HostingScreen,

@@ -28,6 +28,8 @@ import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import { StyledForm } from "../../StyledComponents/form";
+import { StyledItem } from "../../StyledComponents/formItem";
 // import { fetchUrl } from "../../fetchUrl";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
@@ -136,28 +138,25 @@ class addEventForm extends Component {
           }}
         />
         <StyledContent>
-          <Form>
-            <Item floatingLabel>
-              <Label>Image</Label>
+          <StyledForm>
+            <StyledItem type="inlineLabel" label="image">
               <Input
                 autoCapitalize="none"
                 onChangeText={image => this.setState({ image })}
               />
-            </Item>
-            <Item floatingLabel>
-              <Label>Guests</Label>
+            </StyledItem>
+            <StyledItem type="inlineLabel" label="Guests">
               <Input
                 autoCapitalize="none"
                 onChangeText={guests => this.setState({ guests })}
               />
-            </Item>
-            <Item floatingLabel>
-              <Label>Event name</Label>
+            </StyledItem>
+            <StyledItem type="inlineLabel" label="Event name">
               <Input
                 autoCapitalize="none"
                 onChangeText={name => this.setState({ name })}
               />
-            </Item>
+            </StyledItem>
             <Item>
               <DatePicker
                 defaultDate={new Date(2019, 1, 1)}
@@ -175,13 +174,12 @@ class addEventForm extends Component {
                 disabled={false}
               />
             </Item>
-            <Item floatingLabel>
-              <Label>Address</Label>
+            <StyledItem type="inlineLabel" label="Address">
               <Input
                 autoCapitalize="none"
                 onChangeText={location => this.setState({ location })}
               />
-            </Item>
+            </StyledItem>
             <Item>
               <Textarea
                 rowSpan={5}
@@ -190,7 +188,7 @@ class addEventForm extends Component {
                 onChangeText={desc => this.setState({ desc })}
               />
             </Item>
-          </Form>
+          </StyledForm>
           <ScrollView>
             <StyledButton
               onPress={this.onCreateEventPress}

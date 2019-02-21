@@ -1,15 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
 import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledLink } from "../StyledComponents/link";
+import { connect } from "react-redux";
 
-export const HostingScreen = props => (
-  <StyledContent>
-    <StyledLink
-      {...this.props}
-      content="Add an event"
-      onPress={() => {
-        props.navigation.navigate("AddEvent");
-      }}
-    />
-  </StyledContent>
-);
+class HostingScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      events: []
+    };
+  }
+
+  render() {
+    return (
+      <StyledContent>
+        <StyledLink
+          content="Add an event"
+          onPress={() => {
+            this.props.navigation.navigate("AddEvent");
+          }}
+        />
+      </StyledContent>
+    );
+  }
+}
+
+export default connect(state => {
+  return { userId: state.userId };
+})(HostingScreen);
