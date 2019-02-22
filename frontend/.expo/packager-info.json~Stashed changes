@@ -1,0 +1,9 @@
+{
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://7x-cra.anonymous.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.7x-cra.anonymous.frontend.exp.direct",
+  "ngrokPid": 2340,
+  "devToolsPort": 19002,
+  "packagerPort": 19001,
+  "packagerPid": 9452
+}

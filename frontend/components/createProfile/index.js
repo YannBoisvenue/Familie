@@ -35,6 +35,9 @@ class CreateProfile extends Component {
       location: ""
       // interests: [""]
     };
+
+    // this.autocompleteInput = React.createRef();
+    // this.autocomplete = null;
   }
 
   handleFirstNameInput = firstName => {
@@ -105,7 +108,6 @@ class CreateProfile extends Component {
       formData.append("dateOfBirth", this.state.dateOfBirth),
       formData.append("location", this.state.location);
     // formData.append("interests", this.state.interests)
-    console.log("formData", formData);
 
     h.Accept = "application/json";
 

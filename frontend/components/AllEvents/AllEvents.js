@@ -25,8 +25,9 @@ class AllEvents extends Component {
     this.state = { event: [] };
   }
 
-  render() {
-    fetch("http://68.183.200.44:4000/addevent", {
+  componentDidMount() {
+    console.log("In tha fetch");
+    fetch("http://68.183.200.44:4000/allEvents", {
       method: "GET"
     })
       .then(function(x) {
@@ -34,6 +35,7 @@ class AllEvents extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
+        console.log("Show me your body :", body);
         if (body.success) {
           this.props.dispatch({
             type: "setEvents",
@@ -52,10 +54,11 @@ class AllEvents extends Component {
   renderAllEvents = () => {
     if (this.props.events !== undefined) {
       let newEventsArray = this.props.events.events.map((elem, i) => {
+        console.log("how many maps???");
         return (
           <View key={elem._id}>
             <SingleEvent
-              image={elem.image}
+              // image={elem.image}
               name={elem.name}
               desc={elem.desc}
               locaction={elem.locaction}
@@ -80,14 +83,7 @@ class AllEvents extends Component {
 }
 
 const mapStateToProps = state => {
-  return { events: state.events }; //maploc = moi qui decide le nom. => .location, faut ca match le nom dans le state global (dans le reducer, voir *k1)
+  return { events: state.events };
 };
 
 export default connect(mapStateToProps)(AllEvents);
-
-// paste in app to make it render for testing
-// return (
-//     <View>
-//       <AllEvents />
-//     </View>
-//   );

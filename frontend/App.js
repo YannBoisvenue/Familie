@@ -26,7 +26,6 @@ import GetLocation from "./components/GetLocation/GetLocation";
 import AllEvent from "../frontend/components/AllEvents/AllEvents";
 import Colors from "../frontend/constants/Colors";
 
-console.log("root reducers", rootReducer);
 let store = createStore(rootReducer, devToolsEnhancer());
 
 export default class App extends React.Component {

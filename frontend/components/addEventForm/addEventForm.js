@@ -65,9 +65,6 @@ class addEventForm extends Component {
       response => {
         const { lat, lng } = response.results[0].geometry.location;
         this.setState({ coordinate: { lat: lat, lng: lng } });
-        console.log("lat+lon", lat, lng);
-        console.log("state.coordinate :", this.state.coordinate);
-        console.log("Location entered: ", this.state.location);
       },
       error => {
         console.error(error);
@@ -76,7 +73,6 @@ class addEventForm extends Component {
   };
 
   onCreateEventPress = event => {
-    console.log("address :", this.state.location);
     this.getSpag();
     AsyncStorage.getItem("userId").then(userId => {
       let requestBody = JSON.stringify({
@@ -89,6 +85,7 @@ class addEventForm extends Component {
         desc: this.state.desc,
         coordinate: this.state.coordinate
       });
+
       fetch("http://68.183.200.44:4000/addevent", {
         method: "POST",
         body: requestBody

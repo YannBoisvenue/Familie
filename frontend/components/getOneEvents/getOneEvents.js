@@ -55,7 +55,6 @@ class getOneEvent extends components {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
-        console.log("parseBody", body);
 
         this.state.event = body.event;
       });

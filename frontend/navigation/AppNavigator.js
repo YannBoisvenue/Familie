@@ -36,7 +36,7 @@ class Event extends React.Component {
         <Text>
           {/* {this.state.id} */}
           {this.state.event.name}
-          {this.state.event.description}
+          {this.state.event.desc}
         </Text>
       </View>
     );

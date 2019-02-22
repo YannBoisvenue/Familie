@@ -64,8 +64,6 @@ class Login extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
-        console.log("Show me your body", body);
-        //implement logic for user does not exist
         if (!body.success) {
           Toast.show({
             text: "Wrong password",
