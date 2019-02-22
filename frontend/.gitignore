@@ -1,14 +1,7 @@
 /node_modules
 package-lock.json
-<<<<<<< HEAD
-/fetchUrl.js
-/.expo/packager-info.json
-/.expo/settings.json
-
-=======
 .expo/packager-info.json
 .expo/settings.json
->>>>>>> b62dc21c66ba8fb73fdc0ae610ee8a6a3aec8932
 
 # General
 .DS_Store
