@@ -9,7 +9,7 @@ export const StyledContent = ({ children }) => (
 
 const styles = StyleSheet.create({
   content: {
-    padding: 25,
+    padding: 15,
     backgroundColor: Colors.antiFlashWhite
   }
 });

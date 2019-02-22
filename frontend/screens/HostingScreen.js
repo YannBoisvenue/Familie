@@ -6,7 +6,8 @@ import { HostingEventContainer } from "../components/hostingEvent/hostingEventCo
 import { AsyncStorage } from "react-native";
 import { fetchUrl } from "../fetchUrl";
 import { StyledSectionTitle } from "../StyledComponents/title";
-import { Container, Right, Left, CardItem, Card } from "native-base";
+import { Container, Right, Left, CardItem, Card, View } from "native-base";
+import Colors from "../constants/Colors";
 
 class HostingScreen extends Component {
   constructor(props) {
@@ -40,25 +41,36 @@ class HostingScreen extends Component {
     }
 
     return (
-      <StyledContent>
-        <Card transparent style={{ backgroundColor: "transparent" }}>
-          <CardItem style={{ backgroundColor: "transparent" }}>
-            <Container style={{ height: 63 }}>
-              <StyledSectionTitle content="Your Events" width={140} />
-            </Container>
-            <Right style={{ flex: -1 }}>
-              <StyledLink
-                content="Add an event"
-                onPress={() => {
-                  this.props.navigation.navigate("AddEvent");
-                }}
-              />
-            </Right>
-          </CardItem>
-        </Card>
-
-        {events ? eventArr : "You have no hosting events"}
-      </StyledContent>
+      <Container>
+        <View
+          scrollEnabled={false}
+          style={{
+            backgroundColor: Colors.antiFlashWhite,
+            paddingLeft: 15,
+            paddingRight: 15,
+            paddingBottom: 0
+          }}
+        >
+          <Card transparent style={{ backgroundColor: "transparent" }}>
+            <CardItem style={{ backgroundColor: "transparent" }}>
+              <Container style={{ height: 63 }}>
+                <StyledSectionTitle content="Your Events" width={140} />
+              </Container>
+              <Right style={{ flex: -1 }}>
+                <StyledLink
+                  content="Add an event"
+                  onPress={() => {
+                    this.props.navigation.navigate("AddEvent");
+                  }}
+                />
+              </Right>
+            </CardItem>
+          </Card>
+        </View>
+        <StyledContent>
+          {events ? eventArr : "You have no hosting events"}
+        </StyledContent>
+      </Container>
     );
   }
 }
