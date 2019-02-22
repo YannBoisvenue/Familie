@@ -80,6 +80,7 @@ class Login extends Component {
   };
 
   render() {
+    const { navigation } = this.props;
     //if (this.props.loginStatus) {
     //     return <HomePage></HomePage>
     // }
@@ -124,7 +125,7 @@ class Login extends Component {
           </StyledForm>
           <Card>
             <CardItem footer>
-              <Text onPress={() => this.props.navigation.navigate("Signup")}>
+              <Text onPress={() => navigation.navigate("Signup")}>
                 Don't have an account? Sign up
               </Text>
             </CardItem>
