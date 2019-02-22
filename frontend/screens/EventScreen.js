@@ -11,11 +11,8 @@ import { StyledForm } from "../StyledComponents/form";
 import { StyledItem } from "../StyledComponents/formItem";
 import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledSubHeader } from "../StyledComponents/textSubHeader";
-<<<<<<< Updated upstream
 import HostingScreen from "./HostingScreen";
-=======
 import AllEvents from "../components/AllEvents/AllEvents";
->>>>>>> Stashed changes
 
 export default class EventScreen extends React.Component {
   constructor(props) {
@@ -49,9 +46,7 @@ export default class EventScreen extends React.Component {
             </StyledContent>
           </Tab>
           <Tab heading="Hosting">
-<<<<<<< Updated upstream
             <HostingScreen {...this.props} />
-=======
             {/* Put the page component here instead of Login*/}
             <StyledContent>
               <StyledLink
@@ -62,7 +57,6 @@ export default class EventScreen extends React.Component {
                 }}
               />
             </StyledContent>
->>>>>>> Stashed changes
           </Tab>
         </StyledTabs>
       </Container>
