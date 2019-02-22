@@ -25,8 +25,9 @@ class AllEvents extends Component {
     this.state = { event: [] };
   }
 
-  render() {
-    fetch("http://68.183.200.44:4000/addevent", {
+  componentDidMount() {
+    console.log("In tha fetch");
+    fetch("http://68.183.200.44:4000/allEvents", {
       method: "GET"
     })
       .then(function(x) {
@@ -34,6 +35,7 @@ class AllEvents extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
+        console.log("Show me your body :", body);
         if (body.success) {
           this.props.dispatch({
             type: "setEvents",
@@ -50,20 +52,18 @@ class AllEvents extends Component {
   }
 
   renderAllEvents = () => {
-    let events = [{ name: "bob" }, { name: "julie" }];
-    console.log("In tha render all events", this.props.events.events);
     if (this.props.events !== undefined) {
-      let newEventsArray = events.map((elem, i) => {
+      let newEventsArray = this.props.events.events.map((elem, i) => {
         console.log("how many maps???");
         return (
           <View key={elem._id}>
             <SingleEvent
               // image={elem.image}
               name={elem.name}
-              // desc={elem.desc}
-              // locaction={elem.locaction}
-              // time={elem.time}
-              // _id={elem._id}
+              desc={elem.desc}
+              locaction={elem.locaction}
+              time={elem.time}
+              _id={elem._id}
             />
           </View>
         );
