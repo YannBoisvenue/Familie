@@ -28,12 +28,9 @@ import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
 import { createStackNavigator, createAppContainer } from "react-navigation";
-<<<<<<< Updated upstream
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
-=======
 import { fetchUrl } from "../../fetchUrl";
->>>>>>> Stashed changes
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
