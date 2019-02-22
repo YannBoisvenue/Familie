@@ -23,7 +23,6 @@ import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
-import { fetchUrl } from "../../fetchUrl";
 import components from "../../native-base-theme/components";
 
 class getOneEvent extends components {
@@ -47,7 +46,7 @@ class getOneEvent extends components {
   }
 
   getTheSearchedEvents = event => {
-    fetch("./oneEvent", {
+    fetch("http://68.183.200.44:4000/oneEvent", {
       method: "POST",
       body: requestBody
     })

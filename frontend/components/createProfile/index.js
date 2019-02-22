@@ -109,7 +109,7 @@ class CreateProfile extends Component {
 
     h.Accept = "application/json";
 
-    fetch("http://localhost:4000//addProfile", {
+    fetch("http://68.183.200.44:4000/addProfile", {
       method: "POST",
       headers: h,
       body: formData

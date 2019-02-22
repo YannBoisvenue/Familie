@@ -54,7 +54,7 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     });
-    fetch("http://localhost:4000/login", {
+    fetch("http://68.183.200.44:4000/login", {
       method: "POST",
       body: requestBody
     })
@@ -63,7 +63,7 @@ class Login extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
-        console.log("body", body);
+        console.log("Show me your body", body);
         //implement logic for user does not exist
         if (!body.success) {
           Toast.show({

@@ -10,12 +10,14 @@ import addEventForm from "../components/addEventForm/addEventForm";
 import signup from "../components/signup";
 import login from "../components/login";
 import HostingScreen from "../screens/HostingScreen";
+import CreateProfile from "../components/createProfile";
 
 const AppNavigator = createStackNavigator({
   HostingEvent: HostingScreen,
   AddEvent: addEventForm,
   Signup: signup,
   Login: login
+  // CreateProfile: CreateProfile
 });
 
 export default createAppContainer(

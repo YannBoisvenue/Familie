@@ -14,6 +14,7 @@ import Colors from "../constants/Colors";
 import AddEventForm from "../components/addEventForm/addEventForm";
 import EventScreen from "../screens/EventScreen";
 import FriendScreen from "../screens/FriendScreen";
+import createProfile from "../components/createProfile";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -83,7 +84,7 @@ CreateProfileStack.navigationOptions = {
 };
 
 const ProfileStack = createStackNavigator({
-  Profile: Map
+  Profile: createProfile
 });
 
 ProfileStack.navigationOptions = {

@@ -30,7 +30,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
-// import { fetchUrl } from "../../fetchUrl";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
@@ -90,7 +89,7 @@ class addEventForm extends Component {
       desc: this.state.desc,
       coordinate: this.state.coordinate
     });
-    fetch(fetchUrl + "/addevent", {
+    fetch("http://68.183.200.44:4000/addevent", {
       method: "POST",
       body: requestBody
     })
@@ -114,16 +113,16 @@ class addEventForm extends Component {
         }
       });
 
-    // fetch(fetchUrl + "/addevent", {
-    //   method: "POST",
-    //   body: requestBody
-    // })
-    //   .then(function(x) {
-    //     return x.text();
-    //   })
-    //   .then(responseBody => {
-    //     console.log(JSON.parse(responseBody));
-    //   });
+    fetch("http://68.183.200.44:4000/addevent", {
+      method: "POST",
+      body: requestBody
+    })
+      .then(function(x) {
+        return x.text();
+      })
+      .then(responseBody => {
+        console.log(JSON.parse(responseBody));
+      });
   };
 
   render() {

@@ -26,7 +26,7 @@ export default class AllEvents extends Component {
   }
 
   render() {
-    fetch(fetchUrl + "/addevent", {
+    fetch("http://68.183.200.44:4000/addevent", {
       method: "GET"
     })
       .then(function(x) {
