@@ -109,8 +109,6 @@ class CreateProfile extends Component {
       formData.append("location", this.state.location);
     // formData.append("interests", this.state.interests)
 
-    console.log("formData", formData);
-
     h.Accept = "application/json";
 
     fetch("http://68.183.200.44:4000/addProfile", {
@@ -131,6 +129,9 @@ class CreateProfile extends Component {
   };
 
   render() {
+    let picture = this.state.picture;
+    let pictureType = this.state.pictureType;
+
     return (
       <Root>
         <Container>
