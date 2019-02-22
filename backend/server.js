@@ -306,6 +306,20 @@ app.post("/addProfile", (req, res) => {
   });
 });
 
+app.get("/all-parents", (req, res) => {
+  let db = dbs.db("finalproject");
+  db.collection("profiles")
+    .find({})
+    .toArray(function(err, result) {
+      if (err) throw err;
+      let response = {
+        success: true,
+        parents: result
+      };
+      res.send(JSON.stringify(response));
+    });
+});
+
 app.listen(4000, function() {
   console.log("Server started on port 4000");
 });

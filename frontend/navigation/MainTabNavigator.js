@@ -10,6 +10,7 @@ import Login from "../components/login/index.js";
 import Signup from "../components/signup";
 import Map from "../components/map/index.js";
 import CreateProfile from "../components/createProfile";
+import CreateProfileAddFamily from "../components/createProfileAddFamily";
 import Colors from "../constants/Colors";
 import AddEventForm from "../components/addEventForm/addEventForm";
 import EventScreen from "../screens/EventScreen";
@@ -83,6 +84,24 @@ CreateProfileStack.navigationOptions = {
   )
 };
 
+const CreateProfileAddFamilyStack = createStackNavigator({
+  CreateProfileAddFamily: CreateProfileAddFamily
+});
+
+CreateProfileAddFamilyStack.navigationOptions = {
+  tabBarLabel: "Add Family",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === "ios"
+          ? `ios-information-circle${focused ? "" : "-outline"}`
+          : "md-information-circle"
+      }
+    />
+  )
+};
+
 const ProfileStack = createStackNavigator({
   Profile: createProfile
 });
@@ -102,7 +121,9 @@ export default createBottomTabNavigator(
   {
     EventStack,
     FriendStack,
-    ProfileStack
+    ProfileStack,
+    CreateProfileStack,
+    CreateProfileAddFamilyStack
   },
   {
     tabBarOptions: {

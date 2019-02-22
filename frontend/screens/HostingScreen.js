@@ -4,7 +4,6 @@ import { StyledLink } from "../StyledComponents/link";
 import { connect } from "react-redux";
 import { HostingEventContainer } from "../components/hostingEvent/hostingEventContainer";
 import { AsyncStorage } from "react-native";
-import { fetchUrl } from "../fetchUrl";
 
 class HostingScreen extends Component {
   constructor(props) {
@@ -17,7 +16,7 @@ class HostingScreen extends Component {
   async componentDidMount() {
     const value = await AsyncStorage.getItem("userId");
     let body = JSON.stringify(value);
-    fetch(fetchUrl + "/hostingEvents", {
+    fetch("http://68.183.200.44:4000//hostingEvents", {
       method: "POST",
       body: body
     })

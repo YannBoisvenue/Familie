@@ -12,7 +12,6 @@ import login from "../components/login";
 import HostingScreen from "../screens/HostingScreen";
 import CreateProfile from "../components/createProfile";
 import { View, Text } from "native-base";
-import { fetchUrl } from "../fetchUrl";
 
 /*************Not supposed to be here - need proper navigation *******/
 
@@ -23,7 +22,7 @@ class Event extends React.Component {
       id: props.navigation.getParam("id", null),
       event: {}
     };
-    fetch(fetchUrl + `/event/${this.state.id}`)
+    fetch(`http://68.183.200.44:4000/event/${this.state.id}`)
       .then(res => res.json())
       .then(res => {
         // console.log("what do I receive", res);

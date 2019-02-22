@@ -1,9 +1,7 @@
 /node_modules
 package-lock.json
-fetchUrl.js
-/.expo/packager-info.json
-/.expo/settings.json
-
+.expo/packager-info.json
+.expo/settings.json
 
 # General
 .DS_Store
