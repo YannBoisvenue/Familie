@@ -38,7 +38,7 @@ class CreateProfileAddFamily extends Component {
   }
 
   componentDidMount = () => {
-    fetch("http://localhost:4000/all-parents")
+    fetch("http://68.183.200.44:4000/all-parents")
       .then(res => res.json())
       .then(json => {
         const parents = json.parents;
@@ -93,7 +93,7 @@ class CreateProfileAddFamily extends Component {
       formData.append("profilePicture", this.state.kidPicture),
       (h.Accept = "application/json");
 
-    fetch("http://localhost:4000//addKid", {
+    fetch("http://68.183.200.44:4000/addKid", {
       method: "POST",
       headers: h,
       body: formData
@@ -143,7 +143,6 @@ class CreateProfileAddFamily extends Component {
                     onChangeText={text => this.setState({ query: text })}
                     placeholder="Enter the other parent's name"
                     renderItem={({ firstname, lastname }) => (
-                      //you can change the view you want to show in suggestion from here
                       <TouchableOpacity
                         onPress={() => this.setState({ query: firstname })}
                       >
