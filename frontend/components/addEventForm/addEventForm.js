@@ -27,10 +27,9 @@ import { Alert } from "react-native";
 import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
-import { createStackNavigator, createAppContainer } from "react-navigation";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
-import { fetchUrl } from "../../fetchUrl";
+import { AsyncStorage } from "react-native";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
@@ -39,9 +38,9 @@ class addEventForm extends Component {
     super(props);
     this.state = {
       image: "",
-      name: "",
       time: new Date(),
       guests: undefined,
+      name: "",
       location: "",
       desc: "",
       coordinate: { lat: 0, lng: 0 }
@@ -79,51 +78,42 @@ class addEventForm extends Component {
   onCreateEventPress = event => {
     console.log("address :", this.state.location);
     this.getSpag();
-
-    /******************* Fetch the shit *******************/
-    let requestBody = JSON.stringify({
-      // image: this.state.image,
-      name: this.state.name,
-      guests: this.state.guests,
-      time: this.state.time,
-      location: this.state.location,
-      desc: this.state.desc,
-      coordinate: this.state.coordinate
+    AsyncStorage.getItem("userId").then(userId => {
+      let requestBody = JSON.stringify({
+        // image: this.state.image,
+        userId: userId,
+        name: this.state.name,
+        guests: this.state.guests,
+        time: this.state.time,
+        location: this.state.location,
+        desc: this.state.desc,
+        coordinate: this.state.coordinate
+      });
+      fetch("http://68.183.200.44:4000/addevent", {
+        method: "POST",
+        body: requestBody
+      })
+        .then(function(x) {
+          return x.text();
+        })
+        .then(responseBody => {
+          let body = JSON.parse(responseBody);
+          console.log("parseBody", body);
+          if (!body.success) {
+            Toast.show({
+              text: "Oh oh spagetthi oh",
+              buttonText: "Fuck"
+            });
+            return;
+          } else {
+            Toast.show({
+              text: "Event created",
+              buttonText: "Yay!"
+            });
+          }
+        });
+      /******************* Fetch the shit *******************/
     });
-    fetch("http://68.183.200.44:4000/addevent", {
-      method: "POST",
-      body: requestBody
-    })
-      .then(function(x) {
-        return x.text();
-      })
-      .then(responseBody => {
-        let body = JSON.parse(responseBody);
-        console.log("parseBody", body);
-        if (!body.success) {
-          Toast.show({
-            text: "Oh oh spagetthi oh",
-            buttonText: "Fuck"
-          });
-          return;
-        } else {
-          Toast.show({
-            text: "Event created",
-            buttonText: "Yay!"
-          });
-        }
-      });
-
-    fetch("http://68.183.200.44:4000/addevent", {
-      method: "POST",
-      body: requestBody
-    })
-      .then(function(x) {
-        return x.text();
-      })
-      .then(responseBody => {
-        console.log(JSON.parse(responseBody));
-      });
   };
 
   render() {

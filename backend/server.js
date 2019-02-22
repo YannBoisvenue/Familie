@@ -176,13 +176,12 @@ app.post("/attendingEvents", (req, res) => {
 app.post("/hostingEvents", (req, res) => {
   console.log("you made it to hostingEvents");
   let db = dbs.db("finalproject");
-  let request = req.body;
-  let user = request.user;
+  let user = req.body;
   console.log("user", user);
 
   db.collection("events")
     .find({
-      creator: user
+      userId: user
     })
     .toArray(function(err, result) {
       if (err) throw err;

@@ -3,34 +3,39 @@ import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledLink } from "../StyledComponents/link";
 import { connect } from "react-redux";
 import { HostingEventContainer } from "../components/hostingEvent/hostingEventContainer";
+import { AsyncStorage } from "react-native";
 import { fetchUrl } from "../fetchUrl";
 
 class HostingScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: "bob",
       events: []
     };
   }
 
-  componentDidMount() {
-    let body = JSON.stringify({ user: this.state.userId });
-    fetch("http://68.183.200.44:4000/hostingEvents", {
+  async componentDidMount() {
+    const value = await AsyncStorage.getItem("userId");
+    let body = JSON.stringify(value);
+    fetch(fetchUrl + "/hostingEvents", {
       method: "POST",
       body: body
     })
-      .then(x => x.toString())
+      .then(x => x.text())
       .then(response => {
-        console.log(response);
-        this.setState({ events: JSON.parse(response) });
+        let events = JSON.parse(response);
+        this.setState({ events: events.attending });
       });
   }
 
   render() {
-    let eventArr = this.state.events.map(e => {
-      return <HostingEventContainer event={e} />;
-    });
+    const { events } = this.state;
+    let eventArr = [];
+    if (events) {
+      eventArr = events.map((e, index) => {
+        return <HostingEventContainer key={index} event={e} />;
+      });
+    }
 
     return (
       <StyledContent>
@@ -40,7 +45,7 @@ class HostingScreen extends Component {
             this.props.navigation.navigate("AddEvent");
           }}
         />
-        {eventArr}
+        {events ? eventArr : "You have no hosting events"}
       </StyledContent>
     );
   }
