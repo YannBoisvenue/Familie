@@ -18,6 +18,7 @@ import {
   Root
 } from "native-base";
 import SingleEvent from "../SingleEvent/SingleEvent.js";
+import { fetchUrl } from "../../fetchUrl";
 
 class AllEvents extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class AllEvents extends Component {
 
   componentDidMount() {
     console.log("In tha fetch");
-    fetch("http://68.183.200.44:4000/allEvents", {
+    fetch(fetchUrl + "/allEvents", {
       method: "GET"
     })
       .then(function(x) {
