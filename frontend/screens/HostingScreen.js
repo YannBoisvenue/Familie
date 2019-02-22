@@ -4,6 +4,9 @@ import { StyledLink } from "../StyledComponents/link";
 import { connect } from "react-redux";
 import { HostingEventContainer } from "../components/hostingEvent/hostingEventContainer";
 import { AsyncStorage } from "react-native";
+import { fetchUrl } from "../fetchUrl";
+import { StyledSectionTitle } from "../StyledComponents/title";
+import { Container, Right, Left, CardItem, Card } from "native-base";
 
 class HostingScreen extends Component {
   constructor(props) {
@@ -16,7 +19,7 @@ class HostingScreen extends Component {
   async componentDidMount() {
     const value = await AsyncStorage.getItem("userId");
     let body = JSON.stringify(value);
-    fetch("http://68.183.200.44:4000/hostingEvents", {
+    fetch(fetchUrl + "/hostingEvents", {
       method: "POST",
       body: body
     })
@@ -38,12 +41,22 @@ class HostingScreen extends Component {
 
     return (
       <StyledContent>
-        <StyledLink
-          content="Add an event"
-          onPress={() => {
-            this.props.navigation.navigate("AddEvent");
-          }}
-        />
+        <Card transparent style={{ backgroundColor: "transparent" }}>
+          <CardItem style={{ backgroundColor: "transparent" }}>
+            <Container style={{ height: 63 }}>
+              <StyledSectionTitle content="Your Events" width={140} />
+            </Container>
+            <Right style={{ flex: -1 }}>
+              <StyledLink
+                content="Add an event"
+                onPress={() => {
+                  this.props.navigation.navigate("AddEvent");
+                }}
+              />
+            </Right>
+          </CardItem>
+        </Card>
+
         {events ? eventArr : "You have no hosting events"}
       </StyledContent>
     );

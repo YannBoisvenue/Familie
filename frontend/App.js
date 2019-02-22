@@ -24,6 +24,7 @@ import { StyleProvider } from "native-base";
 import { StyledHeader } from "./components/mainHeader/header";
 import GetLocation from "./components/GetLocation/GetLocation";
 import AllEvent from "../frontend/components/AllEvents/AllEvents";
+import Colors from "../frontend/constants/Colors";
 
 console.log("root reducers", rootReducer);
 let store = createStore(rootReducer, devToolsEnhancer());
@@ -94,6 +95,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: Colors.antiFlashWhite
   }
 });

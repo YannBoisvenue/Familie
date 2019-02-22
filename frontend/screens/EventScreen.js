@@ -25,7 +25,7 @@ export default class EventScreen extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container style={styles.container}>
         <StyledTabs>
           <Tab heading="All Events">
             <StyledContent>
@@ -53,3 +53,9 @@ export default class EventScreen extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.antiFlashWhite
+  }
+});
