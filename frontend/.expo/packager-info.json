@@ -1,9 +1,9 @@
 {
   "expoServerPort": 19000,
-  "packagerPid": 905,
+  "packagerPid": 15301,
   "expoServerNgrokUrl": "https://7x-cra.nisois.frontend.exp.direct",
   "packagerNgrokUrl": "https://packager.7x-cra.nisois.frontend.exp.direct",
-  "ngrokPid": 951,
+  "ngrokPid": 15366,
   "devToolsPort": 19002,
   "packagerPort": 19001
 }

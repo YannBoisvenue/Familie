@@ -17,7 +17,7 @@ class HostingScreen extends Component {
   async componentDidMount() {
     const value = await AsyncStorage.getItem("userId");
     let body = JSON.stringify(value);
-    fetch(fetchUrl + "/hostingEvents", {
+    fetch("http://68.183.200.44:4000/hostingEvents", {
       method: "POST",
       body: body
     })
