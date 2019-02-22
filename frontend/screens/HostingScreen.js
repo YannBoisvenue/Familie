@@ -16,11 +16,14 @@ class HostingScreen extends Component {
 
   componentDidMount() {
     let body = JSON.stringify({ user: this.state.userId });
-    fetch(fetchUrl + "/hostingEvents", { method: "POST", body: body })
+    fetch("http://68.183.200.44:4000/hostingEvents", {
+      method: "POST",
+      body: body
+    })
       .then(x => x.toString())
       .then(response => {
         console.log(response);
-        this.setState({ events: response });
+        this.setState({ events: JSON.parse(response) });
       });
   }
 

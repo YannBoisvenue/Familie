@@ -17,6 +17,7 @@ import {
   Toast,
   Root
 } from "native-base";
+import { AsyncStorage } from "react-native";
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
@@ -72,6 +73,7 @@ class Login extends Component {
           });
           return;
         }
+        AsyncStorage.setItem("userId", body.user.userId);
         this.props.dispatch({
           type: LOGIN_SUCCESS
         });
