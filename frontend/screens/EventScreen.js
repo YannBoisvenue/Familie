@@ -47,6 +47,16 @@ export default class EventScreen extends React.Component {
           </Tab>
           <Tab heading="Hosting">
             <HostingScreen {...this.props} />
+            {/* Put the page component here instead of Login*/}
+            <StyledContent>
+              <StyledLink
+                {...this.props}
+                content="Add an event"
+                onPress={() => {
+                  this.props.navigation.push("AddEvent");
+                }}
+              />
+            </StyledContent>
           </Tab>
         </StyledTabs>
       </Container>

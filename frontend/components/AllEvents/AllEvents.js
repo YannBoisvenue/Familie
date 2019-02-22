@@ -50,17 +50,20 @@ class AllEvents extends Component {
   }
 
   renderAllEvents = () => {
+    let events = [{ name: "bob" }, { name: "julie" }];
+    console.log("In tha render all events", this.props.events.events);
     if (this.props.events !== undefined) {
-      let newEventsArray = this.props.events.events.map((elem, i) => {
+      let newEventsArray = events.map((elem, i) => {
+        console.log("how many maps???");
         return (
           <View key={elem._id}>
             <SingleEvent
-              image={elem.image}
+              // image={elem.image}
               name={elem.name}
-              desc={elem.desc}
-              locaction={elem.locaction}
-              time={elem.time}
-              _id={elem._id}
+              // desc={elem.desc}
+              // locaction={elem.locaction}
+              // time={elem.time}
+              // _id={elem._id}
             />
           </View>
         );
@@ -80,14 +83,7 @@ class AllEvents extends Component {
 }
 
 const mapStateToProps = state => {
-  return { events: state.events }; //maploc = moi qui decide le nom. => .location, faut ca match le nom dans le state global (dans le reducer, voir *k1)
+  return { events: state.events };
 };
 
 export default connect(mapStateToProps)(AllEvents);
-
-// paste in app to make it render for testing
-// return (
-//     <View>
-//       <AllEvents />
-//     </View>
-//   );
