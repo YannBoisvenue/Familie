@@ -4,7 +4,6 @@ import { StyledLink } from "../StyledComponents/link";
 import { connect } from "react-redux";
 import { HostingEventContainer } from "../components/hostingEvent/hostingEventContainer";
 import { AsyncStorage } from "react-native";
-import { fetchUrl } from "../fetchUrl";
 
 class HostingScreen extends Component {
   constructor(props) {

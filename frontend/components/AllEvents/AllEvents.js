@@ -17,7 +17,6 @@ import {
   Toast,
   Root
 } from "native-base";
-import { fetchUrl } from "../../fetchUrl";
 import SingleEvent from "../SingleEvent/SingleEvent.js";
 
 class AllEvents extends Component {
