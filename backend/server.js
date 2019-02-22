@@ -300,7 +300,8 @@ app.post("/addProfile", (req, res) => {
     if (err) throw err;
     let response = {
       success: true,
-      message: "Profile successfully created"
+      message: "Profile successfully created",
+      _id: ress._id
     };
     res.send(JSON.stringify(response));
   });
