@@ -67,7 +67,6 @@ class UnconnectedMap extends Component {
   };
 
   render() {
-    console.log("THE props :", this.props);
     return (
       <MapView
         onPress={x => {
@@ -119,7 +118,6 @@ class UnconnectedMap extends Component {
 //  RICHORE: Map state to pros
 
 const mapStateToProps = state => {
-  console.log("state", state);
   return { location: state.location }; //maploc = moi qui decide le nom. => .location, faut ca match le nom dans le state global (dans le reducer, voir *k1)
 };
 

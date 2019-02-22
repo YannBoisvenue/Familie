@@ -7,7 +7,7 @@ import {
   Text,
   Body,
   Form,
-  Item as FormItem,
+  Item,
   Input,
   Label,
   Title,
@@ -17,11 +17,12 @@ import {
   Toast,
   Root
 } from "native-base";
-import Colors from "../../constants/Colors";
+import { fetchUrl } from "../../fetchUrl";
+import SingleEvent from "../SingleEvent/SingleEvent.js";
 
-export default class AllEvents extends Component {
+class AllEvents extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = { event: [] };
   }
 
@@ -34,22 +35,60 @@ export default class AllEvents extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
-        console.log("parseBody", body);
-        if (!body.success) {
+        if (body.success) {
+          this.props.dispatch({
+            type: "setEvents",
+            event: body.events
+          });
+          return;
+        } else {
           Toast.show({
             text: "You did wrong!",
             buttonText: "Ok..."
           });
-          return;
-        } else {
         }
       });
   }
+
+  renderAllEvents = () => {
+    if (this.props.events !== undefined) {
+      let newEventsArray = this.props.events.events.map((elem, i) => {
+        return (
+          <View key={elem._id}>
+            <SingleEvent
+              image={elem.image}
+              name={elem.name}
+              desc={elem.desc}
+              locaction={elem.locaction}
+              time={elem.time}
+              _id={elem._id}
+            />
+          </View>
+        );
+      });
+      return newEventsArray;
+    }
+  };
+
+  render() {
+    return (
+      <View>
+        <Text>All events</Text>
+        {this.renderAllEvents()}
+      </View>
+    );
+  }
 }
+
+const mapStateToProps = state => {
+  return { events: state.events }; //maploc = moi qui decide le nom. => .location, faut ca match le nom dans le state global (dans le reducer, voir *k1)
+};
+
+export default connect(mapStateToProps)(AllEvents);
 
 // paste in app to make it render for testing
 // return (
 //     <View>
-//       <AllEvent />
+//       <AllEvents />
 //     </View>
 //   );

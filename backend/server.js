@@ -196,6 +196,22 @@ app.post("/hostingEvents", (req, res) => {
     });
 });
 
+app.get("/event/:id", (req, res) => {
+  const id = req.params.id;
+  let db = dbs.db("finalproject");
+
+  db.collection("events")
+    .find({ _id: ObjectID(id) })
+    .toArray((err, array) => {
+      if (err) throw err;
+      let response = {
+        success: true,
+        result: array[0]
+      };
+      res.send(JSON.stringify(response));
+    });
+});
+
 app.post("/attendEvent", (req, res) => {
   console.log("you made it to attendEvent");
   let db = dbs.db("finalproject");

@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 
 class GetLocation extends Component {
   async UNSAFE_componentWillMount() {
-    console.log("in willmount");
     await Font.loadAsync({
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
@@ -31,7 +30,6 @@ class GetLocation extends Component {
   }
 
   _getLocationAsync = async () => {
-    console.log("in check permission");
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== "granted") {
       this.setState({
@@ -51,7 +49,6 @@ class GetLocation extends Component {
   };
 
   render() {
-    console.log("in render");
     return <View />;
   }
 }

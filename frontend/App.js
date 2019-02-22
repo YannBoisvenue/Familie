@@ -34,7 +34,6 @@ export default class App extends React.Component {
   };
 
   async UNSAFE_componentWillMount() {
-    console.log("in wfunc");
     await Font.loadAsync({
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
