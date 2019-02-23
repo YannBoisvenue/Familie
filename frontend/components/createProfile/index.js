@@ -26,7 +26,7 @@ class CreateProfile extends Component {
     this.state = {
       firstName: "",
       lastName: "",
-      picture: "",
+      picture: undefined,
       pictureType: "",
       gender: "",
       relationshipStatus: "",
