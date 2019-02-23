@@ -6,8 +6,27 @@ import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import { StyledLink } from "../../StyledComponents/link";
 import moment from "moment";
+import { fetchUrl } from "../../fetchUrl.js";
+import { connect } from "react-redux";
 
 class SingleEvent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      attending: false,
+      userId: this.props.userId
+    };
+  }
+
+  handleAttendEvent = async () => {
+    console.log(this.props);
+    let body = JSON.stringify({
+      user: this.props.userId,
+      eventId: this.props._id
+    });
+    fetch(fetchUrl + "/attendEvent", { method: "POST", body: body });
+  };
+
   render() {
     let description = this.props.desc;
     if (this.props.desc.length > 100) {
@@ -18,7 +37,7 @@ class SingleEvent extends Component {
       <Card noShadow style={styles.card}>
         <CardItem style={styles.image}>
           <Image
-            source={{ uri: "https://picsum.photos/200/300" }}
+            source={{ uri: "https://picsum.photos/500/500" }}
             style={{ height: 200, width: null, flex: 1 }}
           />
         </CardItem>
@@ -42,12 +61,23 @@ class SingleEvent extends Component {
           <Text>{description}</Text>
         </CardItem>
         <CardItem cardBody style={{ paddingLeft: 7 }}>
-          <StyledLink
-            content="Attend"
-            onPress={() => {
-              Alert.alert("Attending event");
-            }}
-          />
+          <Button
+            hasText
+            transparent
+            style={styles.url}
+            onPress={this.handleAttendEvent}
+          >
+            <Text
+              style={{
+                paddingLeft: 0,
+                paddingRight: 0,
+                color: Colors.queenBlue,
+                fontSize: 17
+              }}
+            >
+              Attend
+            </Text>
+          </Button>
         </CardItem>
       </Card>
     );
@@ -56,7 +86,7 @@ class SingleEvent extends Component {
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 10,
+    marginBottom: 15,
     borderColor: "transparent",
     borderRadius: 5
   },
@@ -77,7 +107,15 @@ const styles = StyleSheet.create({
   },
   image: {
     paddingBottom: 7
+  },
+  url: {
+    paddingLeft: 0,
+    paddingRight: 0
   }
 });
 
-export default withNavigation(SingleEvent);
+let ConnectedSingleEvent = connect(state => {
+  return { userId: state.user.userId };
+})(SingleEvent);
+
+export default withNavigation(ConnectedSingleEvent);

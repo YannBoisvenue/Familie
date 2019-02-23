@@ -24,6 +24,7 @@ import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
 import components from "../../native-base-theme/components";
+import { fetchUrl } from "../../fetchUrl";
 
 class getOneEvent extends components {
   constructor(props) {
@@ -46,7 +47,7 @@ class getOneEvent extends components {
   }
 
   getTheSearchedEvents = event => {
-    fetch("http://68.183.200.44:4000/oneEvent", {
+    fetch(fetchUrl + "/oneEvent", {
       method: "POST",
       body: requestBody
     })

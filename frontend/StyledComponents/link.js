@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Text } from "native-base";
 import { StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
+import { navigation } from "react-navigation";
 
 export const StyledLink = ({ onPress, content, color, bold }) => {
   let linkColor = Colors.queenBlue;

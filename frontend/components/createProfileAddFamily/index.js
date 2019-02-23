@@ -21,6 +21,7 @@ import {
 import { StyledButton } from "../../StyledComponents/button.js";
 import { ImagePicker, Permissions } from "expo";
 import Autocomplete from "react-native-autocomplete-input";
+import { fetchUrl } from "../../fetchUrl.js";
 
 class CreateProfileAddFamily extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class CreateProfileAddFamily extends Component {
   }
 
   componentDidMount = () => {
-    fetch("http://68.183.200.44:4000/all-parents")
+    fetch(fetchUrl + "/all-parents")
       .then(res => res.json())
       .then(json => {
         const parents = json.parents;
@@ -93,7 +94,7 @@ class CreateProfileAddFamily extends Component {
       formData.append("profilePicture", this.state.kidPicture),
       (h.Accept = "application/json");
 
-    fetch("http://68.183.200.44:4000/addKid", {
+    fetch(fetchUrl + "/addKid", {
       method: "POST",
       headers: h,
       body: formData

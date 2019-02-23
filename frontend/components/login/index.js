@@ -18,11 +18,12 @@ import {
   Root
 } from "native-base";
 import { AsyncStorage } from "react-native";
-import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
+import { LOGIN_SUCCESS, SET_USERID } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
+import { fetchUrl } from "../../fetchUrl";
 // import firebase from '../login/loginGoogle.js';
 // import {
 //   GoogleSignin,
@@ -55,7 +56,7 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     });
-    fetch("http://68.183.200.44:4000/login", {
+    fetch(fetchUrl + "/login", {
       method: "POST",
       body: requestBody
     })
@@ -74,6 +75,10 @@ class Login extends Component {
         AsyncStorage.setItem("userId", body.user.userId);
         this.props.dispatch({
           type: LOGIN_SUCCESS
+        });
+        this.props.dispatch({
+          type: SET_USERID,
+          payload: body.user.userId
         });
         this.props.navigation.navigate("Links");
       });

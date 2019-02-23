@@ -13,8 +13,10 @@ import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledSubHeader } from "../StyledComponents/textSubHeader";
 import HostingScreen from "./HostingScreen";
 import AllEvents from "../components/AllEvents/AllEvents";
+import { AsyncStorage } from "react-native";
+import { connect } from "react-redux";
 
-export default class EventScreen extends React.Component {
+class EventScreen extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -22,6 +24,16 @@ export default class EventScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+
+  async componentDidMount() {
+    let userId = await AsyncStorage.getItem("userId");
+    if (userId) {
+      this.props.dispatch({
+        type: "SET_USERID",
+        payload: userId
+      });
+    }
+  }
 
   render() {
     return (
@@ -55,8 +67,12 @@ export default class EventScreen extends React.Component {
   }
 }
 
+const ConnectedAllEvents = connect()(EventScreen);
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.antiFlashWhite
   }
 });
+
+export default ConnectedAllEvents;

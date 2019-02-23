@@ -2,22 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   Container,
-  Header,
-  Button,
-  Text,
-  Body,
-  Form,
   Item,
   Input,
-  Label,
-  Title,
-  View,
-  Card,
-  CardItem,
-  Picker,
   DatePicker,
-  Content,
-  Textarea
+  Textarea,
+  Toast
 } from "native-base";
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
@@ -30,6 +19,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
 import { AsyncStorage } from "react-native";
+import { fetchUrl } from "../../fetchUrl";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
@@ -74,18 +64,19 @@ class addEventForm extends Component {
 
   onCreateEventPress = event => {
     this.getSpag();
+    const { navigation } = this.props;
     AsyncStorage.getItem("userId").then(userId => {
       let requestBody = JSON.stringify({
         // image: this.state.image,
         userId: userId,
         name: this.state.name,
-        guests: this.state.guests,
+        guests: [],
         time: this.state.time,
         location: this.state.location,
         desc: this.state.desc,
         coordinate: this.state.coordinate
       });
-      fetch("http://68.183.200.44:4000/addevent", {
+      fetch(`${fetchUrl}/addevent`, {
         method: "POST",
         body: requestBody
       })
@@ -96,10 +87,13 @@ class addEventForm extends Component {
           let body = JSON.parse(responseBody);
           console.log("parseBody", body);
           if (!body.success) {
-            Toast.show({
-              text: "Oh oh spagetthi oh",
-              buttonText: "Fuck"
-            });
+            setTimeout(() => {
+              navigation.navigate("Events");
+            }, 1000);
+            // Toast.show({
+            //   text: "Oh oh spagetthi oh",
+            //   buttonText: "Fuck"
+            // });
             return;
           } else {
             Toast.show({
@@ -108,7 +102,6 @@ class addEventForm extends Component {
             });
           }
         });
-      /******************* Fetch the shit *******************/
     });
   };
 
@@ -129,12 +122,6 @@ class addEventForm extends Component {
               <Input
                 autoCapitalize="none"
                 onChangeText={image => this.setState({ image })}
-              />
-            </StyledItem>
-            <StyledItem type="inlineLabel" label="Guests">
-              <Input
-                autoCapitalize="none"
-                onChangeText={guests => this.setState({ guests })}
               />
             </StyledItem>
             <StyledItem type="inlineLabel" label="Event name">

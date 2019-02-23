@@ -33,7 +33,7 @@ export default class App extends React.Component {
     isLoadingComplete: false
   };
 
-  async UNSAFE_componentWillMount() {
+  async componentDidMount() {
     await Font.loadAsync({
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });

@@ -19,6 +19,7 @@ import {
 } from "native-base";
 import { StyledButton } from "../../StyledComponents/button.js";
 import { ImagePicker, Permissions } from "expo";
+import { fetchUrl } from "../../fetchUrl.js";
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -111,7 +112,7 @@ class CreateProfile extends Component {
 
     h.Accept = "application/json";
 
-    fetch("http://68.183.200.44:4000/addProfile", {
+    fetch(fetchUrl + "/addProfile", {
       method: "POST",
       headers: h,
       body: formData
