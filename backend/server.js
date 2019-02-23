@@ -7,7 +7,8 @@ const MongoClient = require("mongodb").MongoClient;
 const ObjectID = require("mongodb").ObjectID;
 const bodyParser = require("body-parser");
 const url = "mongodb://admin:password1@ds119930.mlab.com:19930/finalproject";
-// const fs = require("fs");
+
+let itemData = [];
 
 let dbs = undefined;
 MongoClient.connect(url, { useNewUrlParser: true }, (err, allDbs) => {
@@ -16,8 +17,84 @@ MongoClient.connect(url, { useNewUrlParser: true }, (err, allDbs) => {
 //the { useNewUrlParser: true }, bit is only to remove the parse error we continually get
 
 let app = express();
+let multer = require("multer");
 app.use(cors());
-app.use(bodyParser.raw({ type: "*/*" }));
+
+let upload = multer({ dest: __dirname + "/images/" });
+app.use(express.static(__dirname + "/images"));
+app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
+  console.log(req.file);
+  console.log("new file location", req.file.path);
+  let extension = req.file.originalname.split(".").pop();
+  fs.rename(req.file.path, req.file.path + "." + extension, () => {});
+  console.log("req.body", req.body);
+  let profile = JSON.parse(req.body);
+  profile = { ...profile, fileName: "thisIsAwesome" };
+  // profile = { ...profile, fileName: req.file.path + "." + extension };
+  console.log("profiles", profile);
+  let db = dbs.db("finalproject");
+  //deal with images here
+  db.collection("profiles").insertOne(profile, (err, ress) => {
+    if (err) throw err;
+    let response = {
+      success: true,
+      message: "Profile successfully created",
+      _id: ress._id
+    };
+    res.send(JSON.stringify(response));
+    console.log("end of profiles");
+    console.log("response", response);
+  });
+  console.log("body", req.body);
+  // let itemToStore = {
+  //   path: "/" + req.file.filename + "." + extension,
+  //   description: req.body.description
+  // };
+  // console.log("we are adding", itemToStore);
+  // // itemData needs to contain the file location and description
+  // itemData.push(itemToStore);
+  // console.log("updated itemData:", itemData);
+  // res.send(JSON.stringify(itemData));
+});
+
+// app.post("/addProfile", (req, res) => {
+//   console.log("made it to profiles");
+
+//   console.log("req.body", req.body.toString());
+//   let profile = JSON.parse(req.body);
+//   console.log("profiles", profile);
+//   let db = dbs.db("finalproject");
+//   //deal with images here
+//   db.collection("profiles").insertOne(profile, (err, ress) => {
+//     if (err) throw err;
+//     let response = {
+//       success: true,
+//       message: "Profile successfully created",
+//       _id: ress._id
+//     };
+//     res.send(JSON.stringify(response));
+//     console.log("end of profiles");
+//     console.log("response", response);
+//   });
+// });
+
+app.post("/addevent", (req, res) => {
+  console.log("req.body", req.body.toString());
+  let event = JSON.parse(req.body);
+  console.log("event", event);
+  let db = dbs.db("finalproject");
+
+  db.collection("events").insertOne(event, (err, ress) => {
+    if (err) throw err;
+    let response = {
+      success: true,
+      message: "Event successfully inserted"
+    };
+    res.send(JSON.stringify(response));
+  });
+});
+
+// app.use(bodyParser.raw({ type: "*/*" }));
 
 // this parse everything received.
 app.use((req, res, next) => {
@@ -98,39 +175,6 @@ app.post("/login", (req, res) => {
 
 //{"name":"Bearded park walkie!","time":"23,02,2019","location":"1515 rue de mencon, a Bruti, j2h 4u8","coordinate":{"lat":40.741895,"lon":-73.989308},"guests":["Bob"],"description":"who does not like beards???","creator":"Vincent"}
 //{name:"Beard trimming",time:"22,02,2019",location:"centre de coiffure quelconque",coordinate:{"lat":40.741895,"lon":-73.989308},guests:["Bearded Bill"],description:"for the beard!",creator:"Vincent"}
-
-app.post("/addevent", (req, res) => {
-  console.log("req.body", req.body.toString());
-  let event = req.body;
-  console.log("event", event);
-  let db = dbs.db("finalproject");
-
-  //image to string and then to the database here
-
-  // const fileType = req.body.pictureType;
-  // const extension = fileType.substring(
-  //   fileType.indexOf("/") + 1,
-  //   fileType.length
-  // );
-  // let replaceBase64 = new RegExp(`^data:image\/${extension};base64,`);
-  // var base64Data = req.body.picture.replace(replaceBase64, "");
-  // var eventId = new ObjectID();
-  // let fileName = `image_${eventId}.${extension}`;
-  // let filePath = `${__dirname}/pictures/${fileName}`;
-
-  // fs.writeFileSync(filePath, base64Data, "base64");
-
-  // end of the input of the image in the db
-
-  db.collection("events").insertOne(event, (err, ress) => {
-    if (err) throw err;
-    let response = {
-      success: true,
-      message: "Event successfully inserted"
-    };
-    res.send(JSON.stringify(response));
-  });
-});
 
 app.get("/allEvents", (req, res) => {
   console.log("you made it to allEvents");
@@ -275,39 +319,8 @@ app.post("/attendEvent", (req, res) => {
 
 //{"firstName":"bob","lastName":"Dabob","gender":"male","relationshipStatus":"single","occupation":"burocrat","dateOfBirth":"14,03,1974","location":"1 rue de mencon, a bruti","interest":"nose picking"}
 
-app.post("/addProfile", (req, res) => {
-  console.log("req.body", req.body.toString());
-  let profile = req.body;
-  console.log("profiles", profile);
-  let db = dbs.db("finalproject");
-
-  //image to string and then to the database here
-
-  // const fileType = req.body.pictureType;
-  // const extension = fileType.substring(
-  //   fileType.indexOf("/") + 1,
-  //   fileType.length
-  // );
-  // let replaceBase64 = new RegExp(`^data:image\/${extension};base64,`);
-  // var base64Data = req.body.picture.replace(replaceBase64, "");
-  // var eventId = new ObjectID();
-  // let fileName = `image_${eventId}.${extension}`;
-  // let filePath = `${__dirname}/pictures/${fileName}`;
-
-  // fs.writeFileSync(filePath, base64Data, "base64");
-
-  db.collection("profiles").insertOne(profile, (err, ress) => {
-    if (err) throw err;
-    let response = {
-      success: true,
-      message: "Profile successfully created",
-      _id: ress._id
-    };
-    res.send(JSON.stringify(response));
-  });
-});
-
 app.get("/all-parents", (req, res) => {
+  console.log("start point of : /all-parents");
   let db = dbs.db("finalproject");
   db.collection("profiles")
     .find({})
@@ -319,6 +332,7 @@ app.get("/all-parents", (req, res) => {
       };
       res.send(JSON.stringify(response));
     });
+  console.log("end point of : /all-parents");
 });
 
 app.listen(4000, function() {
