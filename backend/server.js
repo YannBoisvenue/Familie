@@ -257,26 +257,28 @@ app.get("/event/:id", (req, res) => {
 
 app.post("/attendEvent", (req, res) => {
   console.log("you made it to attendEvent");
-  let db = dbs.db("finalproject");
+  console.log(req.body);
+  let db = dbs.db("familie");
   let request = req.body;
   let user = request.user;
-  let chosenEvent = request._id;
+  let chosenEvent = request.eventId;
 
-  let bob = "";
+  let bob = [];
   db.collection("events").findOne({ _id: ObjectID(chosenEvent) }, function(
     err,
     result
   ) {
+    console.log(result);
     if (err) throw err;
-    bob = result.guests;
+    if (result.guests) bob = result.guests;
     bob.push(user);
     //console.log("bob", bob);
     db.collection("events").updateOne(
       { _id: ObjectID(chosenEvent) },
       { $set: { guests: bob } }
     );
+    res.send(JSON.stringify({ success: true }));
   });
-
   console.log("success at /attendEvent!!!!!");
 });
 
