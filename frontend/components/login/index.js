@@ -93,7 +93,6 @@ class Login extends Component {
     return (
       <Root>
         <Container>
-          <Title>Login</Title>
           <StyledForm>
             <StyledItem type="floatingLabel" label="Email">
               <Input
@@ -117,7 +116,7 @@ class Login extends Component {
                 !this.state.username ||
                 !this.state.password
               }
-              color={Colors.queenBlue}
+              color={Colors.desire}
             />
             {/* <Button full light primary>
             <Text> Sign Up </Text>
@@ -129,8 +128,20 @@ class Login extends Component {
             disabled={this.state.isSigninInProgress}
           /> */}
           </StyledForm>
-          <Card>
-            <CardItem footer>
+          <Card
+            noShadow
+            style={{
+              borderColor: "transparent",
+              backgroundColor: "#fff"
+            }}
+          >
+            <CardItem
+              style={{
+                borderColor: "transparent",
+                backgroundColor: "#fff"
+              }}
+              footer
+            >
               <Text onPress={() => navigation.navigate("SignupScreen")}>
                 Don't have an account? Sign up
               </Text>
