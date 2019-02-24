@@ -15,6 +15,7 @@ import HostingScreen from "./HostingScreen";
 import AllEvents from "../components/AllEvents/AllEvents";
 import { AsyncStorage } from "react-native";
 import { connect } from "react-redux";
+import { SET_USERID } from "../constants/ActionTypes";
 
 class EventScreen extends React.Component {
   constructor(props) {
@@ -56,7 +57,12 @@ class EventScreen extends React.Component {
               <StyledLink
                 content="Logout"
                 onPress={async () => {
-                  AsyncStorage.removeItem("userId");
+                  await AsyncStorage.removeItem("userId");
+                  this.props.dispatch({
+                    type: SET_USERID,
+                    payload: undefined
+                  });
+                  this.props.navigation.navigate("LoginScreen");
                 }}
               />
               {/* Put the page component here*/}

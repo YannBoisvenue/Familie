@@ -27,7 +27,7 @@ import Map from "./components/map/index";
 import getTheme from "./native-base-theme/components";
 import custom from "./native-base-theme/variables/custom";
 import { StyleProvider } from "native-base";
-import { StyledHeader } from "./components/mainHeader/header";
+import StyledHeader from "./components/mainHeader/header";
 import GetLocation from "./components/GetLocation/GetLocation";
 import AllEvent from "../frontend/components/AllEvents/AllEvents";
 import Colors from "../frontend/constants/Colors";
