@@ -74,7 +74,7 @@ class SingleEvent extends Component {
     let dots = this.seeMore();
     let description = this.props.desc;
     if (this.props.desc.length > 100) {
-      description = this.props.desc.slice(0, 99) + "...";
+      description = this.props.desc.slice(0, 99) + " ...";
     }
 
     let locationArr = this.props.location.split(",");
