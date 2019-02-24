@@ -70,7 +70,7 @@ class addEventForm extends Component {
         // image: this.state.image,
         userId: userId,
         name: this.state.name,
-        guests: [],
+        guests: [userId],
         time: this.state.time,
         location: this.state.location,
         desc: this.state.desc,

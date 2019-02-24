@@ -1,4 +1,12 @@
-import { View, Text, Button, Card, CardItem, Container } from "native-base";
+import {
+  View,
+  Text,
+  Button,
+  Card,
+  CardItem,
+  Container,
+  Icon
+} from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, Image, Alert } from "react-native";
 import { withNavigation } from "react-navigation";
@@ -14,6 +22,7 @@ class SingleEvent extends Component {
     super(props);
     this.state = {
       attending: false,
+      seeMore: false,
       userId: this.props.userId
     };
   }
@@ -25,6 +34,10 @@ class SingleEvent extends Component {
     }
   }
 
+  handleSeeMore = () => {
+    this.setState({ seeMore: true });
+  };
+
   handleAttendEvent = async () => {
     console.log(this.props);
     let body = JSON.stringify({
@@ -35,11 +48,37 @@ class SingleEvent extends Component {
     this.setState({ attending: true });
   };
 
+  seeMore = () => {
+    return (
+      <Button
+        hasText
+        transparent
+        style={styles.url}
+        onPress={this.handleSeeMore}
+      >
+        <Text
+          style={{
+            paddingLeft: 0,
+            paddingRight: 0,
+            color: Colors.queenBlue,
+            fontSize: 17
+          }}
+        >
+          See more
+        </Text>
+      </Button>
+    );
+  };
+
   render() {
+    let dots = this.seeMore();
     let description = this.props.desc;
     if (this.props.desc.length > 100) {
       description = this.props.desc.slice(0, 99) + "...";
     }
+
+    let locationArr = this.props.location.split(",");
+    let location = locationArr[0];
 
     return (
       <Card noShadow style={styles.card}>
@@ -65,9 +104,24 @@ class SingleEvent extends Component {
         <CardItem style={styles.cardDate}>
           <Text>{moment(this.props.time).format("MMM Do YYYY, h:mm a")}</Text>
         </CardItem>
-        <CardItem style={styles.cardDescription}>
-          <Text>{description}</Text>
+        <CardItem style={styles.location}>
+          <Icon
+            type="Feather"
+            name="map-pin"
+            style={{ fontSize: 20, width: 26 }}
+          />
+          <Text style={{ flex: -1, fontSize: 15 }}>{location}</Text>
         </CardItem>
+        <CardItem style={styles.cardDescription}>
+          <Text style={{ lineHeight: 25 }}>
+            {this.state.seeMore ? this.props.desc : description}
+          </Text>
+        </CardItem>
+        {this.props.desc.length > 100 && !this.state.seeMore ? (
+          <CardItem style={styles.seemore}>{dots}</CardItem>
+        ) : (
+          <React.Fragment />
+        )}
         {this.state.attending ? (
           <CardItem cardBody style={{ paddingLeft: 7 }}>
             {/* <Button
@@ -123,25 +177,33 @@ const styles = StyleSheet.create({
   },
   cardDate: {
     paddingLeft: 7,
-    paddingBottom: 7,
+    paddingBottom: 8,
     color: Colors.darkGunmetal,
     opacity: 0.75
   },
   cardTitle: {
     paddingLeft: 7,
-    paddingBottom: 7
+    paddingBottom: 0
   },
   cardDescription: {
     paddingLeft: 7,
-    paddingBottom: 7,
     color: Colors.darkGunmetal
   },
   image: {
-    paddingBottom: 7
+    paddingBottom: 8
   },
   url: {
     paddingLeft: 0,
     paddingRight: 0
+  },
+  seemore: {
+    marginTop: 0,
+    paddingLeft: 7
+  },
+  location: {
+    paddingBottom: 8,
+    paddingLeft: 7,
+    color: Colors.darkGunmetal
   }
 });
 

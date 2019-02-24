@@ -63,7 +63,7 @@ class AllEvents extends Component {
               name={elem.name}
               desc={elem.desc}
               guests={elem.guests}
-              locaction={elem.locaction}
+              location={elem.location}
               time={elem.time}
               _id={elem._id}
             />
@@ -75,12 +75,7 @@ class AllEvents extends Component {
   };
 
   render() {
-    return (
-      <View>
-        <Text>All events</Text>
-        {this.renderAllEvents()}
-      </View>
-    );
+    return <View>{this.renderAllEvents()}</View>;
   }
 }
 

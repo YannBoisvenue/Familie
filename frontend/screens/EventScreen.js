@@ -41,8 +41,8 @@ class EventScreen extends React.Component {
         <StyledTabs>
           <Tab heading="All Events">
             <StyledContent>
+              <StyledSectionTitle content="All Events" width={120} />
               <AllEvents />
-              <StyledSectionTitle content="Hello World" width={150} />
             </StyledContent>
           </Tab>
 
