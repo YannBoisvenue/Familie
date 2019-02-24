@@ -53,6 +53,12 @@ class EventScreen extends React.Component {
               onPress={this.handleOnPress}
             />
             <StyledContent>
+              <StyledLink
+                content="Logout"
+                onPress={async () => {
+                  AsyncStorage.removeItem("userId");
+                }}
+              />
               {/* Put the page component here*/}
               <Login {...this.props} />
             </StyledContent>

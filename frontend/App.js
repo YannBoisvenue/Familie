@@ -1,5 +1,11 @@
 import React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  AsyncStorage
+} from "react-native";
 import {
   AppLoading,
   Asset,
@@ -30,14 +36,16 @@ let store = createStore(rootReducer, devToolsEnhancer());
 
 export default class App extends React.Component {
   state = {
-    isLoadingComplete: false
+    isLoadingComplete: false,
+    userId: ""
   };
 
   async componentDidMount() {
+    let userId = await AsyncStorage.getItem("userId");
     await Font.loadAsync({
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
-    this.setState({ loading: false });
+    this.setState({ loading: false, userId: userId });
   }
 
   render() {
@@ -49,7 +57,7 @@ export default class App extends React.Component {
           onFinish={this._handleFinishLoading}
         />
       );
-    } else {
+    } else if (this.state.userId) {
       return (
         <StyleProvider style={getTheme(custom)}>
           <Provider store={store}>
@@ -57,6 +65,17 @@ export default class App extends React.Component {
             <View style={styles.container}>
               <StyledHeader />
               <AppNavigator />
+            </View>
+          </Provider>
+        </StyleProvider>
+      );
+    } else {
+      return (
+        <StyleProvider style={getTheme(custom)}>
+          <Provider store={store}>
+            <GetLocation />
+            <View style={styles.container}>
+              <Login />
             </View>
           </Provider>
         </StyleProvider>
