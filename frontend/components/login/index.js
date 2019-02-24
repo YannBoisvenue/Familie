@@ -24,6 +24,7 @@ import Colors from "../../constants/Colors";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
 import { fetchUrl } from "../../fetchUrl";
+import { navigation } from "react-navigation";
 // import firebase from '../login/loginGoogle.js';
 // import {
 //   GoogleSignin,
@@ -63,7 +64,7 @@ class Login extends Component {
       .then(function(x) {
         return x.text();
       })
-      .then(responseBody => {
+      .then(async responseBody => {
         let body = JSON.parse(responseBody);
         if (!body.success) {
           Toast.show({
@@ -72,7 +73,7 @@ class Login extends Component {
           });
           return;
         }
-        AsyncStorage.setItem("userId", body.user.userId);
+        await AsyncStorage.setItem("userId", body.user.userId);
         this.props.dispatch({
           type: LOGIN_SUCCESS
         });
@@ -80,7 +81,7 @@ class Login extends Component {
           type: SET_USERID,
           payload: body.user.userId
         });
-        this.props.navigation.navigate("Links");
+        this.props.navigation.navigate("Events");
       });
   };
 

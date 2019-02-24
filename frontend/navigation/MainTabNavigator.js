@@ -1,6 +1,8 @@
 import React from "react";
 import { Platform } from "react-native";
 import {
+  createSwitchNavigator,
+  createAppContainer,
   createStackNavigator,
   createBottomTabNavigator
 } from "react-navigation";
@@ -117,17 +119,23 @@ ProfileStack.navigationOptions = {
   )
 };
 
-export default createBottomTabNavigator(
-  {
-    EventStack,
-    FriendStack,
-    ProfileStack,
-    CreateProfileStack,
-    CreateProfileAddFamilyStack
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: Colors.desire
-    }
-  }
+export default createAppContainer(
+  createSwitchNavigator({
+    // You could add another route here for authentication.
+    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
+    Main: createBottomTabNavigator(
+      {
+        EventStack,
+        FriendStack,
+        ProfileStack,
+        CreateProfileStack,
+        CreateProfileAddFamilyStack
+      },
+      {
+        tabBarOptions: {
+          activeTintColor: Colors.desire
+        }
+      }
+    )
+  })
 );

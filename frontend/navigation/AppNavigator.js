@@ -10,9 +10,11 @@ import addEventForm from "../components/addEventForm/addEventForm";
 import signup from "../components/signup";
 import login from "../components/login";
 import HostingScreen from "../screens/HostingScreen";
+import LoginScreen from "../screens/LoginScreen";
 import CreateProfile from "../components/createProfile";
 import { View, Text } from "native-base";
 import { fetchUrl } from "../fetchUrl";
+import AuthLoadingScreen from "../screens/AuthLoadingScreen";
 
 /*************Not supposed to be here - need proper navigation *******/
 
@@ -46,20 +48,31 @@ class Event extends React.Component {
 
 /********************As I said, proper navigation **********/
 
+const AuthenticationNavigator = createStackNavigator({
+  AuthLoadingScreen: AuthLoadingScreen,
+  LoginScreen: LoginScreen,
+  SignupScreen: signup
+});
+
 const AppNavigator = createStackNavigator({
   HostingEvent: HostingScreen,
   AddEvent: addEventForm,
-  Signup: signup,
   Login: login,
   // CreateProfile: CreateProfile
   Event
 });
 
 export default createAppContainer(
-  createSwitchNavigator({
-    // You could add another route here for authentication.
-    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-    Main: MainTabNavigator,
-    AppNavigator
-  })
+  createSwitchNavigator(
+    {
+      // You could add another route here for authentication.
+      // Read more at https://reactnavigation.org/docs/en/auth-flow.html
+      Authenticated: AuthenticationNavigator,
+      Main: MainTabNavigator,
+      AppNavigator
+    },
+    {
+      initialRouteName: "Authenticated"
+    }
+  )
 );

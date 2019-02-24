@@ -31,6 +31,8 @@ import { StyledHeader } from "./components/mainHeader/header";
 import GetLocation from "./components/GetLocation/GetLocation";
 import AllEvent from "../frontend/components/AllEvents/AllEvents";
 import Colors from "../frontend/constants/Colors";
+import LoginScreen from "./screens/LoginScreen";
+import MainTabNavigator from "./navigation/MainTabNavigator";
 
 let store = createStore(rootReducer, devToolsEnhancer());
 
@@ -41,7 +43,6 @@ export default class App extends React.Component {
   };
 
   async componentDidMount() {
-    let userId = await AsyncStorage.getItem("userId");
     await Font.loadAsync({
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
@@ -57,26 +58,12 @@ export default class App extends React.Component {
           onFinish={this._handleFinishLoading}
         />
       );
-    } else if (this.state.userId) {
-      return (
-        <StyleProvider style={getTheme(custom)}>
-          <Provider store={store}>
-            <GetLocation />
-            <View style={styles.container}>
-              <StyledHeader />
-              <AppNavigator />
-            </View>
-          </Provider>
-        </StyleProvider>
-      );
     } else {
       return (
         <StyleProvider style={getTheme(custom)}>
           <Provider store={store}>
-            <GetLocation />
-            <View style={styles.container}>
-              <Login />
-            </View>
+            <StyledHeader />
+            <AppNavigator />
           </Provider>
         </StyleProvider>
       );

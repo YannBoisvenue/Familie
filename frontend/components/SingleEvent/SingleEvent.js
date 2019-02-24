@@ -39,7 +39,6 @@ class SingleEvent extends Component {
   };
 
   handleAttendEvent = async () => {
-    console.log(this.props);
     let body = JSON.stringify({
       user: this.props.userId,
       eventId: this.props._id
