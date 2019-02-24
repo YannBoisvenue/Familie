@@ -258,7 +258,7 @@ app.get("/event/:id", (req, res) => {
 app.post("/attendEvent", (req, res) => {
   console.log("you made it to attendEvent");
   console.log(req.body);
-  let db = dbs.db("familie");
+  let db = dbs.db("finalproject");
   let request = req.body;
   let user = request.user;
   let chosenEvent = request.eventId;
