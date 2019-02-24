@@ -18,6 +18,13 @@ class SingleEvent extends Component {
     };
   }
 
+  componentDidMount() {
+    let isGuest = this.props.guests.some(x => x === this.props.userId);
+    if (isGuest) {
+      this.setState({ attending: true });
+    }
+  }
+
   handleAttendEvent = async () => {
     console.log(this.props);
     let body = JSON.stringify({
@@ -25,6 +32,7 @@ class SingleEvent extends Component {
       eventId: this.props._id
     });
     fetch(fetchUrl + "/attendEvent", { method: "POST", body: body });
+    this.setState({ attending: true });
   };
 
   render() {
@@ -60,25 +68,48 @@ class SingleEvent extends Component {
         <CardItem style={styles.cardDescription}>
           <Text>{description}</Text>
         </CardItem>
-        <CardItem cardBody style={{ paddingLeft: 7 }}>
-          <Button
-            hasText
-            transparent
-            style={styles.url}
-            onPress={this.handleAttendEvent}
-          >
+        {this.state.attending ? (
+          <CardItem cardBody style={{ paddingLeft: 7 }}>
+            {/* <Button
+              hasText
+              transparent
+              style={styles.url}
+              onPress={this.handleGoingClick}
+            > */}
             <Text
               style={{
+                paddingBottom: 10,
                 paddingLeft: 0,
                 paddingRight: 0,
-                color: Colors.queenBlue,
+                color: Colors.lightBlue,
                 fontSize: 17
               }}
             >
-              Attend
+              Going
             </Text>
-          </Button>
-        </CardItem>
+            {/* </Button> */}
+          </CardItem>
+        ) : (
+          <CardItem cardBody style={{ paddingLeft: 7 }}>
+            <Button
+              hasText
+              transparent
+              style={styles.url}
+              onPress={this.handleAttendEvent}
+            >
+              <Text
+                style={{
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                  color: Colors.queenBlue,
+                  fontSize: 17
+                }}
+              >
+                Attend
+              </Text>
+            </Button>
+          </CardItem>
+        )}
       </Card>
     );
   }

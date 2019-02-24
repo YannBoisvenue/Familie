@@ -62,6 +62,7 @@ class AllEvents extends Component {
               // image={elem.image}
               name={elem.name}
               desc={elem.desc}
+              guests={elem.guests}
               locaction={elem.locaction}
               time={elem.time}
               _id={elem._id}
