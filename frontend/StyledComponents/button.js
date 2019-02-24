@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 export const StyledButton = ({ content, onPress, disabled, color }) => (
   <Button
     full
-    style={{ ...styles, backgroundColor: color }}
+    style={{ ...styles.Button, backgroundColor: color }}
     onPress={onPress}
     disabled={disabled}
   >
@@ -15,6 +15,7 @@ export const StyledButton = ({ content, onPress, disabled, color }) => (
 
 const styles = StyleSheet.create({
   Button: {
+    marginTop: 10,
     padding: 10
   }
 });

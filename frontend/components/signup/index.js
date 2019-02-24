@@ -1,25 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { StyleSheet } from "react-native";
 import {
   Container,
-  Header,
-  Button,
-  Text,
-  Body,
-  Form,
   Item as FormItem,
   Input,
-  Label,
-  Title,
-  View,
   Card,
   CardItem,
   Toast,
-  Root
+  Root,
+  H1
 } from "native-base";
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledLink } from "../../StyledComponents/link";
 import { fetchUrl } from "../../fetchUrl";
+import { StyledForm } from "../../StyledComponents/form";
+import { StyledButton } from "../../StyledComponents/button";
+import Colors from "../../constants/Colors";
+import { StyledItem } from "../../StyledComponents/formItem";
 
 class Signup extends Component {
   constructor(props) {
@@ -32,6 +30,10 @@ class Signup extends Component {
       showToast: false
     };
   }
+
+  static navigationOptions = {
+    header: null
+  };
 
   userSigningUp = () => {
     this.setState({ userSigningUp: true });
@@ -97,33 +99,25 @@ class Signup extends Component {
 
     return (
       <Root>
-        <Container>
-          <Header>
-            <Body>
-              <Title>The Social Family</Title>
-            </Body>
-          </Header>
-          <Title>Sign up</Title>
-          <Form>
-            <FormItem floatingLabel>
-              <Label>Email</Label>
+        <Container style={{ flex: 1, padding: 20, justifyContent: "center" }}>
+          <H1 style={styles.h1}>Start your Familie journey!</H1>
+          <StyledForm>
+            <StyledItem type="floatingLabel" label="Email">
               <Input
                 autoCapitalize="none"
                 onChangeText={this.handleUsernameChange}
                 value={this.state.username}
               />
-            </FormItem>
-            <FormItem floatingLabel last>
-              <Label>Password</Label>
+            </StyledItem>
+            <StyledItem type="floatingLabel" label="Password">
               <Input
                 autoCapitalize="none"
                 secureTextEntry={true}
                 onChangeText={this.handlePasswordChange}
                 value={this.state.password}
               />
-            </FormItem>
-            <FormItem floatingLabel last>
-              <Label>Confirm password</Label>
+            </StyledItem>
+            <StyledItem type="floatingLabel" label="Confirm password">
               <Input
                 autoCapitalize="none"
                 secureTextEntry={true}
@@ -131,11 +125,10 @@ class Signup extends Component {
                 value={this.state.confirmPassword}
                 onSubmitEditing={this.userSigningUp}
               />
-            </FormItem>
-            <Button
-              full
-              primary
-              style={{ paddingBottom: 4 }}
+            </StyledItem>
+            <StyledButton
+              content="Sign up"
+              color={Colors.queenBlue}
               onPress={this.onSignupPress}
               disabled={
                 this.state.userSigningUp ||
@@ -143,15 +136,13 @@ class Signup extends Component {
                 !this.state.password ||
                 !this.state.confirmPassword
               }
-            >
-              <Text> Sign up </Text>
-            </Button>
-          </Form>
-          <Card>
-            <CardItem footer>
+            />
+          </StyledForm>
+          <Card noShadow style={{ borderColor: "#fff" }}>
+            <CardItem style={{ borderColor: "#fff" }} footer>
               <StyledLink
                 content="Go back to login"
-                onPress={() => this.props.navigation.navigate("Login")}
+                onPress={() => this.props.navigation.goBack()}
               />
             </CardItem>
           </Card>
@@ -160,6 +151,14 @@ class Signup extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  h1: {
+    fontWeight: "bold",
+    color: Colors.desire,
+    marginTop: 30
+  }
+});
 
 export default connect(function(state) {
   return { loginStatus: state.loggedIn };
