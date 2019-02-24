@@ -131,7 +131,7 @@ class Login extends Component {
           </StyledForm>
           <Card>
             <CardItem footer>
-              <Text onPress={() => navigation.navigate("Signup")}>
+              <Text onPress={() => navigation.navigate("SignupScreen")}>
                 Don't have an account? Sign up
               </Text>
             </CardItem>
