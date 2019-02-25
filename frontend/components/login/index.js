@@ -52,12 +52,18 @@ class Login extends Component {
   };
 
   onLoginPress = event => {
+    console.log("this is going to work, damn it!");
     event.preventDefault();
     let requestBody = JSON.stringify({
       username: this.state.username,
       password: this.state.password
     });
+<<<<<<< Updated upstream
+    console.log("request body ", requestBody);
     fetch("http://68.183.200.44:4000/login", {
+=======
+    fetch(fetchUrl + "/login", {
+>>>>>>> Stashed changes
       method: "POST",
       body: requestBody
     })

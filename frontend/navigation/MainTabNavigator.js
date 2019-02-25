@@ -11,6 +11,7 @@ import HomeScreen from "../screens/HomeScreen";
 import Login from "../components/login/index.js";
 import Signup from "../components/signup";
 import Map from "../components/map/index.js";
+import AllProfiles from "../components/AllProfiles/AllProfiles";
 import CreateProfile from "../components/createProfile";
 import CreateProfileAddFamily from "../components/createProfileAddFamily";
 import Colors from "../constants/Colors";
@@ -105,7 +106,7 @@ CreateProfileAddFamilyStack.navigationOptions = {
 };
 
 const ProfileStack = createStackNavigator({
-  Profile: createProfile
+  Profile: AllProfiles
 });
 
 ProfileStack.navigationOptions = {

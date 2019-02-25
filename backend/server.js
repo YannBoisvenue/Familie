@@ -28,7 +28,7 @@ app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
   let extension = req.file.originalname.split(".").pop();
   fs.rename(req.file.path, req.file.path + "." + extension, () => {});
   console.log("req.body", req.body);
-  let profile = JSON.parse(JSON.stringify(req.body));
+  let profile = req.body;
   // profile = { ...profile, fileName: "thisIsAwesome" };
   profile = { ...profile, fileName: req.file.path + "." + extension };
   console.log("profiles", profile);
@@ -78,8 +78,11 @@ app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
 //   });
 // });
 
+app.use(bodyParser.raw({ type: "*/*" }));
+
 app.post("/addevent", (req, res) => {
   console.log("req.body", req.body.toString());
+
   let event = JSON.parse(req.body);
   console.log("event", event);
   let db = dbs.db("finalproject");
@@ -94,7 +97,7 @@ app.post("/addevent", (req, res) => {
   });
 });
 
-app.use(bodyParser.raw({ type: "*/*" }));
+// app.use(bodyParser.raw({ type: "*/*" }));
 
 // this parse everything received.
 app.use((req, res, next) => {
