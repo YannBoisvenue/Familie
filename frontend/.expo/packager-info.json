@@ -1,9 +1,9 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://yh-ws5.nisois.frontend.exp.direct",
-  "packagerNgrokUrl": "https://packager.yh-ws5.nisois.frontend.exp.direct",
-  "ngrokPid": 74871,
+  "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
-  "packagerPort": 19003,
-  "packagerPid": 74840
+  "packagerPort": null,
+  "packagerPid": null
 }
