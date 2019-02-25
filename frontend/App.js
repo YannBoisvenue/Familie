@@ -26,7 +26,7 @@ import AppNavigator from "./navigation/AppNavigator";
 import Map from "./components/map/index";
 import getTheme from "./native-base-theme/components";
 import custom from "./native-base-theme/variables/custom";
-import { StyleProvider } from "native-base";
+import { StyleProvider, Root } from "native-base";
 import StyledHeader from "./components/mainHeader/header";
 import GetLocation from "./components/GetLocation/GetLocation";
 import AllEvent from "../frontend/components/AllEvents/AllEvents";
@@ -62,8 +62,10 @@ export default class App extends React.Component {
       return (
         <StyleProvider style={getTheme(custom)}>
           <Provider store={store}>
-            <StyledHeader />
-            <AppNavigator />
+            <Root>
+              <StyledHeader />
+              <AppNavigator />
+            </Root>
           </Provider>
         </StyleProvider>
       );

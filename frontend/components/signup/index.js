@@ -54,7 +54,6 @@ class Signup extends Component {
   };
 
   onSignupPress = event => {
-    console.log("-----------SIGNUP-----------");
     event.preventDefault();
     if (this.state.password === this.state.confirmPassword) {
       let requestBody = JSON.stringify({
@@ -69,7 +68,7 @@ class Signup extends Component {
           return x.text();
         })
         .then(async responseBody => {
-          let body = JSON.parse(responseBody);
+          let body = JSON.parse(responseBody.toString());
           if (!body.success) {
             Toast.show({
               text: "An account for this user already exists",

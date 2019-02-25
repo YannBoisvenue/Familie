@@ -28,6 +28,9 @@ class SingleEvent extends Component {
   }
 
   componentDidMount() {
+    if (!this.props.guests) {
+      return;
+    }
     let isGuest = this.props.guests.some(x => x === this.props.userId);
     if (isGuest) {
       this.setState({ attending: true });

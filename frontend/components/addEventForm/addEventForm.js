@@ -1,25 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Image } from "react-native";
 import {
+  Item as FormItem,
   Container,
   Item,
   Input,
   DatePicker,
   Textarea,
-  Toast
+  Toast,
+  ActionSheet,
+  Icon,
+  Card,
+  Right,
+  View
 } from "native-base";
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
-import { Alert } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
+import { ImagePicker, Permissions } from "expo";
 import { AsyncStorage } from "react-native";
 import { fetchUrl } from "../../fetchUrl";
+import { StyledLink } from "../../StyledComponents/link";
 
 // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
@@ -33,7 +42,8 @@ class addEventForm extends Component {
       name: "",
       location: "",
       desc: "",
-      coordinate: { lat: 0, lng: 0 }
+      coordinate: { lat: 0, lng: 0 },
+      hasPicture: false
     };
     this.setDate = this.setDate.bind(this);
   }
@@ -62,12 +72,43 @@ class addEventForm extends Component {
     );
   };
 
+  pickPicture = async () => {
+    this.getPicture(Permissions.CAMERA_ROLL);
+  };
+
+  takePicture = async () => {
+    this.getPicture(Permissions.CAMERA);
+  };
+
+  getPicture = async type => {
+    const { status } = await Permissions.askAsync(type);
+
+    if (status === "granted") {
+      const options = { allowsEditing: true, aspect: [4, 2] };
+      let result = null;
+      if (type === Permissions.CAMERA_ROLL) {
+        result = await ImagePicker.launchImageLibraryAsync(options);
+      } else {
+        result = await ImagePicker.launchCameraAsync(options);
+      }
+
+      if (!result.cancelled) {
+        this.setState({
+          picture: result.uri,
+          pictureType: type,
+          hasPicture: true
+        });
+      }
+    }
+  };
+
   onCreateEventPress = event => {
     this.getSpag();
     const { navigation } = this.props;
     AsyncStorage.getItem("userId").then(userId => {
       let requestBody = JSON.stringify({
-        // image: this.state.image,
+        picture: undefined,
+        pictureType: "",
         userId: userId,
         name: this.state.name,
         guests: [userId],
@@ -106,6 +147,11 @@ class addEventForm extends Component {
   };
 
   render() {
+    let picture = this.state.picture;
+    let pictureType = this.state.pictureType;
+    const BUTTONS = ["From camera roll", "Take a picture", "Cancel"];
+    const CANCEL_INDEX = 2;
+
     return (
       <Container>
         <StyledSubHeader
@@ -117,21 +163,73 @@ class addEventForm extends Component {
           }}
         />
         <StyledContent>
-          <StyledForm>
-            <StyledItem type="inlineLabel" label="image">
-              <Input
-                autoCapitalize="none"
-                onChangeText={image => this.setState({ image })}
+          <Card
+            noShadow
+            style={{
+              alignItems: "center",
+              backgroundColor: "transparent",
+              borderColor: "transparent"
+            }}
+          >
+            {this.state.hasPicture ? (
+              <Item>
+                {!!picture && pictureType === Permissions.CAMERA_ROLL && (
+                  <Image
+                    source={{ uri: picture }}
+                    style={{ width: 300, height: 100 }}
+                  />
+                )}
+                {!!picture && pictureType === Permissions.CAMERA && (
+                  <Image
+                    source={{ uri: picture }}
+                    style={{ width: 300, height: 100 }}
+                  />
+                )}
+              </Item>
+            ) : (
+              <Icon
+                style={{
+                  paddingTop: 30,
+                  paddingLeft: 125,
+                  borderColor: Colors.darkGunmetal,
+                  borderWidth: 1,
+                  width: 300,
+                  height: 100
+                }}
+                type="AntDesign"
+                name="camera"
               />
-            </StyledItem>
+            )}
+          </Card>
+          <StyledLink
+            content="Upload a picture"
+            onPress={() => {
+              ActionSheet.show(
+                {
+                  options: BUTTONS,
+                  cancelButtonIndex: CANCEL_INDEX,
+                  title: "Take a picture"
+                },
+                buttonIndex => {
+                  if (buttonIndex === 0) {
+                    this.pickPicture();
+                  } else if (buttonIndex === 1) {
+                    this.takePicture();
+                  }
+                }
+              );
+            }}
+          />
+          <StyledForm>
             <StyledItem type="inlineLabel" label="Event name">
               <Input
                 autoCapitalize="none"
                 onChangeText={name => this.setState({ name })}
               />
             </StyledItem>
-            <Item>
+            <StyledItem type="inlineLabel" label="Choose a date">
               <DatePicker
+                sytle={styles.datePicker}
                 defaultDate={new Date(2019, 1, 1)}
                 minimumDate={new Date(2018, 2, 20)}
                 maximumDate={new Date(2021, 12, 31)}
@@ -141,20 +239,28 @@ class addEventForm extends Component {
                 animationType={"fade"}
                 androidMode={"default"}
                 placeHolderText="Select date"
-                textStyle={{ color: "green" }}
-                placeHolderTextStyle={{ color: "#d3d3d3" }}
+                textStyle={{ color: Colors.queenBlue }}
+                placeHolderTextStyle={{
+                  color: Colors.darkGunmetal,
+                  opacity: 0.75
+                }}
                 onDateChange={this.setDate}
                 disabled={false}
               />
-            </Item>
+            </StyledItem>
             <StyledItem type="inlineLabel" label="Address">
               <Input
                 autoCapitalize="none"
                 onChangeText={location => this.setState({ location })}
               />
             </StyledItem>
-            <Item>
+            <Item style={{ borderBottomColor: "transparent", marginLeft: 0 }}>
               <Textarea
+                style={{
+                  height: 150,
+                  width: 345,
+                  borderColor: Colors.tabIconDefault
+                }}
                 rowSpan={5}
                 bordered
                 placeholder="Description of the event                                "
@@ -174,5 +280,15 @@ class addEventForm extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  datePicker: {
+    paddingLeft: 0,
+    marginBottom: 15,
+    marginLeft: 0,
+    borderColor: Colors.darkGunmetal,
+    borderBottomWidth: 1
+  }
+});
 
 export default connect()(addEventForm);
