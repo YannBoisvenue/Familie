@@ -22,6 +22,7 @@ class SingleProfile extends Component {
             bold
             color={Colors.darkGunmetal}
             content={this.props.firstName}
+            //MAKEITWORK:
             /****************** THIS WILL NEED TO WORK! **************/
             onPress={() => {
               console.log("navigation to Event with Id", this.props._id);

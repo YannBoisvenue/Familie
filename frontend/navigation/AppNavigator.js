@@ -52,7 +52,7 @@ class Event extends React.Component {
   }
 }
 
-/********************As I said, proper navigation **********/
+/******************** As I said, proper navigation **********/
 
 const AuthenticationNavigator = createStackNavigator({
   AuthLoadingScreen: AuthLoadingScreen,
