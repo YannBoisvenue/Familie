@@ -15,6 +15,8 @@ import CreateProfile from "../components/createProfile";
 import { View, Text } from "native-base";
 import { fetchUrl } from "../fetchUrl";
 import AuthLoadingScreen from "../screens/AuthLoadingScreen";
+import moment from "moment";
+// import console = require("console");
 
 /*************Not supposed to be here - need proper navigation *******/
 
@@ -34,12 +36,16 @@ class Event extends React.Component {
   }
 
   render() {
+    console.log("event calisse", this.state.event.name);
     return (
       <View>
         <Text>
-          {/* {this.state.id} */}
+          {/**Image */}
+          {/* {this.state.event.guests} will need an endpoint that will give the user depending on his id, map every id to show every attending guests*/}
           {this.state.event.name}
           {this.state.event.desc}
+          {this.state.event.location}
+          {moment(this.state.event.time).format("MMM Do YYYY, h:mm a")}
         </Text>
       </View>
     );
