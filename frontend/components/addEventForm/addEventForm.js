@@ -177,25 +177,26 @@ class addEventForm extends Component {
                 {!!picture && pictureType === Permissions.CAMERA_ROLL && (
                   <Image
                     source={{ uri: picture }}
-                    style={{ width: 300, height: 100 }}
+                    style={{ width: 350, height: 150 }}
                   />
                 )}
                 {!!picture && pictureType === Permissions.CAMERA && (
                   <Image
                     source={{ uri: picture }}
-                    style={{ width: 300, height: 100 }}
+                    style={{ width: 350, height: 150 }}
                   />
                 )}
               </Item>
             ) : (
               <Icon
                 style={{
-                  paddingTop: 30,
-                  paddingLeft: 125,
+                  fontSize: 40,
+                  paddingTop: 55,
+                  paddingLeft: 155,
                   borderColor: Colors.darkGunmetal,
                   borderWidth: 1,
-                  width: 300,
-                  height: 100
+                  width: 350,
+                  height: 150
                 }}
                 type="AntDesign"
                 name="camera"
