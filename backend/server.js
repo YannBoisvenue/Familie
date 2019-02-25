@@ -28,9 +28,9 @@ app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
   let extension = req.file.originalname.split(".").pop();
   fs.rename(req.file.path, req.file.path + "." + extension, () => {});
   console.log("req.body", req.body);
-  let profile = JSON.parse(req.body);
-  profile = { ...profile, fileName: "thisIsAwesome" };
-  // profile = { ...profile, fileName: req.file.path + "." + extension };
+  let profile = JSON.parse(JSON.stringify(req.body));
+  // profile = { ...profile, fileName: "thisIsAwesome" };
+  profile = { ...profile, fileName: req.file.path + "." + extension };
   console.log("profiles", profile);
   let db = dbs.db("finalproject");
   //deal with images here
@@ -94,7 +94,7 @@ app.post("/addevent", (req, res) => {
   });
 });
 
-// app.use(bodyParser.raw({ type: "*/*" }));
+app.use(bodyParser.raw({ type: "*/*" }));
 
 // this parse everything received.
 app.use((req, res, next) => {
@@ -108,6 +108,7 @@ app.use((req, res, next) => {
 
 app.post("/signup", (req, res) => {
   let db = dbs.db("finalproject");
+  console.log("username & psw", req.body.username, req.body.password);
   db.collection("users").findOne(
     { username: req.body.username },
     (err, result) => {
