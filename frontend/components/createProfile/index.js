@@ -19,7 +19,7 @@ import {
 } from "native-base";
 import { StyledButton } from "../../StyledComponents/button.js";
 import { ImagePicker, Permissions } from "expo";
-import { fetchUrl } from "../../fetchUrl.js";
+import { fetchUrl } from "../../fetchUrl";
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -100,7 +100,8 @@ class CreateProfile extends Component {
 
     const h = {};
     let formData = new FormData();
-    formData.append("profilePicture", this.state.picture),
+    formData.append("userId", this.props.userId),
+      formData.append("profilePicture", this.state.picture),
       formData.append("firstName", this.state.firstName),
       formData.append("lastName", this.state.lastName),
       formData.append("gender", this.state.gender),
@@ -193,8 +194,8 @@ class CreateProfile extends Component {
                   selectedValue={this.state.gender}
                   onValueChange={this.onValueChangeGender}
                 >
-                  <Picker.Item label="Dad" value="key0" />
-                  <Picker.Item label="Mom" value="key1" />
+                  <Picker.Item label="Dad" value="dad" />
+                  <Picker.Item label="Mom" value="mom" />
                 </Picker>
               </FormItem>
               <Title>About you</Title>
@@ -207,8 +208,8 @@ class CreateProfile extends Component {
                   selectedValue={this.state.relationshipStatus}
                   onValueChange={this.onValueChangeRelationshipStatus}
                 >
-                  <Picker.Item label="Single" value="key0" />
-                  <Picker.Item label="In a relationship" value="key1" />
+                  <Picker.Item label="Single" value="single" />
+                  <Picker.Item label="In a relationship" value="relationship" />
                 </Picker>
               </FormItem>
               <FormItem floatingLabel>
@@ -259,5 +260,5 @@ class CreateProfile extends Component {
 // CreateProfile.name
 
 export default connect(function(state) {
-  return {};
+  return { userId: state.userId };
 })(CreateProfile);

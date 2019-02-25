@@ -21,20 +21,17 @@ import {
 import { StyledButton } from "../../StyledComponents/button.js";
 import { ImagePicker, Permissions } from "expo";
 import Autocomplete from "react-native-autocomplete-input";
+import SingleKid from "../SingleKid";
 import { fetchUrl } from "../../fetchUrl.js";
 
 class CreateProfileAddFamily extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      parents: [],
+      parentId: "",
       query: "",
       otherParentName: "",
-      kidName: "",
-      kidGender: "",
-      kidDateOfBirth: "",
-      kidPicture: "",
-      kidPictureType: ""
+      kids: []
     };
   }
 
@@ -43,7 +40,6 @@ class CreateProfileAddFamily extends Component {
       .then(res => res.json())
       .then(json => {
         const parents = json.parents;
-        console.log("json", parents);
         this.setState({ parents });
       });
   };
@@ -59,42 +55,30 @@ class CreateProfileAddFamily extends Component {
     return parents.filter(parent => parent.firstname.search(regex) >= 0);
   };
 
-  getPicture = async type => {
-    const { status } = await Permissions.askAsync(type);
-
-    if (status === "granted") {
-      const options = { allowsEditing: true, aspect: [4, 3] };
-      let result = null;
-      if (type === Permissions.CAMERA_ROLL) {
-        result = await ImagePicker.launchImageLibraryAsync(options);
-      } else {
-        result = await ImagePicker.launchCameraAsync(options);
-      }
-
-      if (!result.cancelled) {
-        this.setState({ picture: result.uri, pictureType: type });
-      }
-    }
+  addKid = () => {
+    this.state.kids.push({});
+    this.setState({
+      kids: this.state.kids
+    });
   };
 
-  pickPicture = async () => {
-    this.getPicture(Permissions.CAMERA_ROLL);
+  getKidRef = ref => {
+    this.state.kids[this.state.kids.length - 1] = ref;
   };
 
-  takePicture = async () => {
-    this.getPicture(Permissions.CAMERA);
-  };
-
-  onNextCreateProfilePress = event => {
+  onNextCreateProfile = event => {
     event.preventDefault();
+    let kidsInfo = this.state.kids.map(kid => kid.state);
 
     const h = {};
     let formData = new FormData();
-    formData.append("kidName", this.state.kidName),
-      formData.append("profilePicture", this.state.kidPicture),
-      (h.Accept = "application/json");
+    formData.append("userId", this.props.userId),
+      formData.append("kidsInfo", kidsInfo),
+      formData.append("otherParentName", this.state.otherParentName);
 
-    fetch(fetchUrl + "/addKid", {
+    h.Accept = "application/json";
+
+    fetch("http://localhost:4000/add-family", {
       method: "POST",
       headers: h,
       body: formData
@@ -107,7 +91,7 @@ class CreateProfileAddFamily extends Component {
         if (!body.success) {
           return;
         }
-        this.props.navigation.navigate("CreateProfileAddFamily");
+        this.props.navigation.navigate("Events");
       });
   };
 
@@ -116,7 +100,9 @@ class CreateProfileAddFamily extends Component {
     const parents = this.findParent(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
-    let kidPicture = this.state.kidPicture;
+    let newKidsArray = this.state.kids.map((kid, index) => {
+      return <SingleKid key={index} onRef={ref => this.getKidRef(ref)} />;
+    });
 
     return (
       <Root>
@@ -154,69 +140,13 @@ class CreateProfileAddFamily extends Component {
                     )}
                   />
                 </FormItem>
-                <StyledButton transparent>
-                  <Text>Search</Text>
-                </StyledButton>
               </FormItem>
               <FormItem>
-                <StyledButton
-                  content="Pick a picture from camera roll"
-                  onPress={this.pickPicture}
-                />
-                {!!kidPicture && pictureType === Permissions.CAMERA_ROLL && (
-                  <Image
-                    source={{ uri: kidPicture }}
-                    style={{ width: 100, height: 100 }}
-                  />
-                )}
+                <Label>Your kids</Label>
+                <StyledButton content="Add kid" onPress={this.addKid} />
               </FormItem>
-              <FormItem>
-                <StyledButton
-                  content="Take a picture"
-                  onPress={this.takePicture}
-                />
-                {!!kidPicture && pictureType === Permissions.CAMERA && (
-                  <Image
-                    source={{ uri: kidPicture }}
-                    style={{ width: 100, height: 100 }}
-                  />
-                )}
-              </FormItem>
-              <FormItem>
-                <Label>I'm a</Label>
-                <Picker
-                  mode="dropdown"
-                  iosIcon={<Icon name="arrow-down" />}
-                  placeholder="Boy or Girl"
-                  selectedValue={this.state.kidGender}
-                  onValueChange={this.onValueChangeKidGender}
-                >
-                  <Picker.Item label="Boy" value="key0" />
-                  <Picker.Item label="Girl" value="key1" />
-                </Picker>
-              </FormItem>
-              <Title>About you</Title>
-              <FormItem>
-                <Label>Kid Date of birth</Label>
-                <DatePicker
-                  defaultDate={new Date(2010, 1, 1)}
-                  minimumDate={new Date(1900, 1, 1)}
-                  maximumDate={new Date(2020, 12, 31)}
-                  modalTransparent={false}
-                  animationType={"fade"}
-                  androidMode={"default"}
-                  placeHolderText="Select date"
-                  onDateChange={this.setKidBirthDate}
-                  disabled={false}
-                />
-                <Text>
-                  {this.state.kidDateOfBirth.toString().substr(4, 12)}
-                </Text>
-              </FormItem>
-              <StyledButton
-                content="Next"
-                onPress={this.onNextCreateProfilePress}
-              />
+              <FormItem>{newKidsArray}</FormItem>
+              <StyledButton content="Next" onPress={this.onNextCreateProfile} />
             </Form>
           </Content>
         </Container>
@@ -226,5 +156,5 @@ class CreateProfileAddFamily extends Component {
 }
 
 export default connect(function(state) {
-  return {};
+  return { userId: state.userId };
 })(CreateProfileAddFamily);

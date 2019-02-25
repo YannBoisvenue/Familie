@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { AsyncStorage } from "react-native";
 import { StyleSheet } from "react-native";
+import { SET_USERID } from "../../constants/ActionTypes";
 import {
   Container,
   Item as FormItem,
@@ -58,7 +60,7 @@ class Signup extends Component {
         username: this.state.username,
         password: this.state.password
       });
-      fetch(fetchUrl + "/signup", {
+      fetch("http://localhost:4000/signup", {
         method: "POST",
         body: requestBody
       })
@@ -74,7 +76,9 @@ class Signup extends Component {
             });
             return;
           }
-          AsyncStorage.setItem("userId", body.user.userId);
+          console.log("body", body);
+          AsyncStorage.setItem("userId", JSON.stringify(body.user.userId));
+          //check if backend signup end point is returning userId
           this.props.dispatch({
             type: LOGIN_SUCCESS
           });
@@ -93,10 +97,6 @@ class Signup extends Component {
   };
 
   render() {
-    //if (this.props.loginStatus) {
-    //     return <HomePage></HomePage>
-    // }
-
     return (
       <Root>
         <Container style={{ flex: 1, padding: 20, justifyContent: "center" }}>
