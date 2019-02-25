@@ -100,6 +100,8 @@ class CreateProfile extends Component {
   onNextCreateProfilePress = event => {
     event.preventDefault();
     console.log("this.state.picture", this.state.picture);
+    console.log("userId", this.props.user);
+
     const h = {};
     let formData = new FormData();
     formData.append("userId", this.props.userId),
@@ -265,5 +267,6 @@ class CreateProfile extends Component {
 // CreateProfile.name
 
 export default connect(function(state) {
-  return { userId: state.userId };
+  console.log("state bacon", state);
+  return { userId: state.user.userId };
 })(CreateProfile);

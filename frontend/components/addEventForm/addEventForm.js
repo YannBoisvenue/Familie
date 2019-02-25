@@ -25,8 +25,8 @@ import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
-import { ImagePicker, Permissions } from "expo";
 import { AsyncStorage } from "react-native";
+import { ImagePicker, Permissions } from "expo";
 import { fetchUrl } from "../../fetchUrl";
 import { StyledLink } from "../../StyledComponents/link";
 
@@ -36,7 +36,8 @@ class addEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: "",
+      picture: undefined,
+      pictureType: "",
       time: new Date(),
       guests: undefined,
       name: "",

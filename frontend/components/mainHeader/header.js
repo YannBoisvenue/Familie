@@ -4,7 +4,7 @@ import { Header, Button, Left, Right, Body, Title, Icon } from "native-base";
 import { connect } from "react-redux";
 
 const StyledHeader = ({ userId }) => {
-  console.log(userId);
+  console.log("this better be good", userId);
   if (!userId) {
     return <React.Fragment />;
   }
