@@ -111,11 +111,7 @@ class Login extends Component {
             <StyledButton
               onPress={this.onLoginPress}
               content="Login"
-              disabled={
-                this.state.userLoggingIn ||
-                !this.state.username ||
-                !this.state.password
-              }
+              disabled={!this.state.username || !this.state.password}
               color={Colors.desire}
             />
             {/* <Button full light primary>

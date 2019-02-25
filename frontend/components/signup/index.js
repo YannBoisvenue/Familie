@@ -54,20 +54,21 @@ class Signup extends Component {
   };
 
   onSignupPress = event => {
+    console.log("-----------SIGNUP-----------");
     event.preventDefault();
     if (this.state.password === this.state.confirmPassword) {
       let requestBody = JSON.stringify({
         username: this.state.username,
         password: this.state.password
       });
-      fetch("http://localhost:4000/signup", {
+      fetch(fetchUrl + "/signup", {
         method: "POST",
         body: requestBody
       })
         .then(function(x) {
           return x.text();
         })
-        .then(responseBody => {
+        .then(async responseBody => {
           let body = JSON.parse(responseBody);
           if (!body.success) {
             Toast.show({
@@ -76,8 +77,7 @@ class Signup extends Component {
             });
             return;
           }
-          console.log("body", body);
-          AsyncStorage.setItem("userId", JSON.stringify(body.user.userId));
+          await AsyncStorage.setItem("userId", body.user.userId);
           //check if backend signup end point is returning userId
           this.props.dispatch({
             type: LOGIN_SUCCESS
@@ -131,7 +131,6 @@ class Signup extends Component {
               color={Colors.queenBlue}
               onPress={this.onSignupPress}
               disabled={
-                this.state.userSigningUp ||
                 !this.state.username ||
                 !this.state.password ||
                 !this.state.confirmPassword
