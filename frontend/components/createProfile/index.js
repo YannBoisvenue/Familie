@@ -60,9 +60,11 @@ class CreateProfile extends Component {
       } else {
         result = await ImagePicker.launchCameraAsync(options);
       }
-
+      let uri = result.uri;
+      let filename = uri.split("/").pop();
+      let type = "image/png";
       if (!result.cancelled) {
-        this.setState({ picture: result.uri, pictureType: type });
+        this.setState({ picture: { uri, filename, type } });
       }
     }
   };
@@ -97,11 +99,15 @@ class CreateProfile extends Component {
 
   onNextCreateProfilePress = event => {
     event.preventDefault();
-
+    console.log("this.state.picture", this.state.picture);
     const h = {};
     let formData = new FormData();
     formData.append("userId", this.props.userId),
-      formData.append("profilePicture", this.state.picture),
+      formData.append("profilePicture", {
+        uri: this.state.picture.uri,
+        name: this.state.picture.filename,
+        type: this.state.picture.type
+      }),
       formData.append("firstName", this.state.firstName),
       formData.append("lastName", this.state.lastName),
       formData.append("gender", this.state.gender),
@@ -111,8 +117,7 @@ class CreateProfile extends Component {
       formData.append("location", this.state.location);
     // formData.append("interests", this.state.interests)
 
-    h.Accept = "application/json";
-
+    h["content-type"] = "multipart/form-data";
     fetch("http://68.183.200.44:4000/addProfile", {
       method: "POST",
       headers: h,
@@ -168,7 +173,7 @@ class CreateProfile extends Component {
                 />
                 {!!picture && pictureType === Permissions.CAMERA_ROLL && (
                   <Image
-                    source={{ uri: picture }}
+                    source={{ uri: picture.uri }}
                     style={{ width: 100, height: 100 }}
                   />
                 )}
@@ -180,7 +185,7 @@ class CreateProfile extends Component {
                 />
                 {!!picture && pictureType === Permissions.CAMERA && (
                   <Image
-                    source={{ uri: picture }}
+                    source={{ uri: picture.uri }}
                     style={{ width: 100, height: 100 }}
                   />
                 )}

@@ -28,7 +28,7 @@ app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
   let extension = req.file.originalname.split(".").pop();
   fs.rename(req.file.path, req.file.path + "." + extension, () => {});
   console.log("req.body", req.body);
-  let profile = JSON.parse(JSON.stringify(req.body));
+  let profile = req.body;
   // profile = { ...profile, fileName: "thisIsAwesome" };
   profile = { ...profile, fileName: req.file.path + "." + extension };
   console.log("profiles", profile);
