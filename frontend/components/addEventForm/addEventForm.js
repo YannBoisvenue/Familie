@@ -76,7 +76,7 @@ class addEventForm extends Component {
         desc: this.state.desc,
         coordinate: this.state.coordinate
       });
-      fetch("http://localhost:4000/addevent", {
+      fetch("http://68.183.200.44:4000/addevent", {
         method: "POST",
         body: requestBody
       })
