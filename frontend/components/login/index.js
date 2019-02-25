@@ -57,7 +57,7 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password
     });
-    fetch(fetchUrl + "/login", {
+    fetch("http://68.183.200.44:4000/login", {
       method: "POST",
       body: requestBody
     })
