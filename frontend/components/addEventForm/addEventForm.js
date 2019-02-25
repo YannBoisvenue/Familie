@@ -76,7 +76,7 @@ class addEventForm extends Component {
         desc: this.state.desc,
         coordinate: this.state.coordinate
       });
-      fetch(`${fetchUrl}/addevent`, {
+      fetch("http://localhost:4000/addevent", {
         method: "POST",
         body: requestBody
       })
@@ -84,6 +84,7 @@ class addEventForm extends Component {
           return x.text();
         })
         .then(responseBody => {
+          console.log("responseBody of add event", responseBody);
           let body = JSON.parse(responseBody);
           console.log("parseBody", body);
           if (!body.success) {
