@@ -4,9 +4,10 @@ import { StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 import { navigation } from "react-navigation";
 
-export const StyledLink = ({ onPress, content, color, bold }) => {
+export const StyledLink = ({ onPress, content, color, bold, fontSize }) => {
   let linkColor = Colors.queenBlue;
   let fontWeight = "normal";
+  let textSize = 17;
 
   if (color) {
     linkColor = color;
@@ -14,6 +15,10 @@ export const StyledLink = ({ onPress, content, color, bold }) => {
 
   if (bold) {
     fontWeight = "bold";
+  }
+
+  if (fontSize) {
+    textSize = fontSize;
   }
 
   return (
@@ -24,7 +29,7 @@ export const StyledLink = ({ onPress, content, color, bold }) => {
           paddingRight: 0,
           color: linkColor,
           fontWeight: fontWeight,
-          fontSize: 17
+          fontSize: textSize
         }}
       >
         {content}

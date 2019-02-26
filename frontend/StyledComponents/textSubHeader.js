@@ -4,22 +4,50 @@ import { Header, Body, Title, Right } from "native-base";
 import Colors from "../constants/Colors";
 import { StyledLink } from "./link";
 
-export const StyledSubHeader = ({ linkText, title, onPress }) => (
-  <React.Fragment>
-    <Header
-      hasText
-      noShadow
-      style={{ ...styles.Header, backgroundColor: Colors.antiFlashWhite }}
-    >
-      <Body>
-        <Title style={{ color: Colors.desire }}>{title}</Title>
-      </Body>
-      <Right style={{ paddingRight: 10 }}>
-        <StyledLink content={linkText} onPress={onPress} />
-      </Right>
-    </Header>
-  </React.Fragment>
-);
+export const StyledSubHeader = ({
+  linkText,
+  title,
+  onPress,
+  color,
+  textColor
+}) => {
+  let backgroundColor = "#fff";
+  let titlecolor = Colors.desire;
+
+  if (color) {
+    backgroundColor = color;
+  }
+
+  if (textColor) {
+    titlecolor = textColor;
+  }
+
+  return (
+    <React.Fragment>
+      <Header
+        hasText
+        noShadow
+        style={{ ...styles.Header, backgroundColor: backgroundColor }}
+      >
+        <Body style={{ paddingLeft: 0 }}>
+          <Title
+            style={{
+              color: titlecolor,
+              width: 200,
+              paddingLeft: 0,
+              textAlign: "left"
+            }}
+          >
+            {title}
+          </Title>
+        </Body>
+        <Right style={{ paddingRight: 10 }}>
+          <StyledLink content={linkText} onPress={onPress} />
+        </Right>
+      </Header>
+    </React.Fragment>
+  );
+};
 
 const styles = StyleSheet.create({
   Header: {

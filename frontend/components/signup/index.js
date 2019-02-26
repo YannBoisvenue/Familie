@@ -60,7 +60,7 @@ class Signup extends Component {
         username: this.state.username,
         password: this.state.password
       });
-      fetch("http://68.183.200.44:4000/signup", {
+      fetch(fetchUrl + "/signup", {
         method: "POST",
         body: requestBody
       })
