@@ -4,7 +4,8 @@ import {
   StatusBar,
   StyleSheet,
   View,
-  AsyncStorage
+  AsyncStorage,
+  YellowBox
 } from "react-native";
 import {
   AppLoading,
@@ -35,6 +36,12 @@ import LoginScreen from "./screens/LoginScreen";
 import MainTabNavigator from "./navigation/MainTabNavigator";
 
 let store = createStore(rootReducer, devToolsEnhancer());
+YellowBox.ignoreWarnings([
+  "Remote debugger",
+  "ReferenceError",
+  "SyntaxError",
+  "bind()"
+]);
 
 export default class App extends React.Component {
   state = {

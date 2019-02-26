@@ -102,10 +102,10 @@ class addEventForm extends Component {
     }
   };
 
-  onCreateEventPress = event => {
+  onCreateEventPress = async event => {
     this.getSpag();
     const { navigation } = this.props;
-    AsyncStorage.getItem("userId").then(userId => {
+    await AsyncStorage.getItem("userId").then(userId => {
       let requestBody = JSON.stringify({
         picture: undefined,
         pictureType: "",
@@ -125,9 +125,7 @@ class addEventForm extends Component {
           return x.text();
         })
         .then(responseBody => {
-          console.log("responseBody of add event", responseBody);
           let body = JSON.parse(responseBody);
-          console.log("parseBody", body);
           if (!body.success) {
             setTimeout(() => {
               navigation.navigate("Events");
