@@ -127,7 +127,7 @@ class addEventForm extends Component {
 
       h["content-type"] = "multipart/form-data";
 
-      fetch("http://localhost:4000/addevent", {
+      fetch(fetchUrl + "/addevent", {
         method: "POST",
         headers: h,
         body: formData

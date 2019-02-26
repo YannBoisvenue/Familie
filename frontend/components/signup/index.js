@@ -60,7 +60,6 @@ class Signup extends Component {
         username: this.state.username,
         password: this.state.password
       });
-      console.log("request body ", req.body);
       fetch("http://68.183.200.44:4000/signup", {
         method: "POST",
         body: requestBody

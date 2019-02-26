@@ -88,7 +88,6 @@ app.use((req, res, next) => {
 
 app.post("/signup", (req, res) => {
   let db = dbs.db("finalproject");
-  console.log("username & psw", req.body.username, req.body.password);
   db.collection("users").findOne(
     { username: req.body.username },
     (err, result) => {
@@ -100,19 +99,23 @@ app.post("/signup", (req, res) => {
           username: req.body.username,
           password: sha256(req.body.password)
         };
-        db.collection("users").insertOne(user, (err, result) => {
-          if (err) {
-            if (err) return res.status(500).send(err);
-          }
-        });
-        res.send(
-          JSON.stringify({
-            success: true,
-            user: {
-              userId: result._id
+        db.collection("users").insertOne(user, err => {
+          if (err) return res.status(500).send(err);
+          db.collection("users").findOne(
+            { username: req.body.username },
+            (err, result) => {
+              if (err) return res.status(500).send(err);
+              res.send(
+                JSON.stringify({
+                  success: true,
+                  user: {
+                    userId: result._id
+                  }
+                })
+              );
             }
-          })
-        );
+          );
+        });
       }
     }
   );

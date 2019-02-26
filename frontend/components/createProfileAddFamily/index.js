@@ -78,7 +78,7 @@ class CreateProfileAddFamily extends Component {
 
     h.Accept = "application/json";
 
-    fetch("http://localhost:4000/add-family", {
+    fetch(fetchUrl + "/add-family", {
       method: "POST",
       headers: h,
       body: formData
