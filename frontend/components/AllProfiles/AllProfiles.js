@@ -1,7 +1,7 @@
 import React, { Component, cloneElement } from "react";
 import { connect } from "react-redux";
 import { Text, View, Toast } from "native-base";
-import SingleEvent from "../SingleEvent/SingleEvent.js";
+
 import { fetchUrl } from "../../fetchUrl.js";
 import SingleProfile from "../SingleProfile/SingleProfile";
 
@@ -13,7 +13,7 @@ class AllProfiles extends Component {
 
   componentDidMount() {
     console.log("In tha fetch");
-    fetch(fetchUrl + "/allProfiles", {
+    fetch(fetchUrl + "/all-parents", {
       method: "GET"
     })
       .then(function(x) {
@@ -21,16 +21,14 @@ class AllProfiles extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
-        console.log("Show me your body :", body);
+        console.log("met un baconn en avant :", body.parents);
         if (body.success) {
-          console.log("bawdy suxxess", body);
           this.props.dispatch({
             type: "set_profiles",
-            profile: body.profiles
+            profile: body.parents
           });
           return;
         } else {
-          console.log("bawdy suxxess is FAWLZ");
           Toast.show({
             text: "You did something wrong!",
             buttonText: "But... no..."
@@ -41,11 +39,10 @@ class AllProfiles extends Component {
 
   /* Re-arrange this function */
   renderAllProfiles = () => {
+    console.log("ULTIMATE :", this.props);
     if (this.props.profiles !== undefined) {
       console.log("propfiles");
       let newProfileArray = this.props.profiles.map((elem, i) => {
-        console.log("are my props working?", this.props.profile);
-        console.log("show me your elem", elem);
         return (
           <View key={i}>
             <SingleProfile

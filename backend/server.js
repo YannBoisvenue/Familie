@@ -244,10 +244,28 @@ app.post("/hostingEvents", (req, res) => {
 });
 
 app.get("/event/:id", (req, res) => {
+  console.log("eventid backend");
   const id = req.params.id;
   let db = dbs.db("finalproject");
 
   db.collection("events")
+    .find({ _id: ObjectID(id) })
+    .toArray((err, array) => {
+      if (err) throw err;
+      let response = {
+        success: true,
+        result: array[0]
+      };
+      res.send(JSON.stringify(response));
+    });
+});
+
+app.get("/profile/:id", (req, res) => {
+  console.log("in backend prorifle slash id");
+  const id = req.params.id;
+  let db = dbs.db("finalproject");
+
+  db.collection("profiles")
     .find({ _id: ObjectID(id) })
     .toArray((err, array) => {
       if (err) throw err;
@@ -336,6 +354,7 @@ app.get("/all-parents", (req, res) => {
         success: true,
         parents: result
       };
+      console.log("THE ULTIMATE RESPONSE", JSON.stringify(response));
       res.send(JSON.stringify(response));
     });
   console.log("end point of : /all-parents");
