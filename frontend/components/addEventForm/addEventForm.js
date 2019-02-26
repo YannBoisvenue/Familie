@@ -25,8 +25,8 @@ import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
-import { ImagePicker, Permissions } from "expo";
 import { AsyncStorage } from "react-native";
+import { ImagePicker, Permissions } from "expo";
 import { fetchUrl } from "../../fetchUrl";
 import { StyledLink } from "../../StyledComponents/link";
 
@@ -36,7 +36,8 @@ class addEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      image: "",
+      picture: undefined,
+      pictureType: "",
       time: new Date(),
       guests: undefined,
       name: "",
@@ -102,24 +103,34 @@ class addEventForm extends Component {
     }
   };
 
-  onCreateEventPress = async event => {
+  onCreateEventPress = event => {
+    event.preventDefault();
+
     this.getSpag();
     const { navigation } = this.props;
-    await AsyncStorage.getItem("userId").then(userId => {
-      let requestBody = JSON.stringify({
-        picture: undefined,
-        pictureType: "",
-        userId: userId,
-        name: this.state.name,
-        guests: [userId],
-        time: this.state.time,
-        location: this.state.location,
-        desc: this.state.desc,
-        coordinate: this.state.coordinate
-      });
-      fetch("http://68.183.200.44:4000/addevent", {
+    AsyncStorage.getItem("userId").then(userId => {
+      const h = {};
+      let formData = new FormData();
+
+      formData.append("userId", this.props.userId),
+        formData.append("profilePicture", {
+          uri: this.state.picture.uri,
+          name: this.state.picture.filename,
+          type: this.state.picture.type
+        }),
+        formData.append("name", this.state.name),
+        formData.append("guests", [userId]),
+        formData.append("time", this.state.time),
+        formData.append("location", this.state.location),
+        formData.append("desc", this.state.desc),
+        formData.append("coordinate", this.state.coordinate);
+
+      h["content-type"] = "multipart/form-data";
+
+      fetch("http://localhost:4000/addevent", {
         method: "POST",
-        body: requestBody
+        headers: h,
+        body: formData
       })
         .then(function(x) {
           return x.text();
@@ -127,20 +138,18 @@ class addEventForm extends Component {
         .then(responseBody => {
           let body = JSON.parse(responseBody);
           if (!body.success) {
-            setTimeout(() => {
-              navigation.navigate("Events");
-            }, 1000);
             // Toast.show({
             //   text: "Oh oh spagetthi oh",
             //   buttonText: "Fuck"
             // });
             return;
-          } else {
-            Toast.show({
-              text: "Event created",
-              buttonText: "Yay!"
-            });
           }
+          //  else {
+          //   Toast.show({
+          //     text: "Event created",
+          //     buttonText: "Yay!"
+          //   });
+          this.props.navigation.navigate("Events");
         });
     });
   };

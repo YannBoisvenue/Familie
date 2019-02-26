@@ -22,14 +22,16 @@ app.use(cors());
 
 let upload = multer({ dest: __dirname + "/images/" });
 app.use(express.static(__dirname + "/images"));
+
 app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
   console.log(req.file);
   console.log("new file location", req.file.path);
+  console.log("req.body", req.body.toString());
+
   let extension = req.file.originalname.split(".").pop();
   fs.rename(req.file.path, req.file.path + "." + extension, () => {});
   console.log("req.body", req.body);
   let profile = req.body;
-  // profile = { ...profile, fileName: "thisIsAwesome" };
   profile = { ...profile, fileName: req.file.path + "." + extension };
   console.log("profiles", profile);
   let db = dbs.db("finalproject");
@@ -46,44 +48,19 @@ app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
     console.log("response", response);
   });
   console.log("body", req.body);
-  // let itemToStore = {
-  //   path: "/" + req.file.filename + "." + extension,
-  //   description: req.body.description
-  // };
-  // console.log("we are adding", itemToStore);
-  // // itemData needs to contain the file location and description
-  // itemData.push(itemToStore);
-  // console.log("updated itemData:", itemData);
-  // res.send(JSON.stringify(itemData));
 });
 
-// app.post("/addProfile", (req, res) => {
-//   console.log("made it to profiles");
+// app.use(bodyParser.raw({ type: "*/*" }));
 
-//   console.log("req.body", req.body.toString());
-//   let profile = JSON.parse(req.body);
-//   console.log("profiles", profile);
-//   let db = dbs.db("finalproject");
-//   //deal with images here
-//   db.collection("profiles").insertOne(profile, (err, ress) => {
-//     if (err) throw err;
-//     let response = {
-//       success: true,
-//       message: "Profile successfully created",
-//       _id: ress._id
-//     };
-//     res.send(JSON.stringify(response));
-//     console.log("end of profiles");
-//     console.log("response", response);
-//   });
-// });
-
-app.use(bodyParser.raw({ type: "*/*" }));
-
-app.post("/addevent", (req, res) => {
+app.post("/addevent", upload.single("eventPicture"), (req, res) => {
+  console.log("--------------addevent. with joy-------------------");
   console.log("req.body", req.body.toString());
 
-  let event = JSON.parse(req.body);
+  let extension = req.file.originalname.split(".").pop();
+  fs.rename(req.file.path, req.file.path + "." + extension, () => {});
+  console.log("req.body", req.body);
+  let event = req.body;
+  event = { ...event, fileName: req.file.path + "." + extension };
   console.log("event", event);
   let db = dbs.db("finalproject");
 
@@ -97,7 +74,7 @@ app.post("/addevent", (req, res) => {
   });
 });
 
-// app.use(bodyParser.raw({ type: "*/*" }));
+app.use(bodyParser.raw({ type: "*/*" }));
 
 // this parse everything received.
 app.use((req, res, next) => {
@@ -128,7 +105,14 @@ app.post("/signup", (req, res) => {
             if (err) return res.status(500).send(err);
           }
         });
-        res.send(JSON.stringify({ success: true }));
+        res.send(
+          JSON.stringify({
+            success: true,
+            user: {
+              userId: result._id
+            }
+          })
+        );
       }
     }
   );
@@ -244,10 +228,28 @@ app.post("/hostingEvents", (req, res) => {
 });
 
 app.get("/event/:id", (req, res) => {
+  console.log("eventid backend");
   const id = req.params.id;
   let db = dbs.db("finalproject");
 
   db.collection("events")
+    .find({ _id: ObjectID(id) })
+    .toArray((err, array) => {
+      if (err) throw err;
+      let response = {
+        success: true,
+        result: array[0]
+      };
+      res.send(JSON.stringify(response));
+    });
+});
+
+app.get("/profile/:id", (req, res) => {
+  console.log("in backend prorifle slash id");
+  const id = req.params.id;
+  let db = dbs.db("finalproject");
+
+  db.collection("profiles")
     .find({ _id: ObjectID(id) })
     .toArray((err, array) => {
       if (err) throw err;
@@ -336,6 +338,7 @@ app.get("/all-parents", (req, res) => {
         success: true,
         parents: result
       };
+      console.log("THE ULTIMATE RESPONSE", JSON.stringify(response));
       res.send(JSON.stringify(response));
     });
   console.log("end point of : /all-parents");

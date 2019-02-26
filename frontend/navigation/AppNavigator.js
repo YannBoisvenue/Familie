@@ -36,7 +36,7 @@ class Event extends React.Component {
   }
 
   render() {
-    console.log("event calisse", this.state.event.name);
+    console.log("dans le render de event");
     return (
       <View>
         <Text>
@@ -46,6 +46,38 @@ class Event extends React.Component {
           {this.state.event.desc}
           {this.state.event.location}
           {moment(this.state.event.time).format("MMM Do YYYY, h:mm a")}
+        </Text>
+      </View>
+    );
+  }
+}
+
+/******************** As I said, proper navigation **********/
+
+/************* Same here, I'm just being lazy *******/
+
+class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: props.navigation.getParam("id", null),
+      profile: {}
+    };
+    fetch(`${fetchUrl}/profile/${this.state.id}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log("what do I receive", res);
+        this.setState({ profile: res.result });
+      });
+  }
+
+  render() {
+    console.log("dans le render de profile");
+    return (
+      <View>
+        <Text>
+          {/**Image */}
+          {this.state.profile.firstname}
         </Text>
       </View>
     );
@@ -65,7 +97,8 @@ const AppNavigator = createStackNavigator({
   AddEvent: addEventForm,
   Login: login,
   // CreateProfile: CreateProfile
-  Event
+  Event,
+  Profile
 });
 
 export default createAppContainer(
