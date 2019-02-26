@@ -160,7 +160,7 @@ class CreateProfile extends Component {
       <Container>
         <StyledSubHeader
           {...this.props}
-          title="Create your profile"
+          title="Step 1 - Create your profile"
           linkText=""
           onPress={null}
           color={Colors.desire}

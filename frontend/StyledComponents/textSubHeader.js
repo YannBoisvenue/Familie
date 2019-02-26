@@ -33,7 +33,7 @@ export const StyledSubHeader = ({
           <Title
             style={{
               color: titlecolor,
-              width: 200,
+              width: 250,
               paddingLeft: 0,
               textAlign: "left"
             }}

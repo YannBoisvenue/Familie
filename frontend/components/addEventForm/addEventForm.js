@@ -46,7 +46,6 @@ class addEventForm extends Component {
       coordinate: { lat: 0, lng: 0 },
       hasPicture: false
     };
-    this.setDate = this.setDate.bind(this);
   }
 
   static navigationOptions = {
@@ -184,19 +183,20 @@ class addEventForm extends Component {
                 {!!picture && pictureType === Permissions.CAMERA_ROLL && (
                   <Image
                     source={{ uri: picture }}
-                    style={{ width: 350, height: 150 }}
+                    style={{ width: 350, height: 150, borderRadius: 5 }}
                   />
                 )}
                 {!!picture && pictureType === Permissions.CAMERA && (
                   <Image
                     source={{ uri: picture }}
-                    style={{ width: 350, height: 150 }}
+                    style={{ width: 350, height: 150, borderRadius: 5 }}
                   />
                 )}
               </Item>
             ) : (
               <Icon
                 style={{
+                  borderRadius: 5,
                   fontSize: 40,
                   paddingTop: 55,
                   paddingLeft: 155,

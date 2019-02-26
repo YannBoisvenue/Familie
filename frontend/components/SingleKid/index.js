@@ -2,22 +2,24 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Image } from "react-native";
 import {
-  Container,
-  Header,
+  View,
+  Content,
   Text,
-  Body,
-  Form,
   Item as FormItem,
   Input,
-  Label,
-  Title,
-  Root,
   Picker,
   Icon,
-  DatePicker
+  DatePicker,
+  Card,
+  Button,
+  ActionSheet
 } from "native-base";
 import { StyledButton } from "../../StyledComponents/button.js";
 import { ImagePicker, Permissions } from "expo";
+import { StyledForm } from "../../StyledComponents/form.js";
+import { StyledItem } from "../../StyledComponents/formItem.js";
+import { StyledLink } from "../../StyledComponents/link";
+import Colors from "../../constants/Colors";
 
 class SingleKid extends Component {
   constructor(props) {
@@ -27,7 +29,8 @@ class SingleKid extends Component {
       kidGender: "",
       kidDateOfBirth: "",
       kidPicture: "",
-      kidPictureType: ""
+      kidPictureType: "",
+      hasPicture: false
     };
   }
 
@@ -58,7 +61,11 @@ class SingleKid extends Component {
       }
 
       if (!result.cancelled) {
-        this.setState({ kidPicture: result.uri, kidPictureType: type });
+        this.setState({
+          kidPicture: result.uri,
+          kidPictureType: type,
+          hasPicture: true
+        });
       }
     }
   };
@@ -110,69 +117,159 @@ class SingleKid extends Component {
   render() {
     let kidPicture = this.state.kidPicture;
     let kidPictureType = this.state.kidPictureType;
+    const BUTTONS = ["From your library", "Take a picture", "Cancel"];
+    const CANCEL_INDEX = 2;
 
     return (
-      <Container>
-        <Form>
-          <FormItem floatingLabel>
-            <Label>Kid's first name</Label>
-            <Input
-              autoCapitalize="words"
-              onChangeText={this.handleKidNameInput}
-              value={this.state.kidFirstName}
-            />
-          </FormItem>
-          <FormItem>
-            <StyledButton
-              content="Pick a picture from camera roll"
-              onPress={this.pickPicture}
-            />
-            {!!kidPicture && kidPictureType === Permissions.CAMERA_ROLL && (
-              <Image
-                source={{ uri: kidPicture }}
-                style={{ width: 100, height: 100 }}
-              />
+      <Content
+        style={{
+          marginTop: 10
+        }}
+      >
+        <Card
+          style={{
+            paddingTop: 10,
+            paddingLeft: 5,
+            paddingRight: 5
+          }}
+        >
+          <Text>{`Your Kid's Information`}</Text>
+          <View style={{ flexDirection: "row" }}>
+            {this.state.hasPicture ? (
+              <View style={{ flex: 1 }}>
+                {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && ( */}
+                <View>
+                  <Image
+                    source={{ uri: kidPicture }}
+                    style={{
+                      width: 100,
+                      height: 100,
+                      marginLeft: 20,
+                      marginBottom: 5,
+                      marginTop: 25,
+                      borderRadius: 5
+                    }}
+                  />
+                </View>
+                {/* )} */}
+                {/* {!!picture && pictureType === Permissions.CAMERA && (
+                    <Image
+                      source={{ uri: `${picture}` }}
+                      style={{ width: 100, height: 100 }}
+                    />
+                  )} */}
+              </View>
+            ) : (
+              <View style={{ flex: 1 }}>
+                <Button
+                  transparent
+                  style={{
+                    textColor: Colors.queenBlue,
+                    marginBottom: 35,
+                    marginTop: 50
+                  }}
+                  onPress={() => {
+                    ActionSheet.show(
+                      {
+                        options: BUTTONS,
+                        cancelButtonIndex: CANCEL_INDEX,
+                        title: "Kid's picture"
+                      },
+                      buttonIndex => {
+                        if (buttonIndex === 0) {
+                          this.getPicture(Permissions.CAMERA_ROLL);
+                        } else if (buttonIndex === 1) {
+                          this.takePicture();
+                        }
+                      }
+                    );
+                  }}
+                >
+                  <Icon
+                    style={{
+                      color: Colors.queenBlue,
+                      fontSize: 40,
+                      borderRadius: 5,
+                      paddingTop: 28,
+                      paddingLeft: 28,
+                      borderColor: Colors.darkGunmetal,
+                      borderWidth: 1,
+                      width: 100,
+                      height: 100,
+                      justifyContent: "flex-start"
+                    }}
+                    type="AntDesign"
+                    name="camera"
+                  />
+                </Button>
+              </View>
             )}
-          </FormItem>
-          <FormItem>
-            <StyledButton content="Take a picture" onPress={this.takePicture} />
-            {!!kidPicture && kidPictureType === Permissions.CAMERA && (
-              <Image
-                source={{ uri: kidPicture }}
-                style={{ width: 100, height: 100 }}
-              />
-            )}
-          </FormItem>
-          <FormItem>
-            <Label>Select gender</Label>
-            <Picker
-              mode="dropdown"
-              iosIcon={<Icon name="arrow-down" />}
-              placeholder="Boy or Girl"
-              selectedValue={this.state.kidGender}
-              onValueChange={this.onValueChangeKidGender}
+            <View
+              style={{
+                flex: 1,
+                alignContent: "center",
+                justifyContent: "center"
+              }}
             >
-              <Picker.Item label="Boy" value="boy" />
-              <Picker.Item label="Girl" value="girl" />
-            </Picker>
-          </FormItem>
-          <FormItem>
-            <Label>Date of birth</Label>
-            <DatePicker
-              defaultDate={new Date(2010, 1, 1)}
-              minimumDate={new Date(1900, 1, 1)}
-              maximumDate={new Date(2019, 12, 31)}
-              modalTransparent={false}
-              animationType={"fade"}
-              androidMode={"default"}
-              placeHolderText="Select date"
-              onDateChange={this.setKidBirthDate}
-              disabled={false}
-            />
-            <Text>{this.state.kidDateOfBirth.toString().substr(4, 12)}</Text>
-          </FormItem>
-        </Form>
-      </Container>
+              <StyledLink
+                fontSize={20}
+                content="Upload picture"
+                onPress={() => {
+                  ActionSheet.show(
+                    {
+                      options: BUTTONS,
+                      cancelButtonIndex: CANCEL_INDEX,
+                      title: "Take a picture"
+                    },
+                    buttonIndex => {
+                      if (buttonIndex === 0) {
+                        this.pickPicture();
+                      } else if (buttonIndex === 1) {
+                        this.takePicture();
+                      }
+                    }
+                  );
+                }}
+              />
+            </View>
+          </View>
+          <StyledForm>
+            <StyledItem type="inlineLabel" label="Kid's first name">
+              <Input
+                autoCapitalize="words"
+                onChangeText={this.handleKidNameInput}
+                value={this.state.kidFirstName}
+              />
+            </StyledItem>
+            <StyledItem type="inlineLabel" label="Select gender">
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="arrow-down" />}
+                placeholder="Boy or Girl"
+                selectedValue={this.state.kidGender}
+                onValueChange={this.onValueChangeKidGender}
+              >
+                <Picker.Item label="Boy" value="boy" />
+                <Picker.Item label="Girl" value="girl" />
+              </Picker>
+            </StyledItem>
+            <StyledItem type="inlineLabel" label="Date of birth">
+              <DatePicker
+                defaultDate={new Date(2010, 1, 1)}
+                minimumDate={new Date(1900, 1, 1)}
+                maximumDate={new Date(2019, 12, 31)}
+                modalTransparent={false}
+                animationType={"fade"}
+                androidMode={"default"}
+                placeHolderText="Select date"
+                onDateChange={this.setKidBirthDate}
+                disabled={false}
+              />
+              <Text>{this.state.kidDateOfBirth.toString().substr(4, 12)}</Text>
+            </StyledItem>
+          </StyledForm>
+        </Card>
+      </Content>
     );
   }
 }

@@ -2,26 +2,24 @@ import React, { Component } from "react";
 import { Image } from "react-native";
 import { connect } from "react-redux";
 import {
+  View,
   Container,
-  Header,
   Text,
-  Body,
-  Form,
   Item as FormItem,
-  Input,
   Label,
-  Title,
   Root,
-  Picker,
-  Icon,
-  DatePicker,
-  Content,
   TouchableOpacity
 } from "native-base";
 import { StyledButton } from "../../StyledComponents/button.js";
 import { ImagePicker, Permissions } from "expo";
 import Autocomplete from "react-native-autocomplete-input";
 import SingleKid from "../SingleKid";
+import { StyledContent } from "../../StyledComponents/mainContainer";
+import { StyledForm } from "../../StyledComponents/form.js";
+import { StyledItem } from "../../StyledComponents/formItem.js";
+import { StyledLink } from "../../StyledComponents/link.js";
+import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
+import Colors from "../../constants/Colors";
 import { fetchUrl } from "../../fetchUrl.js";
 
 class CreateProfileAddFamily extends Component {
@@ -42,6 +40,10 @@ class CreateProfileAddFamily extends Component {
         const parents = json.parents;
         this.setState({ parents });
       });
+  };
+
+  static navigationOptions = {
+    header: null
   };
 
   findParent = query => {
@@ -105,52 +107,73 @@ class CreateProfileAddFamily extends Component {
     });
 
     return (
-      <Root>
-        <Container>
-          <Header>
-            <Body>
-              <Title>The Social Family</Title>
-            </Body>
-          </Header>
-          <Title>Your family</Title>
-          <Content>
-            <Form>
+      <Container>
+        <StyledSubHeader
+          {...this.props}
+          title="Step 2 - Add your family"
+          linkText=""
+          onPress={null}
+          color={Colors.desire}
+          textColor="#fff"
+        />
+        <StyledContent>
+          <StyledForm>
+            <FormItem
+              noShadow
+              inlineLabel
+              style={{
+                paddingLeft: 0,
+                marginBottom: 15,
+                marginLeft: 0,
+                borderColor: "transparent"
+              }}
+            >
+              <Label style={{ color: Colors.darkGunmetal, fontSize: 17 }}>
+                Other parent
+              </Label>
               <FormItem>
-                <Label>Other parent</Label>
-                <FormItem>
-                  <Autocomplete
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    data={
-                      parents.length === 1 && comp(query, parents[0].firstname)
-                        ? []
-                        : parents
-                    }
-                    defaultValue={query}
-                    onChangeText={text => this.setState({ query: text })}
-                    placeholder="Enter the other parent's name"
-                    renderItem={({ firstname, lastname }) => (
-                      <TouchableOpacity
-                        onPress={() => this.setState({ query: firstname })}
-                      >
-                        <Text>
-                          {firstname} {lastname}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </FormItem>
+                <Autocomplete
+                  inputContainerStyle={{
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderRadius: 2,
+                    borderStyle: "solid",
+                    borderColor: Colors.darkGunmetal
+                  }}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  data={
+                    parents.length === 1 && comp(query, parents[0].firstname)
+                      ? []
+                      : parents
+                  }
+                  defaultValue={query}
+                  onChangeText={text => this.setState({ query: text })}
+                  placeholder="Enter the other parent's name"
+                  renderItem={({ firstname, lastname }) => (
+                    <TouchableOpacity
+                      onPress={() => this.setState({ query: firstname })}
+                    >
+                      <Text noShadow style={{ borderRadius: 5 }}>
+                        {firstname} {lastname}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
               </FormItem>
-              <FormItem>
-                <Label>Your kids</Label>
-                <StyledButton content="Add kid" onPress={this.addKid} />
-              </FormItem>
-              <FormItem>{newKidsArray}</FormItem>
-              <StyledButton content="Next" onPress={this.onNextCreateProfile} />
-            </Form>
-          </Content>
-        </Container>
-      </Root>
+            </FormItem>
+            <StyledItem type="inlineLabel" label="Your kids">
+              <StyledLink content="Add kid" onPress={this.addKid} />
+            </StyledItem>
+            <View>{newKidsArray}</View>
+            <StyledButton
+              content="Next"
+              color={Colors.queenBlue}
+              onPress={this.onNextCreateProfile}
+            />
+          </StyledForm>
+        </StyledContent>
+      </Container>
     );
   }
 }
