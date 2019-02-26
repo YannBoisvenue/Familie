@@ -85,7 +85,7 @@ class Signup extends Component {
             type: SET_USERID,
             payload: body.user.userId
           });
-          this.props.navigation.navigate("CreateProfile");
+          this.props.navigation.navigate("CreateProfileStep1");
         });
     } else {
       Toast.show({

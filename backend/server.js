@@ -227,7 +227,7 @@ app.post("/attendingEvents", (req, res) => {
       if (err) throw err;
       let response = {
         success: true,
-        reviews: result
+        events: result
       };
       res.send(JSON.stringify(response));
       console.log("response", response);

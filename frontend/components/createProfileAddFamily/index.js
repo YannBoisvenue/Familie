@@ -21,6 +21,7 @@ import { StyledLink } from "../../StyledComponents/link.js";
 import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import Colors from "../../constants/Colors";
 import { fetchUrl } from "../../fetchUrl.js";
+import { PROFILE_COMPLETE } from "../../constants/ActionTypes.js";
 
 class CreateProfileAddFamily extends Component {
   constructor(props) {
@@ -93,6 +94,9 @@ class CreateProfileAddFamily extends Component {
         if (!body.success) {
           return;
         }
+        this.props.dispatch({
+          type: PROFILE_COMPLETE
+        });
         this.props.navigation.navigate("Events");
       });
   };

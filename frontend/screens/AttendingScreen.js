@@ -8,8 +8,9 @@ import { fetchUrl } from "../fetchUrl";
 import { StyledSectionTitle } from "../StyledComponents/title";
 import { Container, Right, Left, CardItem, Card, View } from "native-base";
 import Colors from "../constants/Colors";
+import SingleAttendingEvent from "../components/SingleEvent/SingleAttendingEvent";
 
-class HostingScreen extends Component {
+class AttendingScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,25 +19,24 @@ class HostingScreen extends Component {
   }
 
   async componentDidMount() {
-    const value = await AsyncStorage.getItem("userId");
-    let body = JSON.stringify(value);
-    fetch(fetchUrl + "/hostingEvents", {
+    fetch(fetchUrl + "/attendingEvents", {
       method: "POST",
-      body: body
+      body: JSON.stringify({ user: this.props.userId })
     })
       .then(x => x.text())
       .then(response => {
-        let events = JSON.parse(response);
-        this.setState({ events: events.attending });
+        let res = JSON.parse(response);
+        if (res.success) {
+          this.setState({ events: res.events });
+        }
       });
   }
 
   render() {
     const { events } = this.state;
-    let eventArr = [];
     if (events) {
       eventArr = events.map((e, index) => {
-        return <HostingEventContainer key={index} event={e} />;
+        return <SingleAttendingEvent key={index} event={e} />;
       });
     }
 
@@ -54,16 +54,8 @@ class HostingScreen extends Component {
           <Card transparent style={{ backgroundColor: "transparent" }}>
             <CardItem style={{ backgroundColor: "transparent" }}>
               <Container style={{ height: 63 }}>
-                <StyledSectionTitle content="Your Events" width={133} />
+                <StyledSectionTitle content="Attending Events" width={175} />
               </Container>
-              <Right style={{ flex: -1 }}>
-                <StyledLink
-                  content="Add an event"
-                  onPress={() => {
-                    this.props.navigation.navigate("AddEvent");
-                  }}
-                />
-              </Right>
             </CardItem>
           </Card>
         </View>
@@ -76,5 +68,5 @@ class HostingScreen extends Component {
 }
 
 export default connect(state => {
-  return { userId: state.userId };
-})(HostingScreen);
+  return { userId: state.user.userId };
+})(AttendingScreen);

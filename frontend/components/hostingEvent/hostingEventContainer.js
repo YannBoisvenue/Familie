@@ -18,15 +18,10 @@ import { nominalTypeHack } from "prop-types";
 import { StyledLink } from "../../StyledComponents/link";
 
 export const HostingEventContainer = ({ event }) => {
-  let newEvent = {
-    ...event,
-    desc:
-      "I want to do something nice and after I want to drink beer and bring my kids to a park and dance and eat hot-dogs"
-  };
-  let description = newEvent.desc;
+  let description = event.desc;
 
-  if (newEvent.desc.length > 25) {
-    description = newEvent.desc.slice(0, 24) + "...";
+  if (event.desc.length > 25) {
+    description = event.desc.slice(0, 24) + "...";
   }
 
   return (
@@ -36,12 +31,12 @@ export const HostingEventContainer = ({ event }) => {
           <StyledLink
             bold
             color={Colors.darkGunmetal}
-            content={newEvent.name}
+            content={event.name}
             onPress={() => alert("This is Card Body")}
             style={styles.cardTitle}
           />
           <Text style={styles.cardDate}>
-            {moment(newEvent.time).format("MMM Do YYYY, h:mm a")}
+            {moment(event.time).format("MMM Do YYYY, h:mm a")}
           </Text>
           <Text>{description}</Text>
         </Container>

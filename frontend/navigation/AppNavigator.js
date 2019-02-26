@@ -16,6 +16,8 @@ import { View, Text } from "native-base";
 import { fetchUrl } from "../fetchUrl";
 import AuthLoadingScreen from "../screens/AuthLoadingScreen";
 import moment from "moment";
+import AttendingScreen from "../screens/AttendingScreen";
+import createProfileAddFamily from "../components/createProfileAddFamily";
 // import console = require("console");
 
 /*************Not supposed to be here - need proper navigation *******/
@@ -92,8 +94,14 @@ const AuthenticationNavigator = createStackNavigator({
   SignupScreen: signup
 });
 
+const CreateAccount = createStackNavigator({
+  CreateProfileStep1: CreateProfile,
+  CreateFamily: createProfileAddFamily
+});
+
 const AppNavigator = createStackNavigator({
   HostingEvent: HostingScreen,
+  AttendingEvent: AttendingScreen,
   AddEvent: addEventForm,
   Login: login,
   // CreateProfile: CreateProfile
@@ -107,6 +115,7 @@ export default createAppContainer(
       // You could add another route here for authentication.
       // Read more at https://reactnavigation.org/docs/en/auth-flow.html
       Authenticated: AuthenticationNavigator,
+      Profile: CreateAccount,
       Main: MainTabNavigator,
       AppNavigator
     },

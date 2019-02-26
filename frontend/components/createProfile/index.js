@@ -146,7 +146,7 @@ class CreateProfile extends Component {
         if (!body.success) {
           return;
         }
-        this.props.navigation.navigate("CreateProfileAddFamily");
+        this.props.navigation.navigate("CreateFamily");
       });
   };
 

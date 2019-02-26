@@ -16,6 +16,7 @@ import AllEvents from "../components/AllEvents/AllEvents";
 import { AsyncStorage } from "react-native";
 import { connect } from "react-redux";
 import { SET_USERID } from "../constants/ActionTypes";
+import AttendingScreen from "./AttendingScreen";
 
 class EventScreen extends React.Component {
   constructor(props) {
@@ -42,36 +43,29 @@ class EventScreen extends React.Component {
         <StyledTabs>
           <Tab heading="All Events">
             <StyledContent>
-              <StyledSectionTitle content="All Events" width={120} />
+              <StyledSectionTitle content="All Events" width={113} />
               <AllEvents />
             </StyledContent>
           </Tab>
 
           <Tab heading="Attending">
-            <StyledSubHeader
-              title="Choose a friend"
-              linkText="Alert me"
-              onPress={this.handleOnPress}
+            <StyledLink
+              content="Logout"
+              onPress={async () => {
+                await AsyncStorage.removeItem("userId");
+                this.props.dispatch({
+                  type: SET_USERID,
+                  payload: undefined
+                });
+                this.props.navigation.navigate("LoginScreen");
+              }}
             />
-            <StyledContent>
-              <StyledLink
-                content="Logout"
-                onPress={async () => {
-                  await AsyncStorage.removeItem("userId");
-                  this.props.dispatch({
-                    type: SET_USERID,
-                    payload: undefined
-                  });
-                  this.props.navigation.navigate("LoginScreen");
-                }}
-              />
-              {/* Put the page component here*/}
-              <Login {...this.props} />
-            </StyledContent>
+            {/* Put the page component here*/}
+            <AttendingScreen {...this.props} />
           </Tab>
           <Tab heading="Hosting">
             <HostingScreen {...this.props} />
-            {/* Put the page component here instead of Login*/}
+            {/* Put the page component here*/}
           </Tab>
         </StyledTabs>
       </Container>
