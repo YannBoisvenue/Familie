@@ -104,46 +104,53 @@ class addEventForm extends Component {
   };
 
   onCreateEventPress = event => {
+    event.preventDefault();
+
     this.getSpag();
     const { navigation } = this.props;
     AsyncStorage.getItem("userId").then(userId => {
-      let requestBody = JSON.stringify({
-        picture: undefined,
-        pictureType: "",
-        userId: userId,
-        name: this.state.name,
-        guests: [userId],
-        time: this.state.time,
-        location: this.state.location,
-        desc: this.state.desc,
-        coordinate: this.state.coordinate
-      });
+      const h = {};
+      let formData = new FormData();
+
+      formData.append("userId", this.props.userId),
+        formData.append("profilePicture", {
+          uri: this.state.picture.uri,
+          name: this.state.picture.filename,
+          type: this.state.picture.type
+        }),
+        formData.append("name", this.state.name),
+        formData.append("lastName", this.state.lastName),
+        formData.append("guests", [userId]),
+        formData.append("time", this.state.time),
+        formData.append("location", this.state.location),
+        formData.append("desc", this.state.desc),
+        formData.append("coordinate", this.state.coordinate);
+
+      h["content-type"] = "multipart/form-data";
+
       fetch("http://68.183.200.44:4000/addevent", {
         method: "POST",
-        body: requestBody
+        headers: h,
+        body: formData
       })
         .then(function(x) {
           return x.text();
         })
         .then(responseBody => {
-          console.log("responseBody of add event", responseBody);
           let body = JSON.parse(responseBody);
-          console.log("parseBody", body);
           if (!body.success) {
-            setTimeout(() => {
-              navigation.navigate("Events");
-            }, 1000);
             // Toast.show({
             //   text: "Oh oh spagetthi oh",
             //   buttonText: "Fuck"
             // });
             return;
-          } else {
-            Toast.show({
-              text: "Event created",
-              buttonText: "Yay!"
-            });
           }
+          //  else {
+          //   Toast.show({
+          //     text: "Event created",
+          //     buttonText: "Yay!"
+          //   });
+          this.props.navigation.navigate("Events");
         });
     });
   };
