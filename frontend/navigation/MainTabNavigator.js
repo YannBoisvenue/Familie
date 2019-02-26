@@ -19,6 +19,7 @@ import AddEventForm from "../components/addEventForm/addEventForm";
 import EventScreen from "../screens/EventScreen";
 import FriendScreen from "../screens/FriendScreen";
 import createProfile from "../components/createProfile";
+import AllProfilesScreen from "../screens/allProfilesScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -106,7 +107,7 @@ CreateProfileAddFamilyStack.navigationOptions = {
 };
 
 const ProfileStack = createStackNavigator({
-  Profile: AllProfiles
+  Profile: AllProfilesScreen
 });
 
 ProfileStack.navigationOptions = {

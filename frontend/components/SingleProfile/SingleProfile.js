@@ -8,6 +8,9 @@ import { StyledLink } from "../../StyledComponents/link";
 import moment from "moment";
 
 class SingleProfile extends Component {
+  componentDidMount() {
+    console.log("In the component Did Mount", this.props.navigation);
+  }
   render() {
     return (
       <Card noShadow style={styles.card}>
@@ -22,19 +25,17 @@ class SingleProfile extends Component {
             bold
             color={Colors.darkGunmetal}
             content={this.props.firstName}
-            //MAKEITWORK:
-            /****************** THIS WILL NEED TO WORK! **************/
-
             onPress={() => {
+              console.log(
+                "this.props.navigation in singleProfile",
+                this.props.navigation
+              );
               console.log("navigation to profile with Id", this.props._id);
               /*navigate with Id the same way I navigate the single events*/
-
-              console.log(
-                "is this true?",
-                this.props.navigation.navigate("Profile", {
-                  id: this.props._id
-                })
-              ); ///this is the param object
+              this.props.navigation.navigate("MyProfile", {
+                id: this.props._id
+              });
+              console.log("is this true?"); ///this is the param object
               console.log("after navigation");
             }}
           />

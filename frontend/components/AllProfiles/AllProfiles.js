@@ -1,9 +1,12 @@
 import React, { Component, cloneElement } from "react";
 import { connect } from "react-redux";
 import { Text, View, Toast } from "native-base";
-
 import { fetchUrl } from "../../fetchUrl.js";
 import SingleProfile from "../SingleProfile/SingleProfile";
+/**Testing Imports */
+import Colors from "../../constants/Colors";
+import { StyledLink } from "../../StyledComponents/link";
+import Container from "../../native-base-theme/components/Container.js";
 
 class AllProfiles extends Component {
   constructor(props) {
@@ -63,12 +66,7 @@ class AllProfiles extends Component {
   };
 
   render() {
-    return (
-      <View>
-        <Text>All of the profiles! Everyone is here!</Text>
-        {this.renderAllProfiles()}
-      </View>
-    );
+    return <View>{this.renderAllProfiles()}</View>;
   }
 }
 

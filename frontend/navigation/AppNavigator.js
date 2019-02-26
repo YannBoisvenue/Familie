@@ -12,7 +12,7 @@ import login from "../components/login";
 import HostingScreen from "../screens/HostingScreen";
 import LoginScreen from "../screens/LoginScreen";
 import CreateProfile from "../components/createProfile";
-import { View, Text } from "native-base";
+import { View, Text, Image } from "native-base";
 import { fetchUrl } from "../fetchUrl";
 import AuthLoadingScreen from "../screens/AuthLoadingScreen";
 import moment from "moment";
@@ -58,7 +58,7 @@ class Event extends React.Component {
 
 /************* Same here, I'm just being lazy *******/
 
-class Profile extends React.Component {
+class MyProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,16 +77,20 @@ class Profile extends React.Component {
     console.log("dans le render de profile");
     return (
       <View>
-        <Text>
-          {/**Image */}
-          {this.state.profile.firstname}
-        </Text>
+        {console.log(this.state.profile)}
+        <View>
+          <Text>{this.state.profile.firstName}</Text>
+        </View>
+        <View>
+          <Text>{this.state.profile.lastName}</Text>
+        </View>
+        <Image uri="http://68.183.200.44:4000/8c191ac9b6154ff94e69a9ccc874fa63.jpg}" />
       </View>
     );
   }
 }
 
-/******************** As I said, proper navigation **********/
+/******************** As I said, proper navigation **************/
 
 const AuthenticationNavigator = createStackNavigator({
   AuthLoadingScreen: AuthLoadingScreen,
@@ -106,7 +110,7 @@ const AppNavigator = createStackNavigator({
   Login: login,
   // CreateProfile: CreateProfile
   Event,
-  Profile
+  MyProfile
 });
 
 export default createAppContainer(

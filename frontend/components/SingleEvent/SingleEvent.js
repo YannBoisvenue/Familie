@@ -97,6 +97,7 @@ class SingleEvent extends Component {
             content={this.props.name}
             onPress={() => {
               console.log("navigation to Event with Id", this.props._id);
+              console.log("this.props.navigation", this.props.navigation);
               this.props.navigation.navigate("Event", {
                 id: this.props._id
               }); ///this is the param object
