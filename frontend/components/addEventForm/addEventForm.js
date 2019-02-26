@@ -119,7 +119,6 @@ class addEventForm extends Component {
           type: this.state.picture.type
         }),
         formData.append("name", this.state.name),
-        formData.append("lastName", this.state.lastName),
         formData.append("guests", [userId]),
         formData.append("time", this.state.time),
         formData.append("location", this.state.location),
@@ -128,7 +127,7 @@ class addEventForm extends Component {
 
       h["content-type"] = "multipart/form-data";
 
-      fetch("http://68.183.200.44:4000/addevent", {
+      fetch("http://localhost:4000/addevent", {
         method: "POST",
         headers: h,
         body: formData
