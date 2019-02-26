@@ -57,13 +57,22 @@ class CreateProfile extends Component {
     this.setState({ lastName });
   };
 
+  pickPicture = () => {
+    this.getPicture(Permissions.CAMERA_ROLL);
+  };
+
+  takePicture = () => {
+    this.getPicture(Permissions.CAMERA);
+  };
+
   getPicture = async type => {
     const { status } = await Permissions.askAsync(type);
+    const asyncType = await type;
 
     if (status === "granted") {
       const options = { allowsEditing: true, aspect: [4, 3] };
       let result = null;
-      if (type === Permissions.CAMERA_ROLL) {
+      if (asyncType === Permissions.CAMERA_ROLL) {
         result = await ImagePicker.launchImageLibraryAsync(options);
       } else {
         result = await ImagePicker.launchCameraAsync(options);
@@ -79,14 +88,6 @@ class CreateProfile extends Component {
         });
       }
     }
-  };
-
-  pickPicture = async () => {
-    this.getPicture(Permissions.CAMERA_ROLL);
-  };
-
-  takePicture = async () => {
-    this.getPicture(Permissions.CAMERA);
   };
 
   onValueChangeGender = gender => {
@@ -152,9 +153,8 @@ class CreateProfile extends Component {
   render() {
     let picture = this.state.picture.uri;
     let pictureType = this.state.picture.type;
-    const BUTTONS = ["From camera roll", "Take a picture", "Cancel"];
+    const BUTTONS = ["From your library", "Take a picture", "Cancel"];
     const CANCEL_INDEX = 2;
-    console.log("picture:", picture, " picturetype:", pictureType);
 
     return (
       <Container>
@@ -179,7 +179,8 @@ class CreateProfile extends Component {
                       height: 100,
                       marginLeft: 20,
                       marginBottom: 20,
-                      marginTop: 25
+                      marginTop: 25,
+                      borderRadius: 5
                     }}
                   />
                 </View>
@@ -209,7 +210,7 @@ class CreateProfile extends Component {
                       },
                       buttonIndex => {
                         if (buttonIndex === 0) {
-                          this.pickPicture();
+                          this.getPicture(Permissions.CAMERA_ROLL);
                         } else if (buttonIndex === 1) {
                           this.takePicture();
                         }
@@ -221,6 +222,7 @@ class CreateProfile extends Component {
                     style={{
                       color: Colors.queenBlue,
                       fontSize: 40,
+                      borderRadius: 5,
                       paddingTop: 28,
                       paddingLeft: 28,
                       borderColor: Colors.darkGunmetal,
