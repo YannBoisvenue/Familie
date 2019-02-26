@@ -28,10 +28,13 @@ class SingleProfile extends Component {
             onPress={() => {
               console.log("navigation to profile with Id", this.props._id);
               /*navigate with Id the same way I navigate the single events*/
-              console.log("this.props.navigation", this.props.navigation);
-              this.props.navigation.navigate("Profile", {
-                id: this.props._id
-              }); ///this is the param object
+
+              console.log(
+                "is this true?",
+                this.props.navigation.navigate("Profile", {
+                  id: this.props._id
+                })
+              ); ///this is the param object
               console.log("after navigation");
             }}
           />
