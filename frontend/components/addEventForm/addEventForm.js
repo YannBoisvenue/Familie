@@ -94,7 +94,7 @@ class addEventForm extends Component {
 
       if (!result.cancelled) {
         this.setState({
-          picture: result.uri,
+          picture: { uri, filename, type },
           pictureType: type,
           hasPicture: true
         });
@@ -103,16 +103,15 @@ class addEventForm extends Component {
   };
 
   onCreateEventPress = event => {
-    event.preventDefault();
-
     this.getSpag();
     const { navigation } = this.props;
+
     AsyncStorage.getItem("userId").then(userId => {
       const h = {};
       let formData = new FormData();
 
       formData.append("userId", this.props.userId),
-        formData.append("profilePicture", {
+        formData.append("eventPicture", {
           uri: this.state.picture.uri,
           name: this.state.picture.filename,
           type: this.state.picture.type
@@ -126,7 +125,7 @@ class addEventForm extends Component {
 
       h["content-type"] = "multipart/form-data";
 
-      fetch(fetchUrl + "/addevent", {
+      fetch("http://68.183.200.44:4000/addevent", {
         method: "POST",
         headers: h,
         body: formData

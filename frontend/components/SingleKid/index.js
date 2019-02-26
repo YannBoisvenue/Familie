@@ -86,34 +86,6 @@ class SingleKid extends Component {
     this.setState({ kidDateOfBirth });
   };
 
-  // onNextCreateSingleKid = event => {
-  //   event.preventDefault();
-
-  //   const h = {};
-  //   let formData = new FormData();
-  //   formData.append("kidPicture", this.state.kidPicture),
-  //     formData.append("kidFirstName", this.state.kidFirstName),
-  //     formData.append("kidGender", this.state.kidGender),
-  //     formData.append("kidDateOfBirth", this.state.kidDateOfBirth),
-  //     (h.Accept = "application/json");
-
-  //   fetch("http://68.183.200.44:4000/add-single-kid", {
-  //     method: "POST",
-  //     headers: h,
-  //     body: formData
-  //   })
-  //     .then(function(x) {
-  //       return x.text();
-  //     })
-  //     .then(responseBody => {
-  //       let body = JSON.parse(responseBody);
-  //       if (!body.success) {
-  //         return;
-  //       }
-  //       this.props.navigation.navigate("CreateProfileAddFamily");
-  //     });
-  // };
-
   render() {
     let kidPicture = this.state.kidPicture;
     let kidPictureType = this.state.kidPictureType;
