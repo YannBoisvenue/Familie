@@ -54,7 +54,7 @@ app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
 
 app.post("/addevent", upload.single("eventPicture"), (req, res) => {
   console.log("--------------addevent. with joy-------------------");
-  console.log("req.body", req.body.toString());
+  // console.log("req.body", req.body.toString());
 
   let extension = req.file.originalname.split(".").pop();
   fs.rename(req.file.path, req.file.path + "." + extension, () => {});
@@ -72,6 +72,33 @@ app.post("/addevent", upload.single("eventPicture"), (req, res) => {
     };
     res.send(JSON.stringify(response));
   });
+});
+
+app.post("/add-family", upload.single("familyPicture"), (req, res) => {
+  console.log(req.file);
+  console.log("new file location", req.file.path);
+  console.log("req.body", req.body.toString());
+
+  let extension = req.file.originalname.split(".").pop();
+  fs.rename(req.file.path, req.file.path + "." + extension, () => {});
+  console.log("req.body", req.body);
+  let profile = req.body;
+  profile = { ...profile, fileName: req.file.path + "." + extension };
+  console.log("family", profile);
+  let db = dbs.db("finalproject");
+  //deal with images here
+  db.collection("profiles").insertOne(profile, (err, ress) => {
+    if (err) throw err;
+    let response = {
+      success: true,
+      message: "Profile successfully created",
+      _id: ress._id
+    };
+    res.send(JSON.stringify(response));
+    console.log("end of add-family");
+    console.log("response", response);
+  });
+  console.log("body", req.body);
 });
 
 app.use(bodyParser.raw({ type: "*/*" }));
