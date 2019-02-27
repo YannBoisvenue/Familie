@@ -2,25 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Image } from "react-native";
 import {
-  Item as FormItem,
-  Container,
   Item,
+  Container,
   Input,
   DatePicker,
   Textarea,
-  Toast,
   ActionSheet,
   Icon,
   Card,
-  Right,
-  View,
   Root
 } from "native-base";
-import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
@@ -28,10 +23,7 @@ import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
 import { AsyncStorage } from "react-native";
 import { ImagePicker, Permissions } from "expo";
-import { fetchUrl } from "../../fetchUrl";
 import { StyledLink } from "../../StyledComponents/link";
-
-// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
 class addEventForm extends Component {
   constructor(props) {
@@ -58,8 +50,6 @@ class addEventForm extends Component {
     this.setState({ time: newDate });
   }
 
-  /*****************BUTTON PRESS *********************/
-
   getSpag = () => {
     Geocode.setApiKey("AIzaSyAEV5dCEc0FdSkrJoz0o2KI-opfok_Rtr4");
 
@@ -76,23 +66,18 @@ class addEventForm extends Component {
 
   pickPicture = async () => {
     this.getPicture(Permissions.CAMERA_ROLL);
-    // console.log("********************************you went trough pickPicture");
   };
 
   takePicture = async () => {
-    console.log("inside take picture async");
     this.getPicture(Permissions.CAMERA);
-    // console.log("********************************you went trough takePicture");
   };
 
   getPicture = async type => {
-    // console.log("inside get picture async");
     const { status } = await Permissions.askAsync(type);
     let newType = await type;
 
     if (status === "granted") {
       const options = { allowsEditing: true, aspect: [4, 2] };
-      // console.log("********************************options", options);
       let result = null;
       if (newType === Permissions.CAMERA_ROLL) {
         result = await ImagePicker.launchImageLibraryAsync(options);
@@ -103,17 +88,6 @@ class addEventForm extends Component {
       let filename = uri.split("/").pop();
       let type = "image/png";
       if (!result.cancelled) {
-        // console.log("WHHAAAAT");
-        let uri = result.uri;
-        let filename = uri.split("/").pop();
-        // console.log(filename);
-        let type = "image/png";
-        // console.log(
-        //   "****************************8{ uri, filename, type }",
-        //   { uri, filename, type }
-        // );
-        // console.log("pictureType", type);
-
         this.setState({
           picture: { uri, filename, type },
           pictureType: type,
@@ -130,7 +104,6 @@ class addEventForm extends Component {
     AsyncStorage.getItem("userId").then(userId => {
       const h = {};
       let formData = new FormData();
-      console.log("this.state.picture.uri", this.state.picture.uri);
       formData.append("userId", this.props.userId),
         formData.append("eventPicture", {
           uri: this.state.picture.uri,
@@ -143,7 +116,6 @@ class addEventForm extends Component {
         formData.append("location", this.state.location),
         formData.append("desc", this.state.desc),
         formData.append("coordinate", this.state.coordinate);
-      // console.log("********************************formData", formData);
 
       h["content-type"] = "multipart/form-data";
 
@@ -158,17 +130,8 @@ class addEventForm extends Component {
         .then(responseBody => {
           let body = JSON.parse(responseBody);
           if (!body.success) {
-            // Toast.show({
-            //   text: "Oh oh spagetthi oh",
-            //   buttonText: "Fuck"
-            // });
             return;
           }
-          //  else {
-          //   Toast.show({
-          //     text: "Event created",
-          //     buttonText: "Yay!"
-          //   });
           this.props.navigation.navigate("Events");
         });
     });
@@ -176,7 +139,6 @@ class addEventForm extends Component {
 
   render() {
     let picture = this.state.picture.uri;
-    let pictureType = this.state.picture.type;
     const BUTTONS = ["From camera roll", "Take a picture", "Cancel"];
     const CANCEL_INDEX = 2;
 
@@ -202,18 +164,10 @@ class addEventForm extends Component {
             >
               {this.state.hasPicture ? (
                 <Item>
-                  {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && (
                   <Image
                     source={{ uri: picture }}
                     style={{ width: 350, height: 150, borderRadius: 5 }}
                   />
-                )}
-                {!!picture && pictureType === Permissions.CAMERA && ( */}
-                  <Image
-                    source={{ uri: picture }}
-                    style={{ width: 350, height: 150, borderRadius: 5 }}
-                  />
-                  )}
                 </Item>
               ) : (
                 <Icon
@@ -235,9 +189,6 @@ class addEventForm extends Component {
             <StyledLink
               content="Upload a picture"
               onPress={() => {
-                console.log(
-                  "onPressonPressonPressonPressonPressonPressonPressonPress"
-                );
                 ActionSheet.show(
                   {
                     options: BUTTONS,
@@ -245,12 +196,9 @@ class addEventForm extends Component {
                     title: "Take a picture"
                   },
                   buttonIndex => {
-                    // console.log("buttonI", buttonIndex);
                     if (buttonIndex === 0) {
-                      // console.log("button index0");
                       this.getPicture(Permissions.CAMERA_ROLL);
                     } else if (buttonIndex === 1) {
-                      // console.log("button index1");
                       this.getPicture(Permissions.CAMERA);
                     }
                   }
