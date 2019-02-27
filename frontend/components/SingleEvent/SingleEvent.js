@@ -96,11 +96,9 @@ class SingleEvent extends Component {
             color={Colors.darkGunmetal}
             content={this.props.name}
             onPress={() => {
-              console.log("navigation to Event with Id", this.props._id);
-              console.log("this.props.navigation", this.props.navigation);
               this.props.navigation.navigate("Event", {
                 id: this.props._id
-              }); ///this is the param object
+              });
             }}
           />
         </CardItem>
@@ -139,9 +137,7 @@ class SingleEvent extends Component {
               >
                 Going
               </Text>
-              {/* </Button> */}
             </CardItem>
-            {/* <TouchableOpacity> */}
             <CardItem
               button
               onPress={this.handleUnattendEvent}
@@ -159,9 +155,7 @@ class SingleEvent extends Component {
               >
                 Cancel
               </Text>
-              {/* </Button> */}
             </CardItem>
-            {/* </TouchableOpacity> */}
           </View>
         ) : (
           <CardItem cardBody style={{ paddingLeft: 7 }}>
