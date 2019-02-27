@@ -12,7 +12,7 @@ export default {
   noticeBackground: tintColor,
   noticeText: "#fff",
   antiFlashWhite: "#F2F4F7",
-  lightBlue: "#A8DADC",
+  lightBlue: "#90d0d2",
   queenBlue: "#3F708F",
   darkGunmetal: "#101D30",
   desire: "#E63946",

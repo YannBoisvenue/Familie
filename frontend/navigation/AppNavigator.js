@@ -98,6 +98,15 @@ class MyProfile extends React.Component {
     console.log("dans le render de profile");
     return (
       <View>
+        <Image
+          source={{ uri: "https://picsum.photos/250/250" }}
+          style={{
+            height: 100,
+            width: 100,
+            borderRadius: 5,
+            marginTop: 15
+          }}
+        />
         {console.log(this.state.profile)}
         <View>
           <Text>{this.state.profile.firstName}</Text>
@@ -105,7 +114,12 @@ class MyProfile extends React.Component {
         <View>
           <Text>{this.state.profile.lastName}</Text>
         </View>
-        {/* <Image uri="http://68.183.200.44:4000/8c191ac9b6154ff94e69a9ccc874fa63.jpg}" /> */}
+        <View>
+          <Text>{this.state.profile.gender}</Text>
+        </View>
+        <View>
+          <Text>{this.state.profile.relationshipStatus}</Text>
+        </View>
       </View>
     );
   }

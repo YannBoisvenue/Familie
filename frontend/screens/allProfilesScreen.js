@@ -13,7 +13,7 @@ import { AsyncStorage } from "react-native";
 import { connect } from "react-redux";
 import { SET_USERID } from "../constants/ActionTypes";
 
-class EventScreen extends React.Component {
+class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -69,12 +69,17 @@ class EventScreen extends React.Component {
             {/* Put the page component here instead of Login*/}
           </Tab>
         </StyledTabs>
+
+        <StyledSubHeader {...this.props} title="All parents" />
+        <StyledContent>
+          <AllProfiles />
+        </StyledContent>
       </Container>
     );
   }
 }
 
-const ConnectedAllEvents = connect()(EventScreen);
+const ConnectedProfileScreen = connect()(ProfileScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -82,4 +87,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ConnectedAllEvents;
+export default ConnectedProfileScreen;
