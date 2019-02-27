@@ -27,26 +27,27 @@ class AttendingScreen extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     fetch(fetchUrl + "/attendingEvents", {
       method: "POST",
       body: JSON.stringify({ user: this.props.userId })
     })
       .then(x => x.text())
-      .then(response => {
+      .then(async response => {
         let res = JSON.parse(response);
         if (res.success) {
-          this.setState({ events: res.events });
-          this.props.dispatch({
+          await this.props.dispatch({
             type: UPDATE_ATTENDING_EVENT,
             payload: res.events
           });
+          await this.setState({ events: res.events });
         }
       });
   }
 
   render() {
     const { attendingEvents } = this.props;
+    console.log("ATTENDING EVENTS:", attendingEvents);
     if (attendingEvents.length > 0) {
       eventArr = attendingEvents.map((e, index) => {
         return <SingleAttendingEvent key={index} event={e} />;
