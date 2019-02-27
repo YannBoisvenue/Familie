@@ -88,7 +88,6 @@ class SingleAttendEvent extends Component {
       })
         .then(x => x.text())
         .then(response => {
-          debugger;
           let res = JSON.parse(response);
           if (res.success) {
             this.setState({ events: res.events });

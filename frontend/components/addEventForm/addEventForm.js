@@ -2,20 +2,25 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Image } from "react-native";
 import {
-  Item,
+  Item as FormItem,
   Container,
+  Item,
   Input,
   DatePicker,
   Textarea,
+  Toast,
   ActionSheet,
   Icon,
   Card,
+  Right,
+  View,
   Root
 } from "native-base";
+import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
@@ -23,13 +28,16 @@ import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
 import { AsyncStorage } from "react-native";
 import { ImagePicker, Permissions } from "expo";
+import { fetchUrl } from "../../fetchUrl";
 import { StyledLink } from "../../StyledComponents/link";
+
+// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
 class addEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      picture: {},
+      picture: undefined,
       pictureType: "",
       time: new Date(),
       guests: undefined,
@@ -49,6 +57,8 @@ class addEventForm extends Component {
   setDate(newDate) {
     this.setState({ time: newDate });
   }
+
+  /*****************BUTTON PRESS *********************/
 
   getSpag = () => {
     Geocode.setApiKey("AIzaSyAEV5dCEc0FdSkrJoz0o2KI-opfok_Rtr4");
@@ -74,12 +84,12 @@ class addEventForm extends Component {
 
   getPicture = async type => {
     const { status } = await Permissions.askAsync(type);
-    let newType = await type;
+    let asyncType = await type;
 
     if (status === "granted") {
       const options = { allowsEditing: true, aspect: [4, 2] };
       let result = null;
-      if (newType === Permissions.CAMERA_ROLL) {
+      if (asyncType === Permissions.CAMERA_ROLL) {
         result = await ImagePicker.launchImageLibraryAsync(options);
       } else {
         result = await ImagePicker.launchCameraAsync(options);
@@ -104,6 +114,7 @@ class addEventForm extends Component {
     AsyncStorage.getItem("userId").then(userId => {
       const h = {};
       let formData = new FormData();
+      debugger;
       formData.append("userId", this.props.userId),
         formData.append("eventPicture", {
           uri: this.state.picture.uri,
@@ -119,7 +130,7 @@ class addEventForm extends Component {
 
       h["content-type"] = "multipart/form-data";
 
-      fetch("http://68.183.200.44:4000/addevent", {
+      fetch(fetchUrl + "/addevent", {
         method: "POST",
         headers: h,
         body: formData
@@ -130,15 +141,23 @@ class addEventForm extends Component {
         .then(responseBody => {
           let body = JSON.parse(responseBody);
           if (!body.success) {
+            // Toast.show({
+            //   text: "Oh oh spagetthi oh",
+            //   buttonText: "Fuck"
+            // });
             return;
           }
+          //  else {
+          //   Toast.show({
+          //     text: "Event created",
+          //     buttonText: "Yay!"
+          //   });
           this.props.navigation.navigate("Events");
         });
     });
   };
 
   render() {
-    let picture = this.state.picture.uri;
     const BUTTONS = ["From camera roll", "Take a picture", "Cancel"];
     const CANCEL_INDEX = 2;
 
@@ -164,15 +183,22 @@ class addEventForm extends Component {
             >
               {this.state.hasPicture ? (
                 <Item>
+                  {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && (
+                    <Image
+                      source={{ uri: this.state.picture.uri }}
+                      style={{ width: 350, height: 150 }}
+                    />
+                  )}
+                  {!!picture && pictureType === Permissions.CAMERA && ( */}
                   <Image
-                    source={{ uri: picture }}
-                    style={{ width: 350, height: 150, borderRadius: 5 }}
+                    source={{ uri: this.state.picture.uri }}
+                    style={{ width: 350, height: 150 }}
                   />
+                  {/* )} */}
                 </Item>
               ) : (
                 <Icon
                   style={{
-                    borderRadius: 5,
                     fontSize: 40,
                     paddingTop: 55,
                     paddingLeft: 155,
@@ -197,9 +223,9 @@ class addEventForm extends Component {
                   },
                   buttonIndex => {
                     if (buttonIndex === 0) {
-                      this.getPicture(Permissions.CAMERA_ROLL);
+                      this.pickPicture();
                     } else if (buttonIndex === 1) {
-                      this.getPicture(Permissions.CAMERA);
+                      this.takePicture();
                     }
                   }
                 );
@@ -277,6 +303,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(state => {
-  return { userId: state.user.userId };
-})(addEventForm);
+export default connect()(addEventForm);

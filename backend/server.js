@@ -28,7 +28,6 @@ app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
   fs.rename(req.file.path, req.file.path + "." + extension, () => {});
   let profile = req.body;
   profile = { ...profile, fileName: req.file.path + "." + extension };
-  console.log("profiles", profile);
   let db = dbs.db("finalproject");
   //deal with images here
   db.collection("profiles").insertOne(profile, (err, ress) => {
@@ -39,10 +38,7 @@ app.post("/addProfile", upload.single("profilePicture"), (req, res) => {
       _id: ress._id
     };
     res.send(JSON.stringify(response));
-    console.log("end of profiles");
-    console.log("response", response);
   });
-  console.log("body", req.body);
 });
 
 // app.use(bodyParser.raw({ type: "*/*" }));
@@ -55,10 +51,7 @@ app.post("/addevent", upload.single("eventPicture"), (req, res) => {
   fs.rename(req.file.path, req.file.path + "." + extension, () => {});
   console.log("req.body", req.body);
   let event = req.body;
-  event = {
-    ...event,
-    fileName: req.file.path.str.split("/").pop() + "." + extension
-  };
+  event = { ...event, fileName: req.file.path + "." + extension };
   console.log("event", event);
   let db = dbs.db("finalproject");
 
@@ -86,7 +79,7 @@ app.post("/add-family", upload.single("familyPicture"), (req, res) => {
     if (err) throw err;
     let response = {
       success: true,
-      message: "Profile successfully updated by adding kids",
+      message: "Profile successfully created",
       _id: ress._id
     };
     res.send(JSON.stringify(response));
@@ -98,8 +91,7 @@ app.post("/add-family", upload.single("familyPicture"), (req, res) => {
 
 app.use(bodyParser.raw({ type: "*/*" }));
 
-// this parse everything received.///////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// this parse everything received.
 app.use((req, res, next) => {
   try {
     req.body = JSON.parse(req.body.toString());
@@ -107,6 +99,26 @@ app.use((req, res, next) => {
   } catch (error) {
     next();
   }
+});
+
+app.post("/getProfile", (req, res) => {
+  const id = req.body;
+  console.log("BODY BODY", req.body);
+  let db = dbs.db("finalproject");
+  db.collection("profiles").findOne({ userId: id }, (err, result) => {
+    if (err) return res.status(500).send(err);
+    console.log("RESULT:", result);
+    if (result) {
+      res.send(
+        JSON.stringify({
+          success: true,
+          result: result
+        })
+      );
+    } else {
+      res.send(JSON.stringify({ success: false }));
+    }
+  });
 });
 
 app.post("/signup", (req, res) => {
@@ -201,8 +213,6 @@ app.get("/allEvents", (req, res) => {
         success: true,
         events: result
       };
-
-      // use:str.split('/').pop()
       res.send(JSON.stringify(response));
       console.log("response", response);
       console.log("success at /allEvents!!!!!");
@@ -287,26 +297,6 @@ app.get("/profile/:id", (req, res) => {
       };
       res.send(JSON.stringify(response));
     });
-});
-
-app.post("/getProfile", (req, res) => {
-  const id = req.body;
-  console.log("BODY BODY", req.body);
-  let db = dbs.db("finalproject");
-  db.collection("profiles").findOne({ userId: id }, (err, result) => {
-    if (err) return res.status(500).send(err);
-    console.log("RESULT:", result);
-    if (result) {
-      res.send(
-        JSON.stringify({
-          success: true,
-          result: result
-        })
-      );
-    } else {
-      res.send(JSON.stringify({ success: false }));
-    }
-  });
 });
 
 app.post("/attendEvent", (req, res) => {

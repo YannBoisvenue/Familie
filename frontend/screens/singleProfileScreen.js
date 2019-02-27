@@ -39,7 +39,7 @@ class SingleProfileScreen extends React.Component {
   }
 
   render() {
-    // let pictureUri = this.state.profile.fileName.split("/")[5];
+    let pictureUri = this.state.profile.fileName.split("/")[5];
 
     return (
       <Container style={styles.container}>
@@ -60,12 +60,12 @@ class SingleProfileScreen extends React.Component {
                   />
                 </CardItem>
                 <CardItem style={styles.image}>
-                  {/* <Image
+                  <Image
                     source={{
                       uri: `http://68.183.200.44:4000/${pictureUri}`
                     }}
                     style={{ height: 200, width: null, flex: 1 }}
-                  /> */}
+                  />
                 </CardItem>
                 <CardItem style={styles.cardDate}>
                   <Text
