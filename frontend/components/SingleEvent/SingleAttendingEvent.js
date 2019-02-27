@@ -16,6 +16,7 @@ import { StyledLink } from "../../StyledComponents/link";
 import moment from "moment";
 import { fetchUrl } from "../../fetchUrl.js";
 import { connect } from "react-redux";
+import { UPDATE_ATTENDING_EVENT } from "../../constants/ActionTypes";
 
 class SingleAttendEvent extends Component {
   constructor(props) {
@@ -73,6 +74,34 @@ class SingleAttendEvent extends Component {
     );
   };
 
+  handleUnattendEvent = async () => {
+    fetch(fetchUrl + "/unattendEvent", {
+      method: "POST",
+      body: JSON.stringify({
+        user: this.props.userId,
+        eventId: this.props.event._id
+      })
+    }).then(() => {
+      fetch(fetchUrl + "/attendingEvents", {
+        method: "POST",
+        body: JSON.stringify({ user: this.props.userId })
+      })
+        .then(x => x.text())
+        .then(response => {
+          debugger;
+          let res = JSON.parse(response);
+          if (res.success) {
+            this.setState({ events: res.events });
+            this.props.dispatch({
+              type: UPDATE_ATTENDING_EVENT,
+              payload: res.events
+            });
+          }
+        });
+    });
+    this.setState({ attending: false });
+  };
+
   render() {
     let dots = this.seeMore();
     let description = this.props.event.desc;
@@ -127,26 +156,39 @@ class SingleAttendEvent extends Component {
           <React.Fragment />
         )}
         {this.state.isAttending ? (
-          <CardItem cardBody style={{ paddingLeft: 7 }}>
-            {/* <Button
-                hasText
-                transparent
-                style={styles.url}
-                onPress={this.handleGoingClick}
-              > */}
-            <Text
-              style={{
-                paddingBottom: 10,
-                paddingLeft: 0,
-                paddingRight: 0,
-                color: Colors.lightBlue,
-                fontSize: 17
-              }}
+          <View style={{ flexDirection: "row" }}>
+            <CardItem cardBody style={{ paddingLeft: 7 }}>
+              <Text
+                style={{
+                  paddingBottom: 10,
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                  color: Colors.queenBlue,
+                  fontSize: 17
+                }}
+              >
+                Going
+              </Text>
+            </CardItem>
+            <CardItem
+              button
+              onPress={this.handleUnattendEvent}
+              cardBody
+              style={{ paddingLeft: 7 }}
             >
-              Going
-            </Text>
-            {/* </Button> */}
-          </CardItem>
+              <Text
+                style={{
+                  paddingBottom: 10,
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                  color: Colors.lightBlue,
+                  fontSize: 17
+                }}
+              >
+                Cancel
+              </Text>
+            </CardItem>
+          </View>
         ) : (
           <CardItem cardBody style={{ paddingLeft: 7 }}>
             <Button

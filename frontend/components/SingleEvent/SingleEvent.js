@@ -45,12 +45,10 @@ class SingleEvent extends Component {
           body: JSON.stringify({ user: this.props.userId })
         })
           .then(x => {
-            debugger;
             return x.text();
           })
           .then(response => {
             let res = JSON.parse(response);
-            debugger;
             if (res.success) {
               this.setState({ events: res.events });
               this.props.dispatch({
@@ -69,7 +67,25 @@ class SingleEvent extends Component {
       user: this.props.userId,
       eventId: this.props._id
     });
-    fetch(fetchUrl + "/unattendEvent", { method: "POST", body: body });
+    fetch(fetchUrl + "/unattendEvent", { method: "POST", body: body }).then(
+      () => {
+        fetch(fetchUrl + "/attendingEvents", {
+          method: "POST",
+          body: JSON.stringify({ user: this.props.userId })
+        })
+          .then(x => x.text())
+          .then(response => {
+            let res = JSON.parse(response);
+            if (res.success) {
+              this.setState({ events: res.events });
+              this.props.dispatch({
+                type: UPDATE_ATTENDING_EVENT,
+                payload: res.events
+              });
+            }
+          });
+      }
+    );
     this.setState({ attending: false });
   };
 
