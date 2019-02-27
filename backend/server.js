@@ -289,6 +289,26 @@ app.get("/profile/:id", (req, res) => {
     });
 });
 
+app.post("/getProfile", (req, res) => {
+  const id = req.body;
+  console.log("BODY BODY", req.body);
+  let db = dbs.db("finalproject");
+  db.collection("profiles").findOne({ userId: id }, (err, result) => {
+    if (err) return res.status(500).send(err);
+    console.log("RESULT:", result);
+    if (result) {
+      res.send(
+        JSON.stringify({
+          success: true,
+          result: result
+        })
+      );
+    } else {
+      res.send(JSON.stringify({ success: false }));
+    }
+  });
+});
+
 app.post("/attendEvent", (req, res) => {
   console.log("you made it to attendEvent");
   console.log(req.body);

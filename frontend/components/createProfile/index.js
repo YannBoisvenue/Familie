@@ -22,6 +22,7 @@ import { StyledSubHeader } from "../../StyledComponents/textSubHeader.js";
 import Colors from "../../constants/Colors";
 import { StyledLink } from "../../StyledComponents/link.js";
 import { StyledItem } from "../../StyledComponents/formItem.js";
+import moment from "moment";
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -100,7 +101,8 @@ class CreateProfile extends Component {
   };
 
   setBirthDate = dateOfBirth => {
-    this.setState({ dateOfBirth });
+    let dbo = moment(dateOfBirth).format("MMM Do YY");
+    this.setState({ dateOfBirth: dbo });
   };
 
   handleLocationInput = location => {

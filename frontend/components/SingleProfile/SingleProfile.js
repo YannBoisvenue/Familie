@@ -20,9 +20,7 @@ class SingleProfile extends Component {
     console.log("In the component Did Mount", this.props.navigation);
   }
   render() {
-    console.log("that props", this.props);
-    let pictureUri = this.props.profilePicture.split("/")[7];
-    console.log("pictureUri in profile *********", pictureUri);
+    let pictureUri = this.props.profilePicture.split("/")[5];
     return (
       <Card noShadow style={styles.card}>
         <View style={{ flexDirection: "row" }}>

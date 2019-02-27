@@ -20,6 +20,8 @@ import EventScreen from "../screens/EventScreen";
 import FriendScreen from "../screens/FriendScreen";
 import createProfile from "../components/createProfile";
 import AllProfilesScreen from "../screens/allProfilesScreen";
+import SingleProfile from "../components/SingleProfile/SingleProfile";
+import SingleProfileScreen from "../screens/singleProfileScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -107,7 +109,7 @@ CreateProfileAddFamilyStack.navigationOptions = {
 };
 
 const ProfileStack = createStackNavigator({
-  Profile: AllProfilesScreen
+  Profile: SingleProfileScreen
 });
 
 ProfileStack.navigationOptions = {
