@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Container, Text, Tab, Item, Label, Input, Body } from "native-base";
+import { Container, Tab } from "native-base";
 import { StyledTabs } from "../StyledComponents/tabs";
 import Login from "../components/login";
 import Colors from "../constants/Colors.js";
@@ -35,41 +35,6 @@ class ProfileScreen extends React.Component {
   render() {
     return (
       <Container style={styles.container}>
-        <StyledTabs>
-          <Tab heading="All Profiles">
-            <StyledContent>
-              <AllProfiles />
-            </StyledContent>
-          </Tab>
-
-          <Tab heading="Attending">
-            <StyledSubHeader
-              title="Choose a friend"
-              linkText="Alert me"
-              onPress={this.handleOnPress}
-            />
-            <StyledContent>
-              <StyledLink
-                content="Logout"
-                onPress={async () => {
-                  await AsyncStorage.removeItem("userId");
-                  this.props.dispatch({
-                    type: SET_USERID,
-                    payload: undefined
-                  });
-                  this.props.navigation.navigate("LoginScreen");
-                }}
-              />
-              {/* Put the page component here*/}
-              <Login {...this.props} />
-            </StyledContent>
-          </Tab>
-          <Tab heading="Hosting">
-            <HostingScreen {...this.props} />
-            {/* Put the page component here instead of Login*/}
-          </Tab>
-        </StyledTabs>
-
         <StyledSubHeader {...this.props} title="All parents" />
         <StyledContent>
           <AllProfiles />

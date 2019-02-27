@@ -1,50 +1,50 @@
 import React from "react";
-import { Container, Tab } from "native-base";
-import { StyledTabs } from "../StyledComponents/tabs";
+import { StyleSheet } from "react-native";
+import { Container } from "native-base";
+import Colors from "../constants/Colors.js";
 import { StyledContent } from "../StyledComponents/mainContainer";
-import { Alert } from "react-native";
+import { StyledSubHeader } from "../StyledComponents/textSubHeader";
 import AllProfiles from "../components/AllProfiles/AllProfiles";
+import { AsyncStorage } from "react-native";
+import { connect } from "react-redux";
 
-export default class FriendScreen extends React.Component {
+class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.handleOnPress = this.handleOnPress.bind(this);
   }
+
   static navigationOptions = {
     header: null
   };
 
-  handleOnPress() {
-    return Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
-      [
-        {
-          text: "Ask me later",
-          onPress: () => console.log("Ask me later pressed")
-        },
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ],
-      { cancelable: false }
-    );
+  async componentDidMount() {
+    let userId = await AsyncStorage.getItem("userId");
+    if (userId) {
+      this.props.dispatch({
+        type: "SET_USERID",
+        payload: userId
+      });
+    }
   }
 
   render() {
     return (
-      <Container>
-        <StyledTabs>
-          <Tab heading="All Friends">
-            <StyledContent>
-              <AllProfiles />
-            </StyledContent>
-          </Tab>
-        </StyledTabs>
+      <Container style={styles.container}>
+        <StyledSubHeader {...this.props} title="All parents" />
+        <StyledContent>
+          <AllProfiles />
+        </StyledContent>
       </Container>
     );
   }
 }
+
+const ConnectedProfileScreen = connect()(ProfileScreen);
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.antiFlashWhite
+  }
+});
+
+export default ConnectedProfileScreen;
