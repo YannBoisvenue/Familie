@@ -42,7 +42,6 @@ class EventScreen extends React.Component {
         <StyledTabs>
           <Tab heading="All Profiles">
             <StyledContent>
-              <StyledSectionTitle content="All Events" width={120} />
               <AllProfiles />
             </StyledContent>
           </Tab>
