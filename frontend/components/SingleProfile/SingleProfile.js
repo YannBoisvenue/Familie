@@ -20,6 +20,9 @@ class SingleProfile extends Component {
     console.log("In the component Did Mount", this.props.navigation);
   }
   render() {
+    console.log("that props", this.props);
+    let pictureUri = this.props.profilePicture.split("/")[7];
+    console.log("pictureUri in profile *********", pictureUri);
     return (
       <Card noShadow style={styles.card}>
         <View style={{ flexDirection: "row" }}>
@@ -34,6 +37,14 @@ class SingleProfile extends Component {
                     id: this.props._id
                   });
                 }}
+              />
+            </CardItem>
+            <CardItem style={styles.image}>
+              <Image
+                source={{
+                  uri: `http://68.183.200.44:4000/${pictureUri}`
+                }}
+                style={{ height: 200, width: null, flex: 1 }}
               />
             </CardItem>
             <CardItem style={styles.cardDate}>

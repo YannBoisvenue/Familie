@@ -57,6 +57,7 @@ class AllProfiles extends Component {
               dateOfBirth={elem.dateOfBirth}
               location={elem.location}
               _id={elem._id}
+              profilePicture={elem.fileName}
             />
           </View>
         );
