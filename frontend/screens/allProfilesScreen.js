@@ -1,14 +1,10 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { ExpoLinksView } from "@expo/samples";
+import { StyleSheet } from "react-native";
 import { Container, Text, Tab, Item, Label, Input, Body } from "native-base";
 import { StyledTabs } from "../StyledComponents/tabs";
 import Login from "../components/login";
 import Colors from "../constants/Colors.js";
-import { StyledSectionTitle } from "../StyledComponents/title";
 import { StyledLink } from "../StyledComponents/link";
-import { StyledForm } from "../StyledComponents/form";
-import { StyledItem } from "../StyledComponents/formItem";
 import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledSubHeader } from "../StyledComponents/textSubHeader";
 import HostingScreen from "./HostingScreen";
