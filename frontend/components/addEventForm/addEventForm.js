@@ -76,18 +76,23 @@ class addEventForm extends Component {
 
   pickPicture = async () => {
     this.getPicture(Permissions.CAMERA_ROLL);
+    // console.log("********************************you went trough pickPicture");
   };
 
   takePicture = async () => {
+    console.log("inside take picture async");
     this.getPicture(Permissions.CAMERA);
+    // console.log("********************************you went trough takePicture");
   };
 
   getPicture = async type => {
+    // console.log("inside get picture async");
     const { status } = await Permissions.askAsync(type);
     let newType = await type;
 
     if (status === "granted") {
       const options = { allowsEditing: true, aspect: [4, 2] };
+      // console.log("********************************options", options);
       let result = null;
       if (newType === Permissions.CAMERA_ROLL) {
         result = await ImagePicker.launchImageLibraryAsync(options);
@@ -98,6 +103,17 @@ class addEventForm extends Component {
       let filename = uri.split("/").pop();
       let type = "image/png";
       if (!result.cancelled) {
+        // console.log("WHHAAAAT");
+        let uri = result.uri;
+        let filename = uri.split("/").pop();
+        // console.log(filename);
+        let type = "image/png";
+        // console.log(
+        //   "****************************8{ uri, filename, type }",
+        //   { uri, filename, type }
+        // );
+        // console.log("pictureType", type);
+
         this.setState({
           picture: { uri, filename, type },
           pictureType: type,
@@ -114,7 +130,7 @@ class addEventForm extends Component {
     AsyncStorage.getItem("userId").then(userId => {
       const h = {};
       let formData = new FormData();
-
+      console.log("this.state.picture.uri", this.state.picture.uri);
       formData.append("userId", this.props.userId),
         formData.append("eventPicture", {
           uri: this.state.picture.uri,
@@ -127,6 +143,7 @@ class addEventForm extends Component {
         formData.append("location", this.state.location),
         formData.append("desc", this.state.desc),
         formData.append("coordinate", this.state.coordinate);
+      // console.log("********************************formData", formData);
 
       h["content-type"] = "multipart/form-data";
 
@@ -196,7 +213,7 @@ class addEventForm extends Component {
                     source={{ uri: picture }}
                     style={{ width: 350, height: 150, borderRadius: 5 }}
                   />
-                  {/* )} */}
+                  )}
                 </Item>
               ) : (
                 <Icon
@@ -218,6 +235,9 @@ class addEventForm extends Component {
             <StyledLink
               content="Upload a picture"
               onPress={() => {
+                console.log(
+                  "onPressonPressonPressonPressonPressonPressonPressonPress"
+                );
                 ActionSheet.show(
                   {
                     options: BUTTONS,
@@ -225,10 +245,13 @@ class addEventForm extends Component {
                     title: "Take a picture"
                   },
                   buttonIndex => {
+                    // console.log("buttonI", buttonIndex);
                     if (buttonIndex === 0) {
-                      this.pickPicture();
+                      // console.log("button index0");
+                      this.getPicture(Permissions.CAMERA_ROLL);
                     } else if (buttonIndex === 1) {
-                      this.takePicture();
+                      // console.log("button index1");
+                      this.getPicture(Permissions.CAMERA);
                     }
                   }
                 );

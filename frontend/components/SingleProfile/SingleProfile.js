@@ -1,4 +1,12 @@
-import { View, Text, Button, Card, CardItem, Container } from "native-base";
+import {
+  View,
+  Text,
+  Button,
+  Card,
+  CardItem,
+  Container,
+  Icon
+} from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, Image, Alert } from "react-native";
 import { withNavigation } from "react-navigation";
@@ -24,7 +32,7 @@ class SingleProfile extends Component {
           <StyledLink
             bold
             color={Colors.darkGunmetal}
-            content={this.props.firstName}
+            content={this.props.firstName + " " + this.props.lastName}
             onPress={() => {
               console.log(
                 "this.props.navigation in singleProfile",
@@ -40,22 +48,25 @@ class SingleProfile extends Component {
             }}
           />
         </CardItem>
+
         <CardItem style={styles.cardDate}>
-          <Text>{this.props.lastName}</Text>
+          <Text>I'm a: {this.props.gender}</Text>
         </CardItem>
         <CardItem style={styles.cardDate}>
-          <Text>{this.props.gender}</Text>
+          <Text>Status: {this.props.relationshipStatus}</Text>
         </CardItem>
         <CardItem style={styles.cardDate}>
-          <Text>{this.props.relationshipStatus}</Text>
+          <Text>Occupation: {this.props.occupation}</Text>
         </CardItem>
         <CardItem style={styles.cardDate}>
-          <Text>{this.props.occupation}</Text>
+          <Text>D.O.B.: {this.props.dateOfBirth}</Text>
         </CardItem>
         <CardItem style={styles.cardDate}>
-          <Text>{this.props.dateOfBirth}</Text>
-        </CardItem>
-        <CardItem style={styles.cardDate}>
+          <Icon
+            type="Feather"
+            name="map-pin"
+            style={{ fontSize: 20, width: 26 }}
+          />
           <Text>{this.props.location}</Text>
         </CardItem>
       </Card>

@@ -1,6 +1,12 @@
 {
-  "devToolsPort": 19002,
+<<<<<<< Updated upstream
+=======
   "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+>>>>>>> Stashed changes
+  "devToolsPort": 19002,
   "packagerPort": null,
   "packagerPid": null,
   "expoServerNgrokUrl": "https://w9-uer.anonymous.frontend.exp.direct",

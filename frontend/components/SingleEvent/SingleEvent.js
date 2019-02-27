@@ -125,7 +125,10 @@ class SingleEvent extends Component {
       <Card noShadow style={styles.card}>
         <CardItem style={styles.image}>
           <Image
-            source={{ uri: "https://picsum.photos/500/500" }}
+            source={{
+              uri:
+                "http://68.183.200.44:4000/8487f9e11bd3be391f5a404f0f50b39c.jpg"
+            }}
             style={{ height: 200, width: null, flex: 1 }}
           />
         </CardItem>

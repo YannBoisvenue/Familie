@@ -40,7 +40,7 @@ class AllEvents extends Component {
         return (
           <View key={elem._id}>
             <SingleEvent
-              // image={elem.image}
+              image={elem.fileName}
               name={elem.name}
               desc={elem.desc}
               guests={elem.guests}
