@@ -120,14 +120,15 @@ class SingleEvent extends Component {
 
     let locationArr = this.props.location.split(",");
     let location = locationArr[0];
+    let pictureUri = this.props.image.split("/")[5];
+    console.log(pictureUri);
 
     return (
       <Card noShadow style={styles.card}>
         <CardItem style={styles.image}>
           <Image
             source={{
-              uri:
-                "http://68.183.200.44:4000/8487f9e11bd3be391f5a404f0f50b39c.jpg"
+              uri: `http://68.183.200.44:4000/${pictureUri}`
             }}
             style={{ height: 200, width: null, flex: 1 }}
           />

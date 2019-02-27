@@ -13,7 +13,7 @@ import login from "../components/login";
 import HostingScreen from "../screens/HostingScreen";
 import LoginScreen from "../screens/LoginScreen";
 import CreateProfile from "../components/createProfile";
-import { View, Text, Image } from "native-base";
+import { View, Text } from "native-base";
 import { fetchUrl } from "../fetchUrl";
 import AuthLoadingScreen from "../screens/AuthLoadingScreen";
 import moment from "moment";
