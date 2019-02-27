@@ -1,22 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Container,
-  Header,
-  Button,
-  Text,
-  Body,
-  Form,
-  Item,
-  Input,
-  Label,
-  Title,
-  View,
-  Card,
-  CardItem,
-  Toast,
-  Root
-} from "native-base";
+import { View, Toast } from "native-base";
 import SingleEvent from "../SingleEvent/SingleEvent.js";
 import { fetchUrl } from "../../fetchUrl";
 
@@ -27,7 +11,6 @@ class AllEvents extends Component {
   }
 
   componentDidMount() {
-    console.log("In tha fetch");
     fetch(fetchUrl + "/allEvents", {
       method: "GET"
     })
@@ -36,7 +19,6 @@ class AllEvents extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
-        console.log("Show me your body :", body);
         if (body.success) {
           this.props.dispatch({
             type: "setEvents",
@@ -55,7 +37,6 @@ class AllEvents extends Component {
   renderAllEvents = () => {
     if (this.props.events !== undefined) {
       let newEventsArray = this.props.events.events.map((elem, i) => {
-        console.log("how many maps???");
         return (
           <View key={elem._id}>
             <SingleEvent

@@ -3,12 +3,10 @@ import { Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
-  Item,
   Input,
   Picker,
   Icon,
   DatePicker,
-  Card,
   Content,
   View,
   Text,
@@ -39,7 +37,6 @@ class CreateProfile extends Component {
       dateOfBirth: "",
       location: "",
       hasPicture: false
-      // interests: [""]
     };
 
     // this.autocompleteInput = React.createRef();
@@ -80,7 +77,6 @@ class CreateProfile extends Component {
       }
       let uri = result.uri;
       let filename = uri.split("/").pop();
-      console.log(filename);
       let type = "image/png";
       if (!result.cancelled) {
         this.setState({
@@ -113,8 +109,6 @@ class CreateProfile extends Component {
 
   onNextCreateProfilePress = event => {
     event.preventDefault();
-    console.log("this.state.picture", this.state.picture);
-    console.log("userId", this.props.user);
 
     const h = {};
     let formData = new FormData();
@@ -131,7 +125,6 @@ class CreateProfile extends Component {
       formData.append("occupation", this.state.occupation),
       formData.append("dateOfBirth", this.state.dateOfBirth),
       formData.append("location", this.state.location);
-    // formData.append("interests", this.state.interests)
 
     h["content-type"] = "multipart/form-data";
     fetch(fetchUrl + "/addProfile", {
@@ -339,10 +332,6 @@ class CreateProfile extends Component {
                   value={this.state.location}
                 />
               </StyledItem>
-              {/* <FormItem>
-                <Label>Interests</Label>
-                <Input placeHolderText="To be added" />
-              </FormItem> */}
               <StyledButton
                 content="Next"
                 onPress={this.onNextCreateProfilePress}
@@ -371,6 +360,5 @@ const styles = StyleSheet.create({
 // CreateProfile.name
 
 export default connect(function(state) {
-  console.log("state bacon", state);
   return { userId: state.user.userId };
 })(CreateProfile);

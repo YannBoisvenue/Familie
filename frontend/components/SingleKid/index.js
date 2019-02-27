@@ -105,7 +105,6 @@ class SingleKid extends Component {
             paddingRight: 5
           }}
         >
-          <Text>{`Your Kid's Information`}</Text>
           <View style={{ flexDirection: "row" }}>
             {this.state.hasPicture ? (
               <View style={{ flex: 1 }}>
