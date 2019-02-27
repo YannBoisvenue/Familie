@@ -111,73 +111,75 @@ class CreateProfileAddFamily extends Component {
     });
 
     return (
-      <Container>
-        <StyledSubHeader
-          {...this.props}
-          title="Step 2 - Add your family"
-          linkText=""
-          onPress={null}
-          color={Colors.desire}
-          textColor="#fff"
-        />
-        <StyledContent>
-          <StyledForm>
-            <FormItem
-              noShadow
-              inlineLabel
-              style={{
-                paddingLeft: 0,
-                marginBottom: 15,
-                marginLeft: 0,
-                borderColor: "transparent"
-              }}
-            >
-              <Label style={{ color: Colors.darkGunmetal, fontSize: 17 }}>
-                Other parent
-              </Label>
-              <FormItem>
-                <Autocomplete
-                  inputContainerStyle={{
-                    elevation: 0,
-                    shadowOpacity: 0,
-                    borderRadius: 2,
-                    borderStyle: "solid",
-                    borderColor: Colors.darkGunmetal
-                  }}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  data={
-                    parents.length === 1 && comp(query, parents[0].firstname)
-                      ? []
-                      : parents
-                  }
-                  defaultValue={query}
-                  onChangeText={text => this.setState({ query: text })}
-                  placeholder="Enter the other parent's name"
-                  renderItem={({ firstname, lastname }) => (
-                    <TouchableOpacity
-                      onPress={() => this.setState({ query: firstname })}
-                    >
-                      <Text noShadow style={{ borderRadius: 5 }}>
-                        {firstname} {lastname}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                />
+      <Root>
+        <Container>
+          <StyledSubHeader
+            {...this.props}
+            title="Step 2 - Add your family"
+            linkText=""
+            onPress={null}
+            color={Colors.desire}
+            textColor="#fff"
+          />
+          <StyledContent>
+            <StyledForm>
+              <FormItem
+                noShadow
+                inlineLabel
+                style={{
+                  paddingLeft: 0,
+                  marginBottom: 15,
+                  marginLeft: 0,
+                  borderColor: "transparent"
+                }}
+              >
+                <Label style={{ color: Colors.darkGunmetal, fontSize: 17 }}>
+                  Other parent
+                </Label>
+                <FormItem>
+                  <Autocomplete
+                    inputContainerStyle={{
+                      elevation: 0,
+                      shadowOpacity: 0,
+                      borderRadius: 2,
+                      borderStyle: "solid",
+                      borderColor: Colors.darkGunmetal
+                    }}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    data={
+                      parents.length === 1 && comp(query, parents[0].firstname)
+                        ? []
+                        : parents
+                    }
+                    defaultValue={query}
+                    onChangeText={text => this.setState({ query: text })}
+                    placeholder="Enter the other parent's name"
+                    renderItem={({ firstname, lastname }) => (
+                      <TouchableOpacity
+                        onPress={() => this.setState({ query: firstname })}
+                      >
+                        <Text noShadow style={{ borderRadius: 5 }}>
+                          {firstname} {lastname}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  />
+                </FormItem>
               </FormItem>
-            </FormItem>
-            <StyledItem type="inlineLabel" label="Your kids">
-              <StyledLink content="Add kid" onPress={this.addKid} />
-            </StyledItem>
-            <View>{newKidsArray}</View>
-            <StyledButton
-              content="Next"
-              color={Colors.queenBlue}
-              onPress={this.onNextCreateProfile}
-            />
-          </StyledForm>
-        </StyledContent>
-      </Container>
+              <StyledItem type="inlineLabel" label="Your kids">
+                <StyledLink content="Add kid" onPress={this.addKid} />
+              </StyledItem>
+              <View>{newKidsArray}</View>
+              <StyledButton
+                content="Next"
+                color={Colors.queenBlue}
+                onPress={this.onNextCreateProfile}
+              />
+            </StyledForm>
+          </StyledContent>
+        </Container>
+      </Root>
     );
   }
 }

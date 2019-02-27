@@ -8,6 +8,7 @@ import { fetchUrl } from "../fetchUrl";
 import { StyledSectionTitle } from "../StyledComponents/title";
 import { Container, Right, Left, CardItem, Card, View } from "native-base";
 import Colors from "../constants/Colors";
+import { UPDATE_HOSTING_EVENT } from "../constants/ActionTypes";
 
 class HostingScreen extends Component {
   constructor(props) {
@@ -28,14 +29,18 @@ class HostingScreen extends Component {
       .then(response => {
         let events = JSON.parse(response);
         this.setState({ events: events.attending });
+        this.props.dispatch({
+          type: UPDATE_HOSTING_EVENT,
+          payload: events.attending
+        });
       });
   }
 
   render() {
-    const { events } = this.state;
+    const { hostingEvents } = this.props;
     let eventArr = [];
-    if (events) {
-      eventArr = events.map((e, index) => {
+    if (hostingEvents.length > 0) {
+      eventArr = hostingEvents.map((e, index) => {
         return <HostingEventContainer key={index} event={e} />;
       });
     }
@@ -68,7 +73,7 @@ class HostingScreen extends Component {
           </Card>
         </View>
         <StyledContent>
-          {events ? eventArr : "You have no hosting events"}
+          {hostingEvents ? eventArr : "You have no hosting events"}
         </StyledContent>
       </Container>
     );
@@ -76,5 +81,8 @@ class HostingScreen extends Component {
 }
 
 export default connect(state => {
-  return { userId: state.userId };
+  return {
+    userId: state.user.userId,
+    hostingEvents: state.events.hostingEvents
+  };
 })(HostingScreen);

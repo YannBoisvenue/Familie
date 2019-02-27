@@ -13,7 +13,8 @@ import {
   View,
   Text,
   Button,
-  ActionSheet
+  ActionSheet,
+  Root
 } from "native-base";
 import { StyledButton } from "../../StyledComponents/button.js";
 import { ImagePicker, Permissions } from "expo";
@@ -157,50 +158,97 @@ class CreateProfile extends Component {
     const CANCEL_INDEX = 2;
 
     return (
-      <Container>
-        <StyledSubHeader
-          {...this.props}
-          title="Step 1 - Create your profile"
-          linkText=""
-          onPress={null}
-          color={Colors.desire}
-          textColor="#fff"
-        />
-        <Content style={{ padding: 15, backgroundColor: "#fff" }}>
-          <View style={{ flexDirection: "row" }}>
-            {this.state.hasPicture ? (
-              <View style={{ flex: 1 }}>
-                {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && ( */}
-                <View>
-                  <Image
-                    source={{ uri: picture }}
-                    style={{
-                      width: 100,
-                      height: 100,
-                      marginLeft: 20,
-                      marginBottom: 20,
-                      marginTop: 25,
-                      borderRadius: 5
-                    }}
-                  />
-                </View>
-                {/* )} */}
-                {/* {!!picture && pictureType === Permissions.CAMERA && (
+      <Root>
+        <Container>
+          <StyledSubHeader
+            {...this.props}
+            title="Step 1 - Create your profile"
+            linkText=""
+            onPress={null}
+            color={Colors.desire}
+            textColor="#fff"
+          />
+          <Content style={{ padding: 15, backgroundColor: "#fff" }}>
+            <View style={{ flexDirection: "row" }}>
+              {this.state.hasPicture ? (
+                <View style={{ flex: 1 }}>
+                  {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && ( */}
+                  <View>
+                    <Image
+                      source={{ uri: picture }}
+                      style={{
+                        width: 100,
+                        height: 100,
+                        marginLeft: 20,
+                        marginBottom: 20,
+                        marginTop: 25,
+                        borderRadius: 5
+                      }}
+                    />
+                  </View>
+                  {/* )} */}
+                  {/* {!!picture && pictureType === Permissions.CAMERA && (
                     <Image
                       source={{ uri: `${picture}` }}
                       style={{ width: 100, height: 100 }}
                     />
                   )} */}
-              </View>
-            ) : (
-              <View style={{ flex: 1 }}>
-                <Button
-                  transparent
-                  style={{
-                    textColor: Colors.queenBlue,
-                    marginBottom: 50,
-                    marginTop: 50
-                  }}
+                </View>
+              ) : (
+                <View style={{ flex: 1 }}>
+                  <Button
+                    transparent
+                    style={{
+                      textColor: Colors.queenBlue,
+                      marginBottom: 50,
+                      marginTop: 50
+                    }}
+                    onPress={() => {
+                      ActionSheet.show(
+                        {
+                          options: BUTTONS,
+                          cancelButtonIndex: CANCEL_INDEX,
+                          title: "Take a picture"
+                        },
+                        buttonIndex => {
+                          if (buttonIndex === 0) {
+                            this.getPicture(Permissions.CAMERA_ROLL);
+                          } else if (buttonIndex === 1) {
+                            this.takePicture();
+                          }
+                        }
+                      );
+                    }}
+                  >
+                    <Icon
+                      style={{
+                        color: Colors.queenBlue,
+                        fontSize: 40,
+                        borderRadius: 5,
+                        paddingTop: 28,
+                        paddingLeft: 28,
+                        borderColor: Colors.darkGunmetal,
+                        borderWidth: 1,
+                        width: 100,
+                        height: 100,
+                        justifyContent: "flex-start"
+                      }}
+                      type="AntDesign"
+                      name="camera"
+                    />
+                  </Button>
+                </View>
+              )}
+              <View
+                style={{
+                  flex: 1,
+                  alignContent: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <StyledLink
+                  fontSize={20}
+                  content="Upload a picture"
                   onPress={() => {
                     ActionSheet.show(
                       {
@@ -210,146 +258,101 @@ class CreateProfile extends Component {
                       },
                       buttonIndex => {
                         if (buttonIndex === 0) {
-                          this.getPicture(Permissions.CAMERA_ROLL);
+                          this.pickPicture();
                         } else if (buttonIndex === 1) {
                           this.takePicture();
                         }
                       }
                     );
                   }}
-                >
-                  <Icon
-                    style={{
-                      color: Colors.queenBlue,
-                      fontSize: 40,
-                      borderRadius: 5,
-                      paddingTop: 28,
-                      paddingLeft: 28,
-                      borderColor: Colors.darkGunmetal,
-                      borderWidth: 1,
-                      width: 100,
-                      height: 100,
-                      justifyContent: "flex-start"
-                    }}
-                    type="AntDesign"
-                    name="camera"
-                  />
-                </Button>
+                />
               </View>
-            )}
-            <View
-              style={{
-                flex: 1,
-                alignContent: "center",
-                justifyContent: "center"
-              }}
-            >
-              <StyledLink
-                fontSize={20}
-                content="Upload a picture"
-                onPress={() => {
-                  ActionSheet.show(
-                    {
-                      options: BUTTONS,
-                      cancelButtonIndex: CANCEL_INDEX,
-                      title: "Take a picture"
-                    },
-                    buttonIndex => {
-                      if (buttonIndex === 0) {
-                        this.pickPicture();
-                      } else if (buttonIndex === 1) {
-                        this.takePicture();
-                      }
-                    }
-                  );
-                }}
-              />
             </View>
-          </View>
-          <StyledForm>
-            <StyledItem type="inlineLabel" label="First name">
-              <Input
-                autoCapitalize="words"
-                onChangeText={this.handleFirstNameInput}
-                value={this.state.firstName}
-              />
-            </StyledItem>
-            <StyledItem type="inlineLabel" label="Last name">
-              <Input
-                autoCapitalize="words"
-                onChangeText={this.handleLastNameInput}
-                value={this.state.lastName}
-              />
-            </StyledItem>
-            <StyledItem type="inlineLabel" label="I'm a">
-              <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="arrow-down" />}
-                placeholder="Dad or Mom"
-                selectedValue={this.state.gender}
-                onValueChange={this.onValueChangeGender}
-              >
-                <Picker.Item label="Dad" value="dad" />
-                <Picker.Item label="Mom" value="mom" />
-              </Picker>
-            </StyledItem>
-            <Text style={styles.title}>About you</Text>
-            <StyledItem type="inlineLabel" label="Relationship status">
-              <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="arrow-down" />}
-                placeholder="Select"
-                selectedValue={this.state.relationshipStatus}
-                onValueChange={this.onValueChangeRelationshipStatus}
-              >
-                <Picker.Item label="Single" value="single" />
-                <Picker.Item label="In a relationship" value="relationship" />
-              </Picker>
-            </StyledItem>
-            <StyledItem type="inlineLabel" label="Occupation">
-              <Input
-                onChangeText={this.handleOccupationInput}
-                value={this.state.occupation}
-              />
-            </StyledItem>
-            <StyledItem type="inlineLabel" label="Date of birth">
-              <DatePicker
-                defaultDate={new Date(1985, 1, 1)}
-                minimumDate={new Date(1900, 1, 1)}
-                maximumDate={new Date(2018, 12, 31)}
-                modalTransparent={false}
-                animationType={"fade"}
-                androidMode={"default"}
-                placeHolderText="Select date"
-                textStyle={{ color: Colors.queenBlue }}
-                placeHolderTextStyle={{
-                  color: Colors.darkGunmetal,
-                  opacity: 0.75
-                }}
-                onDateChange={this.setBirthDate}
-                disabled={false}
-              />
-              <Text>{this.state.dateOfBirth.toString().substr(4, 12)}</Text>
-            </StyledItem>
-            <StyledItem type="inlineLabel" label="Location">
-              <Input
-                onChangeText={this.handleLocationInput}
-                value={this.state.location}
-              />
-            </StyledItem>
-            {/* <FormItem>
+            <StyledForm>
+              <StyledItem type="inlineLabel" label="First name">
+                <Input
+                  autoCapitalize="words"
+                  onChangeText={this.handleFirstNameInput}
+                  value={this.state.firstName}
+                />
+              </StyledItem>
+              <StyledItem type="inlineLabel" label="Last name">
+                <Input
+                  autoCapitalize="words"
+                  onChangeText={this.handleLastNameInput}
+                  value={this.state.lastName}
+                />
+              </StyledItem>
+              <StyledItem type="inlineLabel" label="I'm a">
+                <Picker
+                  mode="dropdown"
+                  iosIcon={<Icon name="arrow-down" />}
+                  placeholder="Dad or Mom"
+                  selectedValue={this.state.gender}
+                  onValueChange={this.onValueChangeGender}
+                >
+                  <Picker.Item label="Dad" value="dad" />
+                  <Picker.Item label="Mom" value="mom" />
+                </Picker>
+              </StyledItem>
+              <Text style={styles.title}>About you</Text>
+              <StyledItem type="inlineLabel" label="Relationship status">
+                <Picker
+                  mode="dropdown"
+                  iosIcon={<Icon name="arrow-down" />}
+                  placeholder="Select"
+                  selectedValue={this.state.relationshipStatus}
+                  onValueChange={this.onValueChangeRelationshipStatus}
+                >
+                  <Picker.Item label="Single" value="single" />
+                  <Picker.Item label="In a relationship" value="relationship" />
+                </Picker>
+              </StyledItem>
+              <StyledItem type="inlineLabel" label="Occupation">
+                <Input
+                  onChangeText={this.handleOccupationInput}
+                  value={this.state.occupation}
+                />
+              </StyledItem>
+              <StyledItem type="inlineLabel" label="Date of birth">
+                <DatePicker
+                  defaultDate={new Date(1985, 1, 1)}
+                  minimumDate={new Date(1900, 1, 1)}
+                  maximumDate={new Date(2018, 12, 31)}
+                  modalTransparent={false}
+                  animationType={"fade"}
+                  androidMode={"default"}
+                  placeHolderText="Select date"
+                  textStyle={{ color: Colors.queenBlue }}
+                  placeHolderTextStyle={{
+                    color: Colors.darkGunmetal,
+                    opacity: 0.75
+                  }}
+                  onDateChange={this.setBirthDate}
+                  disabled={false}
+                />
+                <Text>{this.state.dateOfBirth.toString().substr(4, 12)}</Text>
+              </StyledItem>
+              <StyledItem type="inlineLabel" label="Location">
+                <Input
+                  onChangeText={this.handleLocationInput}
+                  value={this.state.location}
+                />
+              </StyledItem>
+              {/* <FormItem>
                 <Label>Interests</Label>
                 <Input placeHolderText="To be added" />
               </FormItem> */}
-            <StyledButton
-              content="Next"
-              onPress={this.onNextCreateProfilePress}
-              color={Colors.queenBlue}
-            />
-          </StyledForm>
-          <View style={{ backgroundColor: "transparent", height: 50 }} />
-        </Content>
-      </Container>
+              <StyledButton
+                content="Next"
+                onPress={this.onNextCreateProfilePress}
+                color={Colors.queenBlue}
+              />
+            </StyledForm>
+            <View style={{ backgroundColor: "transparent", height: 50 }} />
+          </Content>
+        </Container>
+      </Root>
     );
   }
 }

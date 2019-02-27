@@ -16,13 +16,41 @@ import Colors from "../../constants/Colors";
 import moment from "moment";
 import { nominalTypeHack } from "prop-types";
 import { StyledLink } from "../../StyledComponents/link";
+import { fetchUrl } from "../../fetchUrl";
+import { UPDATE_HOSTING_EVENT } from "../../constants/ActionTypes";
 
-export const HostingEventContainer = ({ event }) => {
+const UnconnectedHostingEventContainer = ({ event, userId, dispatch }) => {
   let description = event.desc;
 
   if (event.desc.length > 25) {
     description = event.desc.slice(0, 24) + "...";
   }
+
+  removeEvent = () => {
+    fetch(fetchUrl + "/deleteEvent", {
+      method: "POST",
+      body: JSON.stringify(event._id)
+    })
+      .then(x => {
+        x.text();
+      })
+      .then(() => {
+        console.log(userId);
+        fetch(fetchUrl + "/hostingEvents", {
+          method: "POST",
+          body: JSON.stringify(userId)
+        })
+          .then(x => x.text())
+          .then(response => {
+            debugger;
+            let events = JSON.parse(response);
+            dispatch({
+              type: UPDATE_HOSTING_EVENT,
+              payload: events.attending
+            });
+          });
+      });
+  };
 
   return (
     <Card noShadow style={styles.card}>
@@ -41,12 +69,7 @@ export const HostingEventContainer = ({ event }) => {
           <Text>{description}</Text>
         </Container>
         <Right style={{ flex: -1 }}>
-          <Button
-            transparent
-            onPress={() => {
-              Alert.alert("Remove this event");
-            }}
-          >
+          <Button transparent onPress={this.removeEvent}>
             <Icon
               style={{ fontSize: 30, color: Colors.lightBlue }}
               type="FontAwesome"
@@ -79,3 +102,9 @@ const styles = StyleSheet.create({
     color: Colors.darkGunmetal
   }
 });
+
+let HostingEventContainer = connect(state => {
+  return { userId: state.user.userId };
+})(UnconnectedHostingEventContainer);
+
+export { HostingEventContainer };

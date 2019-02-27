@@ -36,7 +36,7 @@ class addEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      picture: undefined,
+      picture: {},
       pictureType: "",
       time: new Date(),
       guests: undefined,
@@ -46,6 +46,7 @@ class addEventForm extends Component {
       coordinate: { lat: 0, lng: 0 },
       hasPicture: false
     };
+    this.setDate = this.setDate.bind(this);
   }
 
   static navigationOptions = {
@@ -82,16 +83,19 @@ class addEventForm extends Component {
 
   getPicture = async type => {
     const { status } = await Permissions.askAsync(type);
+    let newType = await type;
 
     if (status === "granted") {
       const options = { allowsEditing: true, aspect: [4, 2] };
       let result = null;
-      if (type === Permissions.CAMERA_ROLL) {
+      if (newType === Permissions.CAMERA_ROLL) {
         result = await ImagePicker.launchImageLibraryAsync(options);
       } else {
         result = await ImagePicker.launchCameraAsync(options);
       }
-
+      let uri = result.uri;
+      let filename = uri.split("/").pop();
+      let type = "image/png";
       if (!result.cancelled) {
         this.setState({
           picture: { uri, filename, type },
@@ -153,8 +157,8 @@ class addEventForm extends Component {
   };
 
   render() {
-    let picture = this.state.picture;
-    let pictureType = this.state.pictureType;
+    let picture = this.state.picture.uri;
+    let pictureType = this.state.picture.type;
     const BUTTONS = ["From camera roll", "Take a picture", "Cancel"];
     const CANCEL_INDEX = 2;
 
@@ -179,18 +183,18 @@ class addEventForm extends Component {
           >
             {this.state.hasPicture ? (
               <Item>
-                {!!picture && pictureType === Permissions.CAMERA_ROLL && (
+                {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && (
                   <Image
                     source={{ uri: picture }}
                     style={{ width: 350, height: 150, borderRadius: 5 }}
                   />
                 )}
-                {!!picture && pictureType === Permissions.CAMERA && (
-                  <Image
-                    source={{ uri: picture }}
-                    style={{ width: 350, height: 150, borderRadius: 5 }}
-                  />
-                )}
+                {!!picture && pictureType === Permissions.CAMERA && ( */}
+                <Image
+                  source={{ uri: picture }}
+                  style={{ width: 350, height: 150, borderRadius: 5 }}
+                />
+                {/* )} */}
               </Item>
             ) : (
               <Icon
@@ -299,4 +303,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect()(addEventForm);
+export default connect(state => {
+  return { userId: state.user.userId };
+})(addEventForm);
