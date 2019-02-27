@@ -97,7 +97,6 @@ class SingleAttendEvent extends Component {
             color={Colors.darkGunmetal}
             content={this.props.event.name}
             onPress={() => {
-              console.log("navigation to Event with Id", this.props.event._id);
               this.props.navigation.navigate("Event", {
                 id: this.props.event._id
               }); ///this is the param object

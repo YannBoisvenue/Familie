@@ -42,7 +42,6 @@ const UnconnectedHostingEventContainer = ({ event, userId, dispatch }) => {
         })
           .then(x => x.text())
           .then(response => {
-            debugger;
             let events = JSON.parse(response);
             dispatch({
               type: UPDATE_HOSTING_EVENT,

@@ -1,9 +1,13 @@
-import { UPDATE_HOSTING_EVENT } from "../constants/ActionTypes";
+import {
+  UPDATE_HOSTING_EVENT,
+  UPDATE_ATTENDING_EVENT
+} from "../constants/ActionTypes";
 import { ActionSheet } from "native-base";
 
 const initialState = {
   events: [],
-  hostingEvents: []
+  hostingEvents: [],
+  attendingEvents: []
 };
 
 export default function authentication(state = initialState, action) {
@@ -13,6 +17,9 @@ export default function authentication(state = initialState, action) {
 
     case UPDATE_HOSTING_EVENT:
       return { ...state, hostingEvents: action.payload };
+
+    case UPDATE_ATTENDING_EVENT:
+      return { ...state, attendingEvents: action.payload };
 
     default:
       return state;

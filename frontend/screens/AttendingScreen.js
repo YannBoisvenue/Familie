@@ -17,6 +17,7 @@ import {
 } from "native-base";
 import Colors from "../constants/Colors";
 import SingleAttendingEvent from "../components/SingleEvent/SingleAttendingEvent";
+import { UPDATE_ATTENDING_EVENT } from "../constants/ActionTypes";
 
 class AttendingScreen extends Component {
   constructor(props) {
@@ -36,14 +37,18 @@ class AttendingScreen extends Component {
         let res = JSON.parse(response);
         if (res.success) {
           this.setState({ events: res.events });
+          this.props.dispatch({
+            type: UPDATE_ATTENDING_EVENT,
+            payload: res.events
+          });
         }
       });
   }
 
   render() {
-    const { events } = this.state;
-    if (events) {
-      eventArr = events.map((e, index) => {
+    const { attendingEvents } = this.props;
+    if (attendingEvents.length > 0) {
+      eventArr = attendingEvents.map((e, index) => {
         return <SingleAttendingEvent key={index} event={e} />;
       });
     }
@@ -68,7 +73,7 @@ class AttendingScreen extends Component {
           </Card>
         </View>
         <StyledContent>
-          {events ? (
+          {attendingEvents.length > 0 ? (
             eventArr
           ) : (
             <Text>You have no attending events. Find one!</Text>
@@ -80,5 +85,8 @@ class AttendingScreen extends Component {
 }
 
 export default connect(state => {
-  return { userId: state.user.userId };
+  return {
+    userId: state.user.userId,
+    attendingEvents: state.events.attendingEvents
+  };
 })(AttendingScreen);
