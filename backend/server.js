@@ -55,7 +55,10 @@ app.post("/addevent", upload.single("eventPicture"), (req, res) => {
   fs.rename(req.file.path, req.file.path + "." + extension, () => {});
   console.log("req.body", req.body);
   let event = req.body;
-  event = { ...event, fileName: req.file.path + "." + extension };
+  event = {
+    ...event,
+    fileName: req.file.path.str.split("/").pop() + "." + extension
+  };
   console.log("event", event);
   let db = dbs.db("finalproject");
 
@@ -83,7 +86,7 @@ app.post("/add-family", upload.single("familyPicture"), (req, res) => {
     if (err) throw err;
     let response = {
       success: true,
-      message: "Profile successfully created",
+      message: "Profile successfully updated by adding kids",
       _id: ress._id
     };
     res.send(JSON.stringify(response));
@@ -95,7 +98,8 @@ app.post("/add-family", upload.single("familyPicture"), (req, res) => {
 
 app.use(bodyParser.raw({ type: "*/*" }));
 
-// this parse everything received.
+// this parse everything received.///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.use((req, res, next) => {
   try {
     req.body = JSON.parse(req.body.toString());
@@ -197,6 +201,8 @@ app.get("/allEvents", (req, res) => {
         success: true,
         events: result
       };
+
+      // use:str.split('/').pop()
       res.send(JSON.stringify(response));
       console.log("response", response);
       console.log("success at /allEvents!!!!!");

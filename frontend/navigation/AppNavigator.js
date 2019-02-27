@@ -4,6 +4,7 @@ import {
   createSwitchNavigator,
   createStackNavigator
 } from "react-navigation";
+import { Image } from "react-native";
 
 import MainTabNavigator from "./MainTabNavigator";
 import addEventForm from "../components/addEventForm/addEventForm";
@@ -33,17 +34,38 @@ class Event extends React.Component {
       .then(res => res.json())
       .then(res => {
         // console.log("what do I receive", res);
-        this.setState({ event: res.result });
+        let result = res.result;
+        console.log("result", result);
+        let filenameArr = result.fileName.split("/");
+        let pictureToShow = "/" + filenameArr[filenameArr.length - 1];
+        console.log("result bef", pictureToShow);
+        result = { ...result, fileName: pictureToShow };
+        console.log("result after change", result);
+        this.setState({ event: result });
       });
   }
 
   render() {
     console.log("dans le render de event");
+    console.log(
+      "concat this motha fucka",
+      "http://68.183.200.44:4000" + this.state.event.fileName
+    );
     return (
       <View>
+        <Text>an image should be below</Text>
+        <View>
+          <Image
+            style={{ height: 500, width: 500 }}
+            source={{
+              uri: "http://68.183.200.44:4000" + this.state.event.fileName
+            }}
+          />
+        </View>
         <Text>
           {/**Image */}
           {/* {this.state.event.guests} will need an endpoint that will give the user depending on his id, map every id to show every attending guests*/}
+
           {this.state.event.name}
           {this.state.event.desc}
           {this.state.event.location}
