@@ -13,7 +13,8 @@ import {
   Icon,
   Card,
   Right,
-  View
+  View,
+  Root
 } from "native-base";
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
@@ -163,132 +164,134 @@ class addEventForm extends Component {
     const CANCEL_INDEX = 2;
 
     return (
-      <Container>
-        <StyledSubHeader
-          {...this.props}
-          title="Add Event Form"
-          linkText="Cancel"
-          onPress={() => {
-            this.props.navigation.navigate("Events");
-          }}
-        />
-        <StyledContent>
-          <Card
-            noShadow
-            style={{
-              alignItems: "center",
-              backgroundColor: "transparent",
-              borderColor: "transparent"
+      <Root>
+        <Container>
+          <StyledSubHeader
+            {...this.props}
+            title="Add Event Form"
+            linkText="Cancel"
+            onPress={() => {
+              this.props.navigation.navigate("Events");
             }}
-          >
-            {this.state.hasPicture ? (
-              <Item>
-                {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && (
+          />
+          <StyledContent>
+            <Card
+              noShadow
+              style={{
+                alignItems: "center",
+                backgroundColor: "transparent",
+                borderColor: "transparent"
+              }}
+            >
+              {this.state.hasPicture ? (
+                <Item>
+                  {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && (
                   <Image
                     source={{ uri: picture }}
                     style={{ width: 350, height: 150, borderRadius: 5 }}
                   />
                 )}
                 {!!picture && pictureType === Permissions.CAMERA && ( */}
-                <Image
-                  source={{ uri: picture }}
-                  style={{ width: 350, height: 150, borderRadius: 5 }}
+                  <Image
+                    source={{ uri: picture }}
+                    style={{ width: 350, height: 150, borderRadius: 5 }}
+                  />
+                  {/* )} */}
+                </Item>
+              ) : (
+                <Icon
+                  style={{
+                    borderRadius: 5,
+                    fontSize: 40,
+                    paddingTop: 55,
+                    paddingLeft: 155,
+                    borderColor: Colors.darkGunmetal,
+                    borderWidth: 1,
+                    width: 350,
+                    height: 150
+                  }}
+                  type="AntDesign"
+                  name="camera"
                 />
-                {/* )} */}
-              </Item>
-            ) : (
-              <Icon
-                style={{
-                  borderRadius: 5,
-                  fontSize: 40,
-                  paddingTop: 55,
-                  paddingLeft: 155,
-                  borderColor: Colors.darkGunmetal,
-                  borderWidth: 1,
-                  width: 350,
-                  height: 150
-                }}
-                type="AntDesign"
-                name="camera"
-              />
-            )}
-          </Card>
-          <StyledLink
-            content="Upload a picture"
-            onPress={() => {
-              ActionSheet.show(
-                {
-                  options: BUTTONS,
-                  cancelButtonIndex: CANCEL_INDEX,
-                  title: "Take a picture"
-                },
-                buttonIndex => {
-                  if (buttonIndex === 0) {
-                    this.pickPicture();
-                  } else if (buttonIndex === 1) {
-                    this.takePicture();
+              )}
+            </Card>
+            <StyledLink
+              content="Upload a picture"
+              onPress={() => {
+                ActionSheet.show(
+                  {
+                    options: BUTTONS,
+                    cancelButtonIndex: CANCEL_INDEX,
+                    title: "Take a picture"
+                  },
+                  buttonIndex => {
+                    if (buttonIndex === 0) {
+                      this.pickPicture();
+                    } else if (buttonIndex === 1) {
+                      this.takePicture();
+                    }
                   }
-                }
-              );
-            }}
-          />
-          <StyledForm>
-            <StyledItem type="inlineLabel" label="Event name">
-              <Input
-                autoCapitalize="none"
-                onChangeText={name => this.setState({ name })}
-              />
-            </StyledItem>
-            <StyledItem type="inlineLabel" label="Choose a date">
-              <DatePicker
-                sytle={styles.datePicker}
-                defaultDate={new Date(2019, 1, 1)}
-                minimumDate={new Date(2018, 2, 20)}
-                maximumDate={new Date(2021, 12, 31)}
-                locale={"en"}
-                timeZoneOffsetInMinutes={undefined}
-                modalTransparent={false}
-                animationType={"fade"}
-                androidMode={"default"}
-                placeHolderText="Select date"
-                textStyle={{ color: Colors.queenBlue }}
-                placeHolderTextStyle={{
-                  color: Colors.darkGunmetal,
-                  opacity: 0.75
-                }}
-                onDateChange={this.setDate}
-                disabled={false}
-              />
-            </StyledItem>
-            <StyledItem type="inlineLabel" label="Address">
-              <Input
-                autoCapitalize="none"
-                onChangeText={location => this.setState({ location })}
-              />
-            </StyledItem>
-            <Item style={{ borderBottomColor: "transparent", marginLeft: 0 }}>
-              <Textarea
-                style={{
-                  height: 150,
-                  width: 345,
-                  borderColor: Colors.tabIconDefault
-                }}
-                rowSpan={5}
-                bordered
-                placeholder="Description of the event                                "
-                onChangeText={desc => this.setState({ desc })}
-              />
-            </Item>
-          </StyledForm>
-          <ScrollView>
-            <StyledButton
-              onPress={this.onCreateEventPress}
-              content="Create Event"
-              color={Colors.queenBlue}
+                );
+              }}
             />
-          </ScrollView>
-        </StyledContent>
-      </Container>
+            <StyledForm>
+              <StyledItem type="inlineLabel" label="Event name">
+                <Input
+                  autoCapitalize="none"
+                  onChangeText={name => this.setState({ name })}
+                />
+              </StyledItem>
+              <StyledItem type="inlineLabel" label="Choose a date">
+                <DatePicker
+                  sytle={styles.datePicker}
+                  defaultDate={new Date(2019, 1, 1)}
+                  minimumDate={new Date(2018, 2, 20)}
+                  maximumDate={new Date(2021, 12, 31)}
+                  locale={"en"}
+                  timeZoneOffsetInMinutes={undefined}
+                  modalTransparent={false}
+                  animationType={"fade"}
+                  androidMode={"default"}
+                  placeHolderText="Select date"
+                  textStyle={{ color: Colors.queenBlue }}
+                  placeHolderTextStyle={{
+                    color: Colors.darkGunmetal,
+                    opacity: 0.75
+                  }}
+                  onDateChange={this.setDate}
+                  disabled={false}
+                />
+              </StyledItem>
+              <StyledItem type="inlineLabel" label="Address">
+                <Input
+                  autoCapitalize="none"
+                  onChangeText={location => this.setState({ location })}
+                />
+              </StyledItem>
+              <Item style={{ borderBottomColor: "transparent", marginLeft: 0 }}>
+                <Textarea
+                  style={{
+                    height: 150,
+                    width: 345,
+                    borderColor: Colors.tabIconDefault
+                  }}
+                  rowSpan={5}
+                  bordered
+                  placeholder="Description of the event                                "
+                  onChangeText={desc => this.setState({ desc })}
+                />
+              </Item>
+            </StyledForm>
+            <ScrollView>
+              <StyledButton
+                onPress={this.onCreateEventPress}
+                content="Create Event"
+                color={Colors.queenBlue}
+              />
+            </ScrollView>
+          </StyledContent>
+        </Container>
+      </Root>
     );
   }
 }
