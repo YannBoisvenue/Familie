@@ -121,7 +121,6 @@ class SingleEvent extends Component {
     let locationArr = this.props.location.split(",");
     let location = locationArr[0];
     let pictureUri = this.props.image.split("/")[5];
-    console.log(pictureUri);
 
     return (
       <Card noShadow style={styles.card}>

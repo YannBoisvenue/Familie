@@ -111,12 +111,13 @@ class SingleAttendEvent extends Component {
 
     let locationArr = this.props.event.location.split(",");
     let location = locationArr[0];
+    let pictureUri = this.props.event.fileName.split("/")[5];
 
     return (
       <Card noShadow style={styles.card}>
         <CardItem style={styles.image}>
           <Image
-            source={{ uri: "https://picsum.photos/500/500" }}
+            source={{ uri: `http://68.183.200.44:4000/${pictureUri}` }}
             style={{ height: 200, width: null, flex: 1 }}
           />
         </CardItem>
