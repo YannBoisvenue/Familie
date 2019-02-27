@@ -22,33 +22,18 @@ class SingleProfile extends Component {
   render() {
     return (
       <Card noShadow style={styles.card}>
-        {/* <CardItem style={styles.image}>
-          <Image
-            source={{ uri: "https://picsum.photos/200/300" }}
-            style={{ height: 200, width: null, flex: 1 }}
-          />
-        </CardItem> */}
         <CardItem style={styles.cardTitle}>
           <StyledLink
             bold
             color={Colors.darkGunmetal}
             content={this.props.firstName + " " + this.props.lastName}
             onPress={() => {
-              console.log(
-                "this.props.navigation in singleProfile",
-                this.props.navigation
-              );
-              console.log("navigation to profile with Id", this.props._id);
-              /*navigate with Id the same way I navigate the single events*/
               this.props.navigation.navigate("MyProfile", {
                 id: this.props._id
               });
-              console.log("is this true?"); ///this is the param object
-              console.log("after navigation");
             }}
           />
         </CardItem>
-
         <CardItem style={styles.cardDate}>
           <Text>I'm a: {this.props.gender}</Text>
         </CardItem>

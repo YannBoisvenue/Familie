@@ -5,7 +5,6 @@ import {
   createStackNavigator
 } from "react-navigation";
 import { Image } from "react-native";
-
 import MainTabNavigator from "./MainTabNavigator";
 import addEventForm from "../components/addEventForm/addEventForm";
 import signup from "../components/signup";
@@ -21,7 +20,7 @@ import AttendingScreen from "../screens/AttendingScreen";
 import createProfileAddFamily from "../components/createProfileAddFamily";
 // import console = require("console");
 
-/*************Not supposed to be here - need proper navigation *******/
+/************* Not supposed to be here - need proper navigation *******/
 
 class Event extends React.Component {
   constructor(props) {
