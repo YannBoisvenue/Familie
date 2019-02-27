@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, Text, Tab, Item, Label, Input } from "native-base";
+import { Container, Tab } from "native-base";
 import { StyledTabs } from "../StyledComponents/tabs";
-import Login from "../components/login";
 import { StyledContent } from "../StyledComponents/mainContainer";
 import { Alert } from "react-native";
+import AllProfiles from "../components/AllProfiles/AllProfiles";
 
 export default class FriendScreen extends React.Component {
   constructor(props) {
@@ -38,17 +38,9 @@ export default class FriendScreen extends React.Component {
     return (
       <Container>
         <StyledTabs>
-          <Tab heading="Suggested">
+          <Tab heading="All Friends">
             <StyledContent>
-              {/* Put the page component here instead of Login*/}
-              <Login />
-            </StyledContent>
-          </Tab>
-
-          <Tab heading="Your Friends">
-            <StyledContent>
-              {/* Put the page component here instead of Login*/}
-              <Login />
+              <AllProfiles />
             </StyledContent>
           </Tab>
         </StyledTabs>
