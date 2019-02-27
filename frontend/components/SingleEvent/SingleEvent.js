@@ -1,16 +1,7 @@
-import {
-  View,
-  Text,
-  Button,
-  Card,
-  CardItem,
-  Container,
-  Icon
-} from "native-base";
+import { View, Text, Button, Card, CardItem, Icon } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, Image, Alert } from "react-native";
 import { withNavigation } from "react-navigation";
-import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import { StyledLink } from "../../StyledComponents/link";
 import moment from "moment";
@@ -48,6 +39,15 @@ class SingleEvent extends Component {
     });
     fetch(fetchUrl + "/attendEvent", { method: "POST", body: body });
     this.setState({ attending: true });
+  };
+
+  handleUnattendEvent = async () => {
+    let body = JSON.stringify({
+      user: this.props.userId,
+      eventId: this.props._id
+    });
+    fetch(fetchUrl + "/unattendEvent", { method: "POST", body: body });
+    this.setState({ attending: false });
   };
 
   seeMore = () => {
@@ -126,26 +126,43 @@ class SingleEvent extends Component {
           <React.Fragment />
         )}
         {this.state.attending ? (
-          <CardItem cardBody style={{ paddingLeft: 7 }}>
-            {/* <Button
-              hasText
-              transparent
-              style={styles.url}
-              onPress={this.handleGoingClick}
-            > */}
-            <Text
-              style={{
-                paddingBottom: 10,
-                paddingLeft: 0,
-                paddingRight: 0,
-                color: Colors.lightBlue,
-                fontSize: 17
-              }}
+          <View style={{ flexDirection: "row" }}>
+            <CardItem cardBody style={{ paddingLeft: 7 }}>
+              <Text
+                style={{
+                  paddingBottom: 10,
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                  color: Colors.queenBlue,
+                  fontSize: 17
+                }}
+              >
+                Going
+              </Text>
+              {/* </Button> */}
+            </CardItem>
+            {/* <TouchableOpacity> */}
+            <CardItem
+              button
+              onPress={this.handleUnattendEvent}
+              cardBody
+              style={{ paddingLeft: 7 }}
             >
-              Going
-            </Text>
-            {/* </Button> */}
-          </CardItem>
+              <Text
+                style={{
+                  paddingBottom: 10,
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                  color: Colors.lightBlue,
+                  fontSize: 17
+                }}
+              >
+                Cancel
+              </Text>
+              {/* </Button> */}
+            </CardItem>
+            {/* </TouchableOpacity> */}
+          </View>
         ) : (
           <CardItem cardBody style={{ paddingLeft: 7 }}>
             <Button

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import {
   View,
@@ -7,11 +7,9 @@ import {
   Text,
   Item as FormItem,
   Label,
-  Root,
-  TouchableOpacity
+  Root
 } from "native-base";
 import { StyledButton } from "../../StyledComponents/button.js";
-import { ImagePicker, Permissions } from "expo";
 import Autocomplete from "react-native-autocomplete-input";
 import SingleKid from "../SingleKid";
 import { StyledContent } from "../../StyledComponents/mainContainer";
@@ -27,9 +25,9 @@ class CreateProfileAddFamily extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      parentId: "",
       query: "",
-      otherParentName: "",
+      otherParentId: "",
+      parents: [],
       kids: []
     };
   }
@@ -51,11 +49,9 @@ class CreateProfileAddFamily extends Component {
     if (query === "") {
       return [];
     }
-    const parents = this.state.parents;
-    //making a case insensitive regular expression to get similar value from the film json
+    const { parents } = this.state;
     const regex = new RegExp(query.trim(), "i");
-    //return the filtered film array according the query from the input
-    return parents.filter(parent => parent.firstname.search(regex) >= 0);
+    return parents.filter(parent => parent.firstName.search(regex) >= 0);
   };
 
   addKid = () => {
@@ -77,9 +73,9 @@ class CreateProfileAddFamily extends Component {
     let formData = new FormData();
     formData.append("userId", this.props.userId),
       formData.append("kidsInfo", kidsInfo),
-      formData.append("otherParentName", this.state.otherParentName);
+      formData.append("otherParentId", this.state.otherParentId);
 
-    h.Accept = "application/json";
+    h["content-type"] = "multipart/form-data";
 
     fetch(fetchUrl + "/add-family", {
       method: "POST",
@@ -143,27 +139,35 @@ class CreateProfileAddFamily extends Component {
                       shadowOpacity: 0,
                       borderRadius: 2,
                       borderStyle: "solid",
-                      borderColor: Colors.darkGunmetal
+                      borderColor: Colors.darkGunmetal,
+                      width: 200
                     }}
                     autoCapitalize="none"
                     autoCorrect={false}
                     data={
-                      parents.length === 1 && comp(query, parents[0].firstname)
+                      parents.length === 1 && comp(query, parents[0].firstName)
                         ? []
                         : parents
                     }
                     defaultValue={query}
                     onChangeText={text => this.setState({ query: text })}
                     placeholder="Enter the other parent's name"
-                    renderItem={({ firstname, lastname }) => (
-                      <TouchableOpacity
-                        onPress={() => this.setState({ query: firstname })}
-                      >
-                        <Text noShadow style={{ borderRadius: 5 }}>
-                          {firstname} {lastname}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
+                    renderItem={({ firstName, lastName, _id }) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.setState({
+                              query: firstName + " " + lastName,
+                              otherParentId: _id
+                            });
+                          }}
+                        >
+                          <Text noShadow style={{ borderRadius: 5 }}>
+                            {firstName} {lastName}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    }}
                   />
                 </FormItem>
               </FormItem>

@@ -310,6 +310,30 @@ app.post("/attendEvent", (req, res) => {
   console.log("success at /attendEvent!!!!!");
 });
 
+app.post("/unattendEvent", (req, res) => {
+  let db = dbs.db("finalproject");
+  let userId = req.body.user;
+  let chosenEvent = req.body.eventId;
+  let guestsArray = [];
+  db.collection("events").findOne({ _id: ObjectID(chosenEvent) }, function(
+    err,
+    result
+  ) {
+    if (err) throw err;
+    if (result.guests) {
+      guestsArray = result.guests;
+    }
+    while (guestsArray.indexOf(userId) !== -1) {
+      guestsArray.splice(guestsArray.indexOf(userId), 1);
+    }
+    db.collection("events").updateOne(
+      { _id: ObjectID(chosenEvent) },
+      { $set: { guests: guestsArray } }
+    );
+    res.send(JSON.stringify({ success: true }));
+  });
+});
+
 // addEventListener.post("/oneEvent", (req, res) => {
 //   console.log("you made it to /oneEvent");
 //   let db = dbs.db("finalproject");
