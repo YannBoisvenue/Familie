@@ -106,7 +106,7 @@ class MyProfile extends React.Component {
         <View>
           <Text>{this.state.profile.lastName}</Text>
         </View>
-        <Image uri="http://68.183.200.44:4000/8c191ac9b6154ff94e69a9ccc874fa63.jpg}" />
+        {/* <Image uri="http://68.183.200.44:4000/8c191ac9b6154ff94e69a9ccc874fa63.jpg}" /> */}
       </View>
     );
   }

@@ -1,4 +1,12 @@
-import { View, Text, Button, Card, CardItem, Container } from "native-base";
+import {
+  View,
+  Text,
+  Button,
+  Card,
+  CardItem,
+  Container,
+  Icon
+} from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, Image, Alert } from "react-native";
 import { withNavigation } from "react-navigation";
@@ -54,7 +62,12 @@ class SingleProfile extends Component {
           <Text>D.O.B.: {this.props.dateOfBirth}</Text>
         </CardItem>
         <CardItem style={styles.cardDate}>
-          <Text>Location: {this.props.location}</Text>
+          <Icon
+            type="Feather"
+            name="map-pin"
+            style={{ fontSize: 20, width: 26 }}
+          />
+          <Text>{this.props.location}</Text>
         </CardItem>
       </Card>
     );
