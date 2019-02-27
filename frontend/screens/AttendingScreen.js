@@ -6,7 +6,15 @@ import { HostingEventContainer } from "../components/hostingEvent/hostingEventCo
 import { AsyncStorage } from "react-native";
 import { fetchUrl } from "../fetchUrl";
 import { StyledSectionTitle } from "../StyledComponents/title";
-import { Container, Right, Left, CardItem, Card, View } from "native-base";
+import {
+  Container,
+  Right,
+  Left,
+  CardItem,
+  Card,
+  View,
+  Text
+} from "native-base";
 import Colors from "../constants/Colors";
 import SingleAttendingEvent from "../components/SingleEvent/SingleAttendingEvent";
 
@@ -60,7 +68,11 @@ class AttendingScreen extends Component {
           </Card>
         </View>
         <StyledContent>
-          {events ? eventArr : "You have no hosting events"}
+          {events ? (
+            eventArr
+          ) : (
+            <Text>You have no attending events. Find one!</Text>
+          )}
         </StyledContent>
       </Container>
     );

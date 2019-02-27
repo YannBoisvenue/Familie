@@ -6,7 +6,15 @@ import { HostingEventContainer } from "../components/hostingEvent/hostingEventCo
 import { AsyncStorage } from "react-native";
 import { fetchUrl } from "../fetchUrl";
 import { StyledSectionTitle } from "../StyledComponents/title";
-import { Container, Right, Left, CardItem, Card, View } from "native-base";
+import {
+  Container,
+  Right,
+  Left,
+  CardItem,
+  Card,
+  View,
+  Text
+} from "native-base";
 import Colors from "../constants/Colors";
 import { UPDATE_HOSTING_EVENT } from "../constants/ActionTypes";
 
@@ -73,7 +81,11 @@ class HostingScreen extends Component {
           </Card>
         </View>
         <StyledContent>
-          {hostingEvents ? eventArr : "You have no hosting events"}
+          {hostingEvents.length > 0 ? (
+            eventArr
+          ) : (
+            <Text>You have no hosting events. Create one!</Text>
+          )}
         </StyledContent>
       </Container>
     );
