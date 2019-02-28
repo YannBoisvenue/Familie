@@ -86,6 +86,9 @@ class MyProfile extends React.Component {
       id: props.navigation.getParam("id", null),
       profile: {}
     };
+  }
+  componentDidMount() {
+    console.log("in component did mount");
     fetch(`${fetchUrl}/profile/${this.state.id}`)
       .then(res => res.json())
       .then(res => {
@@ -95,30 +98,80 @@ class MyProfile extends React.Component {
   }
 
   render() {
-    console.log("dans le render de profile");
+    console.log("wattttttttttttttttttttttt");
+    let pictureUri;
+    if (this.state.profile.fileName !== undefined) {
+      pictureUri = this.state.profile.fileName.split("/").pop();
+      console.log("picture uri now equals to something");
+    }
+    console.log(`http://68.183.200.44:4000/${pictureUri}`);
+    console.log("new consolelog");
+
+    console.log("PROFILE", pictureUri);
     return (
-      <View>
-        <Image
-          source={{ uri: "https://picsum.photos/250/250" }}
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column"
+        }}
+      >
+        <View
           style={{
-            height: 100,
-            width: 100,
-            borderRadius: 5,
-            marginTop: 15
+            alignItems: "center",
+            marginTop: 20,
+            marginBottom: 20,
+            fontWeight: "bold"
           }}
-        />
-        {console.log(this.state.profile)}
-        <View>
-          <Text>{this.state.profile.firstName}</Text>
+        >
+          <Text>
+            {this.state.profile.firstName} {this.state.profile.lastName}
+          </Text>
         </View>
-        <View>
-          <Text>{this.state.profile.lastName}</Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <Image
+            style={{ height: 200, width: 200, marginLeft: 40 }}
+            source={{
+              uri: `http://68.183.200.44:4000/${pictureUri}`
+            }}
+          />
+          <View style={{ marginRight: 50 }}>
+            <Text>{this.state.profile.gender}</Text>
+            <Text>{this.state.profile.relationshipStatus}</Text>
+          </View>
         </View>
-        <View>
-          <Text>{this.state.profile.gender}</Text>
+        <View
+          style={{
+            alignItems: "center",
+            marginTop: 20,
+            marginBottom: 20,
+            fontWeight: "bold"
+          }}
+        >
+          <Text style={{ marginTop: -50 }}>My kids</Text>
         </View>
-        <View>
-          <Text>{this.state.profile.relationshipStatus}</Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <Image
+            style={{ height: 150, width: 150, marginLeft: 40, marginTop: 0 }}
+            source={{
+              uri: `http://68.183.200.44:4000/${pictureUri}`
+            }}
+          />
+          <View style={{ marginRight: 80 }}>
+            <Text />
+            <Text />
+          </View>
         </View>
       </View>
     );

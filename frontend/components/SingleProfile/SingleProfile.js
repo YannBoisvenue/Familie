@@ -37,14 +37,7 @@ class SingleProfile extends Component {
                 }}
               />
             </CardItem>
-            <CardItem style={styles.image}>
-              <Image
-                source={{
-                  uri: `http://68.183.200.44:4000/${pictureUri}`
-                }}
-                style={{ height: 200, width: null, flex: 1 }}
-              />
-            </CardItem>
+            <CardItem style={styles.image} />
             <CardItem style={styles.cardDate}>
               <Text style={{ color: Colors.darkGunmetal, fontWeight: "bold" }}>
                 I'm a:{" "}
@@ -73,7 +66,7 @@ class SingleProfile extends Component {
           <View style={{ flex: 1 }}>
             <CardItem style={styles.cardDate}>
               <Image
-                source={{ uri: "https://picsum.photos/100/100" }}
+                source={{ uri: `http://68.183.200.44:4000/${pictureUri}` }}
                 style={{
                   height: 100,
                   width: 100,
