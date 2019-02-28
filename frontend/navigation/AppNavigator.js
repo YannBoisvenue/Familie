@@ -11,73 +11,13 @@ import signup from "../components/signup";
 import login from "../components/login";
 import HostingScreen from "../screens/HostingScreen";
 import LoginScreen from "../screens/LoginScreen";
+import DisplayEvent from "../components/displayEvent";
 import CreateProfile from "../components/createProfile";
 import { View, Text } from "native-base";
 import { fetchUrl } from "../fetchUrl";
 import AuthLoadingScreen from "../screens/AuthLoadingScreen";
-import moment from "moment";
 import AttendingScreen from "../screens/AttendingScreen";
 import createProfileAddFamily from "../components/createProfileAddFamily";
-// import console = require("console");
-
-/************* Not supposed to be here - need proper navigation *******/
-
-class Event extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: props.navigation.getParam("id", null),
-      event: {}
-    };
-    fetch(`${fetchUrl}/event/${this.state.id}`)
-      .then(res => res.json())
-      .then(res => {
-        // console.log("what do I receive", res);
-        let result = res.result;
-        console.log("result", result);
-        let filenameArr = result.fileName.split("/");
-        let pictureToShow = "/" + filenameArr[filenameArr.length - 1];
-        console.log("result bef", pictureToShow);
-        result = { ...result, fileName: pictureToShow };
-        console.log("result after change", result);
-        this.setState({ event: result });
-      });
-  }
-
-  render() {
-    console.log("dans le render de event");
-    console.log(
-      "concat this motha fucka",
-      "http://68.183.200.44:4000" + this.state.event.fileName
-    );
-    return (
-      <View>
-        <Text>an image should be below</Text>
-        <View>
-          <Image
-            style={{ height: 500, width: 500 }}
-            source={{
-              uri: "http://68.183.200.44:4000" + this.state.event.fileName
-            }}
-          />
-        </View>
-        <Text>
-          {/**Image */}
-          {/* {this.state.event.guests} will need an endpoint that will give the user depending on his id, map every id to show every attending guests*/}
-
-          {this.state.event.name}
-          {this.state.event.desc}
-          {this.state.event.location}
-          {moment(this.state.event.time).format("MMM Do YYYY, h:mm a")}
-        </Text>
-      </View>
-    );
-  }
-}
-
-/******************** As I said, proper navigation **********/
-
-/************* Same here, I'm just being lazy *******/
 
 class MyProfile extends React.Component {
   constructor(props) {
@@ -178,8 +118,6 @@ class MyProfile extends React.Component {
   }
 }
 
-/******************** As I said, proper navigation **************/
-
 const AuthenticationNavigator = createStackNavigator({
   AuthLoadingScreen: AuthLoadingScreen,
   LoginScreen: LoginScreen,
@@ -196,16 +134,13 @@ const AppNavigator = createStackNavigator({
   AttendingEvent: AttendingScreen,
   AddEvent: addEventForm,
   Login: login,
-  // CreateProfile: CreateProfile
-  Event,
+  DisplayEvent: DisplayEvent,
   MyProfile
 });
 
 export default createAppContainer(
   createSwitchNavigator(
     {
-      // You could add another route here for authentication.
-      // Read more at https://reactnavigation.org/docs/en/auth-flow.html
       Authenticated: AuthenticationNavigator,
       Profile: CreateAccount,
       Main: MainTabNavigator,
