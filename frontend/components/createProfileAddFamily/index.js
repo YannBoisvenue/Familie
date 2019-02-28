@@ -68,7 +68,6 @@ class CreateProfileAddFamily extends Component {
   onNextCreateProfile = event => {
     event.preventDefault();
     let kidsInfo = this.state.kids.map(kid => kid.state);
-    debugger;
 
     const h = {};
     let formData = new FormData();
@@ -93,7 +92,6 @@ class CreateProfileAddFamily extends Component {
       })
       .then(responseBody => {
         console.log("RESPONSE!!!!!!!!!!!", responseBody);
-        debugger;
         let body = JSON.parse(responseBody);
         if (!body.success) {
           return;

@@ -114,7 +114,6 @@ class addEventForm extends Component {
     AsyncStorage.getItem("userId").then(userId => {
       const h = {};
       let formData = new FormData();
-      debugger;
       formData.append("userId", userId),
         formData.append("eventPicture", {
           uri: this.state.picture.uri,
