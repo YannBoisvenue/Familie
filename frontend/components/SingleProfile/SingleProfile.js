@@ -1,206 +1,109 @@
+import { View, Text, Card, CardItem, Icon } from "native-base";
 import React, { Component } from "react";
-import { Image, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import { Text, View, Root, Container, Icon, Item, Card } from "native-base";
-import { fetchUrl } from "../../fetchUrl";
-import moment from "moment";
-import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
-import { StyledContent } from "../../StyledComponents/mainContainer";
+import { StyleSheet, Image } from "react-native";
 import { withNavigation } from "react-navigation";
 import Colors from "../../constants/Colors";
-import { StyledSectionTitle } from "../../StyledComponents/title";
+import { StyledLink } from "../../StyledComponents/link";
 
-class MyProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userId: this.props.userId,
-      profile: {},
-      family: {},
-      kidInfo: {},
-      otherParent: {}
-    };
-  }
-
-  componentDidMount() {
-    fetch(`${fetchUrl}/profile/${this.state.userId}`)
-      .then(res => res.json())
-      .then(res => {
-        let otherParent = {};
-        fetch(fetchUrl + "/getProfile", {
-          method: "POST",
-          body: JSON.stringify(res.result.family.otherParentId)
-        })
-          .then(x => x.text())
-          .then(response => {
-            let res = JSON.parse(response);
-            if (res.success) {
-              otherParent = res.result;
-            }
-          });
-        this.setState({
-          profile: res.result,
-          family: res.result.family,
-          kidInfo: res.result.family.kidsInfo,
-          otherParent: otherParent
-        });
-      });
-  }
-
-  static navigationOptions = {
-    header: null
-  };
-
+class SingleProfile extends Component {
   render() {
-    let kidBirthday = moment(
-      new Date(this.state.kidInfo.kidDateOfBirth)
-    ).format("MMM Do YY");
-    let pictureUri;
-    if (this.state.profile.fileName !== undefined) {
-      pictureUri = this.state.profile.fileName.split("/").pop();
-    }
-
-    let childPictureUri;
-    if (this.state.family.childPicture !== undefined) {
-      childPictureUri = this.state.family.childPicture.split("/").pop();
-    }
-
+    let pictureUri = this.props.profilePicture.split("/")[5];
     return (
-      <Root>
-        <Container>
-          <StyledSubHeader
-            {...this.props}
-            title="Parent Profile"
-            linkText="Cancel"
-            onPress={() => {
-              this.props.navigation.navigate("AllFriends");
+      <Card noShadow style={styles.card}>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ flex: 2 }}>
+            <CardItem style={styles.cardTitle}>
+              <StyledLink
+                bold
+                color={Colors.queenBlue}
+                content={this.props.firstName + " " + this.props.lastName}
+                onPress={() => {
+                  this.props.navigation.navigate("OtherProfile", {
+                    id: this.props._id
+                  });
+                }}
+              />
+            </CardItem>
+            <CardItem style={styles.image} />
+            <CardItem style={styles.cardDate}>
+              <Text style={{ color: Colors.darkGunmetal, fontWeight: "bold" }}>
+                I'm a:{" "}
+              </Text>
+              <Text>{this.props.gender}</Text>
+            </CardItem>
+            <CardItem style={styles.cardDate}>
+              <Text style={{ color: Colors.darkGunmetal, fontWeight: "bold" }}>
+                Status:{" "}
+              </Text>
+              <Text>{this.props.relationshipStatus}</Text>
+            </CardItem>
+            <CardItem style={styles.cardDate}>
+              <Text style={{ color: Colors.darkGunmetal, fontWeight: "bold" }}>
+                Occupation:
+              </Text>
+              <Text>{this.props.occupation}</Text>
+            </CardItem>
+            <CardItem style={styles.cardDate}>
+              <Text style={{ color: Colors.darkGunmetal, fontWeight: "bold" }}>
+                D.O.B.:{" "}
+              </Text>
+              <Text>{this.props.dateOfBirth}</Text>
+            </CardItem>
+          </View>
+          <View style={{ flex: 1 }}>
+            <CardItem style={styles.cardDate}>
+              <Image
+                source={{ uri: `http://68.183.200.44:4000/${pictureUri}` }}
+                style={{
+                  height: 100,
+                  width: 100,
+                  borderRadius: 5,
+                  marginTop: 15
+                }}
+              />
+            </CardItem>
+          </View>
+        </View>
+        <CardItem style={styles.cardDate}>
+          <Icon
+            type="Feather"
+            name="map-pin"
+            style={{
+              fontSize: 20,
+              width: 26,
+              color: Colors.lightBlue,
+              fontWeight: "bold"
             }}
           />
-          <StyledContent>
-            <View>
-              <View
-                style={{
-                  alignItems: "left",
-                  marginBottom: 8
-                }}
-              >
-                <Text style={styles.title}>
-                  {this.state.profile.firstName} {this.state.profile.lastName}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "left",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 20
-                }}
-              >
-                <Image
-                  style={{ height: 150, width: 150, borderRadius: 5 }}
-                  source={{
-                    uri: `http://68.183.200.44:4000/${pictureUri}`
-                  }}
-                />
-                <View style={{ marginRight: 50 }}>
-                  <Text style={styles.subSection}>I'm a: </Text>
-                  {this.state.profile.gender === "mom" ? (
-                    <Text style={styles.otherText}>Mom</Text>
-                  ) : (
-                    <Text style={styles.otherText}>Dad</Text>
-                  )}
-                  <Text style={styles.subSection}>Status: </Text>
-                  <Text style={styles.otherText}>
-                    In a {this.state.profile.relationshipStatus}{" "}
-                    {this.state.otherParent.length > 0 ? (
-                      <Text>
-                        with {this.state.otherParent.firstName}{" "}
-                        {this.state.otherParent.lastName}
-                      </Text>
-                    ) : (
-                      <React.Fragment />
-                    )}
-                  </Text>
-                </View>
-              </View>
-              {this.state.kidInfo ? (
-                <View>
-                  <View
-                    style={{
-                      alignItems: "left"
-                    }}
-                  >
-                    <StyledSectionTitle content="My Children" width={135} />
-                  </View>
-                  <Card noShadow style={styles.card}>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        justifyContent: "space-between"
-                      }}
-                    >
-                      <Image
-                        style={{
-                          height: 100,
-                          width: 100,
-                          marginTop: 10,
-                          borderRadius: 5
-                        }}
-                        source={{
-                          uri: `http://68.183.200.44:4000/${childPictureUri}`
-                        }}
-                      />
-                      <View style={{ marginRight: 80 }}>
-                        <Text style={styles.subSection}>Name: </Text>
-                        <Text style={styles.otherText}>
-                          {this.state.kidInfo.kidFirstName}
-                        </Text>
-                        <Text style={styles.subSection}>Birthday: </Text>
-                        <Text style={styles.otherText}>{kidBirthday}</Text>
-                      </View>
-                    </View>
-                  </Card>
-                </View>
-              ) : (
-                <React.Fragment />
-              )}
-            </View>
-          </StyledContent>
-        </Container>
-      </Root>
+          <Text>{this.props.location}</Text>
+        </CardItem>
+      </Card>
     );
   }
 }
-
 const styles = StyleSheet.create({
-  subSection: {
-    fontWeight: "bold",
-    color: Colors.darkGunmetal,
-    marginBottom: 10
-  },
-  otherText: {
-    color: Colors.darkGunmetal,
-    marginBottom: 10
-  },
-  title: {
-    marginTop: 15,
-    marginBottom: 15,
-    textAlign: "left",
-    fontSize: 25,
-    fontWeight: "bold",
-    color: Colors.darkGunmetal
-  },
   card: {
-    padding: 20,
+    marginBottom: 10,
     borderColor: "transparent",
     borderRadius: 5
+  },
+  cardDate: {
+    paddingLeft: 7,
+    paddingBottom: 7,
+    color: Colors.darkGunmetal,
+    opacity: 0.75
+  },
+  cardTitle: {
+    paddingLeft: 7,
+    paddingBottom: 7
+  },
+  cardDescription: {
+    paddingLeft: 7,
+    paddingBottom: 7,
+    color: Colors.darkGunmetal
+  },
+  image: {
+    paddingBottom: 7
   }
 });
-
-let ConnectedMyProfile = connect(state => {
-  return { userId: state.user.userId };
-})(MyProfile);
-
-export default withNavigation(ConnectedMyProfile);
+export default withNavigation(SingleProfile);
