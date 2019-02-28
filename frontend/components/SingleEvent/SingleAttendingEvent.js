@@ -1,16 +1,7 @@
-import {
-  View,
-  Text,
-  Button,
-  Card,
-  CardItem,
-  Container,
-  Icon
-} from "native-base";
+import { View, Text, Button, Card, CardItem, Icon } from "native-base";
 import React, { Component } from "react";
 import { StyleSheet, Image, Alert } from "react-native";
 import { withNavigation } from "react-navigation";
-import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import { StyledLink } from "../../StyledComponents/link";
 import moment from "moment";
@@ -42,15 +33,6 @@ class SingleAttendEvent extends Component {
   handleSeeMore = () => {
     this.setState({ seeMore: true });
   };
-
-  // handleAttendEvent = async () => {
-  //   let body = JSON.stringify({
-  //     user: this.props.userId,
-  //     eventId: this.props._id
-  //   });
-  //   fetch(fetchUrl + "/attendEvent", { method: "POST", body: body });
-  //   this.setState({ attending: true });
-  // };
 
   seeMore = () => {
     return (
@@ -128,7 +110,7 @@ class SingleAttendEvent extends Component {
             onPress={() => {
               this.props.navigation.navigate("Event", {
                 id: this.props.event._id
-              }); ///this is the param object
+              });
             }}
           />
         </CardItem>

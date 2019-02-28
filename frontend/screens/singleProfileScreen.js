@@ -1,17 +1,11 @@
 import React from "react";
 import { StyleSheet, Image } from "react-native";
-import { Container, Tab, Card, View, CardItem, Text, Icon } from "native-base";
-import { StyledTabs } from "../StyledComponents/tabs";
-import Login from "../components/login";
+import { Container, Card, View, CardItem, Text, Icon } from "native-base";
 import Colors from "../constants/Colors.js";
 import { StyledLink } from "../StyledComponents/link";
 import { StyledContent } from "../StyledComponents/mainContainer";
 import { StyledSubHeader } from "../StyledComponents/textSubHeader";
-import HostingScreen from "./HostingScreen";
-import AllProfiles from "../components/AllProfiles/AllProfiles";
-import { AsyncStorage } from "react-native";
 import { connect } from "react-redux";
-import { SET_USERID } from "../constants/ActionTypes";
 import { fetchUrl } from "../fetchUrl";
 
 class SingleProfileScreen extends React.Component {

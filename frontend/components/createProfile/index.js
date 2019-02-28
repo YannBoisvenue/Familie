@@ -39,9 +39,6 @@ class CreateProfile extends Component {
       location: "",
       hasPicture: false
     };
-
-    // this.autocompleteInput = React.createRef();
-    // this.autocomplete = null;
   }
 
   static navigationOptions = {
@@ -148,7 +145,6 @@ class CreateProfile extends Component {
 
   render() {
     let picture = this.state.picture.uri;
-    let pictureType = this.state.picture.type;
     const BUTTONS = ["From your library", "Take a picture", "Cancel"];
     const CANCEL_INDEX = 2;
 
@@ -167,7 +163,6 @@ class CreateProfile extends Component {
             <View style={{ flexDirection: "row" }}>
               {this.state.hasPicture ? (
                 <View style={{ flex: 1 }}>
-                  {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && ( */}
                   <View>
                     <Image
                       source={{ uri: picture }}
@@ -181,13 +176,6 @@ class CreateProfile extends Component {
                       }}
                     />
                   </View>
-                  {/* )} */}
-                  {/* {!!picture && pictureType === Permissions.CAMERA && (
-                    <Image
-                      source={{ uri: `${picture}` }}
-                      style={{ width: 100, height: 100 }}
-                    />
-                  )} */}
                 </View>
               ) : (
                 <View style={{ flex: 1 }}>
@@ -358,8 +346,6 @@ const styles = StyleSheet.create({
     color: Colors.darkGunmetal
   }
 });
-
-// CreateProfile.name
 
 export default connect(function(state) {
   return { userId: state.user.userId };

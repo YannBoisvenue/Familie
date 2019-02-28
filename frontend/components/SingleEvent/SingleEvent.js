@@ -1,6 +1,6 @@
 import { View, Text, Button, Card, CardItem, Icon } from "native-base";
 import React, { Component } from "react";
-import { StyleSheet, Image, Alert } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { withNavigation } from "react-navigation";
 import Colors from "../../constants/Colors";
 import { StyledLink } from "../../StyledComponents/link";

@@ -2,25 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Image } from "react-native";
 import {
-  Item as FormItem,
-  Container,
   Item,
+  Container,
   Input,
   DatePicker,
   Textarea,
-  Toast,
   ActionSheet,
   Icon,
   Card,
-  Right,
-  View,
   Root
 } from "native-base";
-import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import Geocode from "react-geocode";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
 import { StyledContent } from "../../StyledComponents/mainContainer";
 import { ScrollView } from "react-native-gesture-handler";
@@ -30,8 +25,6 @@ import { AsyncStorage } from "react-native";
 import { ImagePicker, Permissions } from "expo";
 import { fetchUrl } from "../../fetchUrl";
 import { StyledLink } from "../../StyledComponents/link";
-
-// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBJp31wdd16862J0Vevyzbie4DN3CLOfq8
 
 class addEventForm extends Component {
   constructor(props) {
@@ -141,17 +134,8 @@ class addEventForm extends Component {
         .then(responseBody => {
           let body = JSON.parse(responseBody);
           if (!body.success) {
-            // Toast.show({
-            //   text: "Oh oh spagetthi oh",
-            //   buttonText: "Fuck"
-            // });
             return;
           }
-          //  else {
-          //   Toast.show({
-          //     text: "Event created",
-          //     buttonText: "Yay!"
-          //   });
           this.props.navigation.navigate("Events");
         });
     });
@@ -183,18 +167,10 @@ class addEventForm extends Component {
             >
               {this.state.hasPicture ? (
                 <Item>
-                  {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && (
-                    <Image
-                      source={{ uri: this.state.picture.uri }}
-                      style={{ width: 350, height: 150 }}
-                    />
-                  )}
-                  {!!picture && pictureType === Permissions.CAMERA && ( */}
                   <Image
                     source={{ uri: this.state.picture.uri }}
                     style={{ width: 350, height: 150 }}
                   />
-                  {/* )} */}
                 </Item>
               ) : (
                 <Icon

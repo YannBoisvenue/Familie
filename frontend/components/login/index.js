@@ -2,16 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   Container,
-  Header,
-  Button,
   Text,
-  Body,
-  Form,
-  Item as FormItem,
   Input,
-  Label,
-  Title,
-  View,
   Card,
   CardItem,
   Toast,
@@ -24,13 +16,6 @@ import Colors from "../../constants/Colors";
 import { StyledForm } from "../../StyledComponents/form";
 import { StyledItem } from "../../StyledComponents/formItem";
 import { fetchUrl } from "../../fetchUrl";
-import { navigation } from "react-navigation";
-// import firebase from '../login/loginGoogle.js';
-// import {
-//   GoogleSignin,
-//   GoogleSigninButton,
-//   statusCodes
-// } from 'react-native-google-signin';
 
 class Login extends Component {
   constructor(props) {
@@ -52,13 +37,11 @@ class Login extends Component {
   };
 
   onLoginPress = event => {
-    console.log("this is going to work, damn it!");
     event.preventDefault();
     let requestBody = JSON.stringify({
       username: this.state.username,
       password: this.state.password
     });
-    console.log("request body ", requestBody);
     fetch(fetchUrl + "/login", {
       method: "POST",
       body: requestBody
@@ -89,9 +72,7 @@ class Login extends Component {
 
   render() {
     const { navigation } = this.props;
-    //if (this.props.loginStatus) {
-    //     return <HomePage></HomePage>
-    // }
+
     return (
       <Root>
         <Container>
@@ -116,15 +97,6 @@ class Login extends Component {
               disabled={!this.state.username || !this.state.password}
               color={Colors.desire}
             />
-            {/* <Button full light primary>
-            <Text> Sign Up </Text>
-          </Button> */}
-            {/* <GoogleSigninButton
-            size={GoogleSigninButton.Size.Standard}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={this._signIn}
-            disabled={this.state.isSigninInProgress}
-          /> */}
           </StyledForm>
           <Card
             noShadow

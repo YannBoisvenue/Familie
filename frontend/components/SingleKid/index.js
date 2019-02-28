@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Image } from "react-native";
 import {
   View,
   Content,
   Text,
-  Item as FormItem,
   Input,
   Picker,
   Icon,
@@ -14,7 +12,6 @@ import {
   Button,
   ActionSheet
 } from "native-base";
-import { StyledButton } from "../../StyledComponents/button.js";
 import { ImagePicker, Permissions } from "expo";
 import { StyledForm } from "../../StyledComponents/form.js";
 import { StyledItem } from "../../StyledComponents/formItem.js";
@@ -89,7 +86,6 @@ class SingleKid extends Component {
 
   render() {
     let kidPicture = this.state.kidPicture.uri;
-    let kidPictureType = this.state.kidPicture.type;
     const BUTTONS = ["From your library", "Take a picture", "Cancel"];
     const CANCEL_INDEX = 2;
 
@@ -109,7 +105,6 @@ class SingleKid extends Component {
           <View style={{ flexDirection: "row" }}>
             {this.state.hasPicture ? (
               <View style={{ flex: 1 }}>
-                {/* {!!picture && pictureType === Permissions.CAMERA_ROLL && ( */}
                 <View>
                   <Image
                     source={{ uri: kidPicture }}
@@ -123,13 +118,6 @@ class SingleKid extends Component {
                     }}
                   />
                 </View>
-                {/* )} */}
-                {/* {!!picture && pictureType === Permissions.CAMERA && (
-                    <Image
-                      source={{ uri: `${picture}` }}
-                      style={{ width: 100, height: 100 }}
-                    />
-                  )} */}
               </View>
             ) : (
               <View style={{ flex: 1 }}>

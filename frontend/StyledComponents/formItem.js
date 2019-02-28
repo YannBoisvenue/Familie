@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
-import { Form, Item, Input, Label } from "native-base";
+import { Item, Label } from "native-base";
 import Colors from "../constants/Colors";
 
 export const StyledItem = ({ label, type, children }) => {

@@ -1,21 +1,14 @@
-import React, { Component } from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { Header, Button, Left, Right, Body, Title, Icon } from "native-base";
+import React from "react";
+import { Header, Button, Right, Body, Title, Icon } from "native-base";
 import { connect } from "react-redux";
 
 const StyledHeader = ({ userId }) => {
-  // console.log("this better be good", userId);
   if (!userId) {
     return <React.Fragment />;
   }
   return (
     <React.Fragment>
       <Header>
-        {/* <Left>
-        <Button transparent>
-          <Icon type="AntDesign" name="arrowleft" />
-        </Button>
-      </Left> */}
         <Body style={{ paddingLeft: 15 }}>
           <Title>Familie</Title>
         </Body>

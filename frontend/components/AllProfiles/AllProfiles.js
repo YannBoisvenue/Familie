@@ -1,12 +1,8 @@
-import React, { Component, cloneElement } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Text, View, Toast } from "native-base";
+import { View, Toast } from "native-base";
 import { fetchUrl } from "../../fetchUrl.js";
 import SingleProfile from "../SingleProfile/SingleProfile";
-/**Testing Imports */
-import Colors from "../../constants/Colors";
-import { StyledLink } from "../../StyledComponents/link";
-import Container from "../../native-base-theme/components/Container.js";
 
 class AllProfiles extends Component {
   constructor(props) {
@@ -15,7 +11,6 @@ class AllProfiles extends Component {
   }
 
   componentDidMount() {
-    console.log("In tha fetch");
     fetch(fetchUrl + "/all-parents", {
       method: "GET"
     })
@@ -24,7 +19,6 @@ class AllProfiles extends Component {
       })
       .then(responseBody => {
         let body = JSON.parse(responseBody);
-        console.log("met un baconn en avant :", body.parents);
         if (body.success) {
           this.props.dispatch({
             type: "set_profiles",
@@ -40,11 +34,8 @@ class AllProfiles extends Component {
       });
   }
 
-  /* Re-arrange this function */
   renderAllProfiles = () => {
-    console.log("ULTIMATE :", this.props);
     if (this.props.profiles !== undefined) {
-      console.log("propfiles");
       let newProfileArray = this.props.profiles.map((elem, i) => {
         return (
           <View key={i}>
@@ -72,7 +63,6 @@ class AllProfiles extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("statpfile", state);
   return { profiles: state.profile.profiles };
 };
 

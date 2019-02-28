@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { Header, Tabs } from "native-base";
 
 export const StyledTabs = ({ children, color }) => (

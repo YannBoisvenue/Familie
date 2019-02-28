@@ -1,8 +1,6 @@
 import { MapView } from "expo";
 import { Marker } from "react-native-maps";
 import React, { Component } from "react";
-import { Platform, Text, View, StyleSheet } from "react-native";
-import { Constants, Location, Permissions } from "expo";
 import LocationClass from "./getLocTest";
 import { connect } from "react-redux";
 
@@ -28,7 +26,6 @@ class UnconnectedMap extends Component {
     header: null
   };
 
-  //
   fetchMarkerData() {
     fetch("https://feeds.citibikenyc.com/stations/stations.json")
       .then(response => response.json())
@@ -76,7 +73,6 @@ class UnconnectedMap extends Component {
         }}
         style={{ flex: 1 }}
         region={{
-          // RICHORE: redux state au lieu de this.state
           latitude: this.props.location.coordinates.latitude,
           longitude: this.props.location.coordinates.longitude,
           latitudeDelta: 0.0922,
@@ -115,35 +111,9 @@ class UnconnectedMap extends Component {
     );
   }
 }
-//  RICHORE: Map state to pros
 
 const mapStateToProps = state => {
-  return { location: state.location }; //maploc = moi qui decide le nom. => .location, faut ca match le nom dans le state global (dans le reducer, voir *k1)
+  return { location: state.location };
 };
 
 export default connect(mapStateToProps)(UnconnectedMap);
-
-/** Original render before taking everything apart
- * 
- *   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-      return (
-        <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
-        />
-      );
-    } else {
-      return (
-        <Provider store={store}>
-          <View style={styles.container}>
-            <Map markers={this.state.markers} />
-            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-            <AppNavigator />
-          </View>
-        </Provider>
-      );
-    }
-  }
- */

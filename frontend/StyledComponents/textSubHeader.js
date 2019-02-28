@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { Header, Body, Title, Right } from "native-base";
 import Colors from "../constants/Colors";
 import { StyledLink } from "./link";
