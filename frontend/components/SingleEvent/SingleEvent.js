@@ -138,7 +138,7 @@ class SingleEvent extends Component {
             color={Colors.darkGunmetal}
             content={this.props.name}
             onPress={() => {
-              this.props.navigation.navigate("Event", {
+              this.props.navigation.navigate("DisplayEvent", {
                 id: this.props._id
               });
             }}
