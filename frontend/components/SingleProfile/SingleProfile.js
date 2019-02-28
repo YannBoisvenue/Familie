@@ -1,24 +1,11 @@
-import {
-  View,
-  Text,
-  Button,
-  Card,
-  CardItem,
-  Container,
-  Icon
-} from "native-base";
+import { View, Text, Card, CardItem, Icon } from "native-base";
 import React, { Component } from "react";
-import { StyleSheet, Image, Alert } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { withNavigation } from "react-navigation";
-import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
 import { StyledLink } from "../../StyledComponents/link";
-import moment from "moment";
 
 class SingleProfile extends Component {
-  componentDidMount() {
-    console.log("In the component Did Mount", this.props.navigation);
-  }
   render() {
     let pictureUri = this.props.profilePicture.split("/")[5];
     return (
@@ -31,7 +18,7 @@ class SingleProfile extends Component {
                 color={Colors.queenBlue}
                 content={this.props.firstName + " " + this.props.lastName}
                 onPress={() => {
-                  this.props.navigation.navigate("MyProfile", {
+                  this.props.navigation.navigate("OtherProfile", {
                     id: this.props._id
                   });
                 }}

@@ -18,7 +18,6 @@ import Colors from "../constants/Colors";
 import AddEventForm from "../components/addEventForm/addEventForm";
 import EventScreen from "../screens/EventScreen";
 import FriendScreen from "../screens/FriendScreen";
-import createProfile from "../components/createProfile";
 import AllProfilesScreen from "../screens/allProfilesScreen";
 import SingleProfile from "../components/SingleProfile/SingleProfile";
 import SingleProfileScreen from "../screens/singleProfileScreen";
@@ -58,7 +57,7 @@ EventStack.navigationOptions = {
 };
 
 const FriendStack = createStackNavigator({
-  Login: FriendScreen
+  AllFriends: FriendScreen
 });
 
 FriendStack.navigationOptions = {
@@ -113,7 +112,7 @@ const ProfileStack = createStackNavigator({
 });
 
 ProfileStack.navigationOptions = {
-  tabBarLabel: "Profile",
+  tabBarLabel: "My Profile",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -125,15 +124,11 @@ ProfileStack.navigationOptions = {
 
 export default createAppContainer(
   createSwitchNavigator({
-    // You could add another route here for authentication.
-    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
     Main: createBottomTabNavigator(
       {
         EventStack,
         FriendStack,
-        ProfileStack,
-        CreateProfileStack,
-        CreateProfileAddFamilyStack
+        ProfileStack
       },
       {
         tabBarOptions: {
