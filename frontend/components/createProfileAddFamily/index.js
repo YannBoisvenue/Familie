@@ -68,12 +68,18 @@ class CreateProfileAddFamily extends Component {
   onNextCreateProfile = event => {
     event.preventDefault();
     let kidsInfo = this.state.kids.map(kid => kid.state);
+    debugger;
 
     const h = {};
     let formData = new FormData();
     formData.append("userId", this.props.userId),
-      formData.append("kidsInfo", kidsInfo),
-      formData.append("otherParentId", this.state.otherParentId);
+      formData.append("kidsInfo", JSON.stringify(kidsInfo[0])),
+      formData.append("kidsPicture", {
+        uri: kidsInfo[0].kidPicture.uri,
+        name: kidsInfo[0].kidPicture.filename,
+        type: kidsInfo[0].kidPicture.type
+      });
+    formData.append("otherParentId", this.state.otherParentId);
 
     h["content-type"] = "multipart/form-data";
 
@@ -86,6 +92,8 @@ class CreateProfileAddFamily extends Component {
         return x.text();
       })
       .then(responseBody => {
+        console.log("RESPONSE!!!!!!!!!!!", responseBody);
+        debugger;
         let body = JSON.parse(responseBody);
         if (!body.success) {
           return;
@@ -175,12 +183,12 @@ class CreateProfileAddFamily extends Component {
                 <StyledLink content="Add kid" onPress={this.addKid} />
               </StyledItem>
               <View>{newKidsArray}</View>
-              <StyledButton
-                content="Next"
-                color={Colors.queenBlue}
-                onPress={this.onNextCreateProfile}
-              />
             </StyledForm>
+            <StyledButton
+              content="Next"
+              color={Colors.queenBlue}
+              onPress={this.onNextCreateProfile}
+            />
           </StyledContent>
         </Container>
       </Root>
@@ -189,5 +197,5 @@ class CreateProfileAddFamily extends Component {
 }
 
 export default connect(function(state) {
-  return { userId: state.userId };
+  return { userId: state.user.userId };
 })(CreateProfileAddFamily);

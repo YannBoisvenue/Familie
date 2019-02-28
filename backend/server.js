@@ -65,28 +65,37 @@ app.post("/addevent", upload.single("eventPicture"), (req, res) => {
   });
 });
 
-app.post("/add-family", upload.single("familyPicture"), (req, res) => {
-  console.log(req.file);
-  let extension = req.file.originalname.split(".").pop();
-  fs.rename(req.file.path, req.file.path + "." + extension, () => {});
-  console.log("req.body", req.body);
+app.post("/add-family", upload.single("kidsPicture"), (req, res) => {
+  console.log("FAMMMMMMIIIIIILLLLLYYYYYYYY");
+  let fileName = "";
+  if (req.file) {
+    let extension = req.file.originalname.split(".").pop();
+    fs.rename(req.file.path, req.file.path + "." + extension, () => {});
+    fileName = req.file.path + "." + extension;
+  }
+  let kidInfo = JSON.parse(req.body.kidsInfo.toString());
   let profile = req.body;
-  profile = { ...profile, fileName: req.file.path + "." + extension };
+  profile = { ...profile, fileName: fileName };
   console.log("family", profile);
   let db = dbs.db("finalproject");
   //deal with images here
-  db.collection("profiles").insertOne(profile, (err, ress) => {
-    if (err) throw err;
-    let response = {
-      success: true,
-      message: "Profile successfully created",
-      _id: ress._id
-    };
-    res.send(JSON.stringify(response));
-    console.log("end of add-family");
-    console.log("response", response);
-  });
-  console.log("body", req.body);
+  db.collection("profiles").updateOne(
+    { userId: profile.userId },
+    {
+      $set: {
+        family: {
+          childPicture: profile.fileName,
+          kidsInfo: kidInfo,
+          otherParentId: profile.otherParentId
+        }
+      }
+    }
+  );
+  let response = {
+    success: true,
+    message: "Family successfuly added"
+  };
+  res.send(JSON.stringify(response));
 });
 
 app.use(bodyParser.raw({ type: "*/*" }));

@@ -28,8 +28,7 @@ class SingleKid extends Component {
       kidFirstName: "",
       kidGender: "",
       kidDateOfBirth: "",
-      kidPicture: "",
-      kidPictureType: "",
+      kidPicture: {},
       hasPicture: false
     };
   }
@@ -50,20 +49,22 @@ class SingleKid extends Component {
 
   getPicture = async type => {
     const { status } = await Permissions.askAsync(type);
+    const asyncType = await type;
 
     if (status === "granted") {
       const options = { allowsEditing: true, aspect: [4, 3] };
       let result = null;
-      if (type === Permissions.CAMERA_ROLL) {
+      if (asyncType === Permissions.CAMERA_ROLL) {
         result = await ImagePicker.launchImageLibraryAsync(options);
       } else {
         result = await ImagePicker.launchCameraAsync(options);
       }
-
+      let uri = result.uri;
+      let filename = uri.split("/").pop();
+      let type = "image/png";
       if (!result.cancelled) {
         this.setState({
-          kidPicture: result.uri,
-          kidPictureType: type,
+          kidPicture: { uri, filename, type },
           hasPicture: true
         });
       }
@@ -87,8 +88,8 @@ class SingleKid extends Component {
   };
 
   render() {
-    let kidPicture = this.state.kidPicture;
-    let kidPictureType = this.state.kidPictureType;
+    let kidPicture = this.state.kidPicture.uri;
+    let kidPictureType = this.state.kidPicture.type;
     const BUTTONS = ["From your library", "Take a picture", "Cancel"];
     const CANCEL_INDEX = 2;
 
