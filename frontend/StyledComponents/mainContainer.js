@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { Content, View } from "native-base";
 import Colors from "../constants/Colors";

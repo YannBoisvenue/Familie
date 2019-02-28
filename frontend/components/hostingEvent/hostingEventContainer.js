@@ -1,20 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet, Alert } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   Card,
   Text,
-  Body,
   Right,
   Icon,
   Button,
-  Left,
   CardItem,
   Container
 } from "native-base";
 import Colors from "../../constants/Colors";
 import moment from "moment";
-import { nominalTypeHack } from "prop-types";
 import { StyledLink } from "../../StyledComponents/link";
 import { fetchUrl } from "../../fetchUrl";
 import { UPDATE_HOSTING_EVENT } from "../../constants/ActionTypes";
@@ -35,7 +32,6 @@ const UnconnectedHostingEventContainer = ({ event, userId, dispatch }) => {
         x.text();
       })
       .then(() => {
-        console.log(userId);
         fetch(fetchUrl + "/hostingEvents", {
           method: "POST",
           body: JSON.stringify(userId)

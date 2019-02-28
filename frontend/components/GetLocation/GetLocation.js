@@ -1,14 +1,6 @@
 import React, { Component } from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
-import {
-  AppLoading,
-  Asset,
-  Font,
-  Icon,
-  Constants,
-  Location,
-  Permissions
-} from "expo";
+import { Platform, View } from "react-native";
+import { Font, Constants, Location, Permissions } from "expo";
 
 import { connect } from "react-redux";
 
@@ -18,7 +10,6 @@ class GetLocation extends Component {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
     this.setState({ loading: false });
-    /******************* */
     if (Platform.OS === "android" && !Constants.isDevice) {
       this.setState({
         errorMessage:
@@ -40,7 +31,6 @@ class GetLocation extends Component {
     this.getUpdateLocationAsync();
   };
 
-  //RACHORE: AU lieu de setstate, dispatch vers le radux
   getUpdateLocationAsync = async () => {
     let location = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.Highest
@@ -54,7 +44,7 @@ class GetLocation extends Component {
 }
 
 const mapStateToProps = state => {
-  return { mapLoc: state.location }; //maploc = moi qui decide le nom. => .location, faut ca match le nom dans le state global (dans le reducer, voir *k1)
+  return { mapLoc: state.location };
 };
 
 export default connect(mapStateToProps)(GetLocation);

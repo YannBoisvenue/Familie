@@ -3,16 +3,7 @@ import { connect } from "react-redux";
 import { AsyncStorage } from "react-native";
 import { StyleSheet } from "react-native";
 import { SET_USERID } from "../../constants/ActionTypes";
-import {
-  Container,
-  Item as FormItem,
-  Input,
-  Card,
-  CardItem,
-  Toast,
-  Root,
-  H1
-} from "native-base";
+import { Container, Input, Card, CardItem, Toast, Root, H1 } from "native-base";
 import { LOGIN_SUCCESS } from "../../constants/ActionTypes";
 import { StyledLink } from "../../StyledComponents/link";
 import { fetchUrl } from "../../fetchUrl";
@@ -77,7 +68,6 @@ class Signup extends Component {
             return;
           }
           await AsyncStorage.setItem("userId", body.user.userId);
-          //check if backend signup end point is returning userId
           this.props.dispatch({
             type: LOGIN_SUCCESS
           });

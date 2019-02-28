@@ -1,20 +1,9 @@
 import React, { Component } from "react";
 import { StyledContent } from "../StyledComponents/mainContainer";
-import { StyledLink } from "../StyledComponents/link";
 import { connect } from "react-redux";
-import { HostingEventContainer } from "../components/hostingEvent/hostingEventContainer";
-import { AsyncStorage } from "react-native";
 import { fetchUrl } from "../fetchUrl";
 import { StyledSectionTitle } from "../StyledComponents/title";
-import {
-  Container,
-  Right,
-  Left,
-  CardItem,
-  Card,
-  View,
-  Text
-} from "native-base";
+import { Container, CardItem, Card, View, Text } from "native-base";
 import Colors from "../constants/Colors";
 import SingleAttendingEvent from "../components/SingleEvent/SingleAttendingEvent";
 import { UPDATE_ATTENDING_EVENT } from "../constants/ActionTypes";
@@ -47,7 +36,6 @@ class AttendingScreen extends Component {
 
   render() {
     const { attendingEvents } = this.props;
-    console.log("ATTENDING EVENTS:", attendingEvents);
     if (attendingEvents.length > 0) {
       eventArr = attendingEvents.map((e, index) => {
         return <SingleAttendingEvent key={index} event={e} />;

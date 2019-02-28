@@ -91,7 +91,6 @@ class CreateProfileAddFamily extends Component {
         return x.text();
       })
       .then(responseBody => {
-        console.log("RESPONSE!!!!!!!!!!!", responseBody);
         let body = JSON.parse(responseBody);
         if (!body.success) {
           return;

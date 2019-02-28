@@ -30,9 +30,7 @@ class LoginScreen extends React.Component {
                 "https://www.freepik.com/free-photos-vectors/people"
               )
             }
-          >
-            People vector created by macrovector - www.freepik.com
-          </Text>
+          />
         </Footer>
       </Container>
     );

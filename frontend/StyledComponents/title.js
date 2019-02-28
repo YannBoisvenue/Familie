@@ -1,5 +1,5 @@
 import React from "react";
-import { Item, H2, H3 } from "native-base";
+import { Item, H3 } from "native-base";
 import { StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 
