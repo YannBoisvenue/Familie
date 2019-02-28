@@ -115,7 +115,7 @@ class addEventForm extends Component {
       const h = {};
       let formData = new FormData();
       debugger;
-      formData.append("userId", this.props.userId),
+      formData.append("userId", userId),
         formData.append("eventPicture", {
           uri: this.state.picture.uri,
           name: this.state.picture.filename,
@@ -303,4 +303,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect()(addEventForm);
+export default connect(state => {
+  return { userId: state.user.userId };
+})(addEventForm);
