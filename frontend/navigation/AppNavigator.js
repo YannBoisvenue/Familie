@@ -109,26 +109,69 @@ class MyProfile extends React.Component {
 
     console.log("PROFILE", pictureUri);
     return (
-      <View>
-        <Image
-          style={{ height: 200, width: 200 }}
-          source={{
-            uri: `http://68.183.200.44:4000/${pictureUri}`
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column"
+        }}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            marginTop: 20,
+            marginBottom: 20,
+            fontWeight: "bold"
           }}
-        />
-        {console.log(this.state.profile)}
-        <View style={{ marginLeft: 20 }}>
+        >
           <Text>
             {this.state.profile.firstName} {this.state.profile.lastName}
           </Text>
         </View>
-        <View style={{ marginLeft: 20 }}>
-          <Text>{this.state.profile.gender}</Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <Image
+            style={{ height: 200, width: 200, marginLeft: 40 }}
+            source={{
+              uri: `http://68.183.200.44:4000/${pictureUri}`
+            }}
+          />
+          <View style={{ marginRight: 50 }}>
+            <Text>{this.state.profile.gender}</Text>
+            <Text>{this.state.profile.relationshipStatus}</Text>
+          </View>
         </View>
-        <View>
-          <Text style={{ marginLeft: 20 }}>
-            {this.state.profile.relationshipStatus}
-          </Text>
+        <View
+          style={{
+            alignItems: "center",
+            marginTop: 20,
+            marginBottom: 20,
+            fontWeight: "bold"
+          }}
+        >
+          <Text style={{ marginTop: -50 }}>My kids</Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <Image
+            style={{ height: 150, width: 150, marginLeft: 40, marginTop: 0 }}
+            source={{
+              uri: `http://68.183.200.44:4000/${pictureUri}`
+            }}
+          />
+          <View style={{ marginRight: 80 }}>
+            <Text />
+            <Text />
+          </View>
         </View>
       </View>
     );
