@@ -109,7 +109,7 @@ CreateProfileAddFamilyStack.navigationOptions = {
 };
 
 const ProfileStack = createStackNavigator({
-  Profile: MyProfile
+  Profile: SingleProfileScreen
 });
 
 ProfileStack.navigationOptions = {

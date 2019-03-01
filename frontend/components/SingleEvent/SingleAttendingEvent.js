@@ -116,7 +116,9 @@ class SingleAttendEvent extends Component {
         </CardItem>
         <CardItem style={styles.cardDate}>
           <Text>
-            {moment(this.props.event.time).format("MMM Do YYYY, h:mm a")}
+            {moment(new Date(this.props.event.time)).format(
+              "MMM Do YYYY, h:mm a"
+            )}
           </Text>
         </CardItem>
         <CardItem style={styles.location}>

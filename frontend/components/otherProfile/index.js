@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, StyleSheet } from "react-native";
-import { Text, View, Root, Container, Icon, Item, Card } from "native-base";
+import { Text, View, Root, Container, Card } from "native-base";
 import { fetchUrl } from "../../fetchUrl";
 import moment from "moment";
 import { StyledSubHeader } from "../../StyledComponents/textSubHeader";
@@ -39,6 +39,7 @@ class OtherProfile extends Component {
           });
         this.setState({
           profile: res.result,
+          parentDateOfBirth: res.result.dateOfBirth,
           family: res.result.family,
           kidInfo: res.result.family.kidsInfo,
           otherParent: otherParent
@@ -97,18 +98,25 @@ class OtherProfile extends Component {
                 }}
               >
                 <Image
-                  style={{ height: 150, width: 150, borderRadius: 5 }}
+                  style={{
+                    height: 150,
+                    width: 150,
+                    borderRadius: 5,
+                    marginRight: 15
+                  }}
                   source={{
                     uri: `http://68.183.200.44:4000/${pictureUri}`
                   }}
                 />
                 <View style={{ marginRight: 50 }}>
-                  <Text style={styles.subSection}>I'm a: </Text>
-                  {this.state.profile.gender === "mom" ? (
-                    <Text style={styles.otherText}>Mom</Text>
-                  ) : (
-                    <Text style={styles.otherText}>Dad</Text>
-                  )}
+                  <Text style={styles.textSection}>
+                    <Text style={styles.subSection}>I'm a: </Text>
+                    {this.state.profile.gender === "mom" ? (
+                      <Text style={styles.otherText}>Mom</Text>
+                    ) : (
+                      <Text style={styles.otherText}>Dad</Text>
+                    )}
+                  </Text>
                   <Text style={styles.subSection}>Status: </Text>
                   <Text style={styles.otherText}>
                     In a {this.state.profile.relationshipStatus}{" "}
@@ -120,6 +128,20 @@ class OtherProfile extends Component {
                     ) : (
                       <React.Fragment />
                     )}
+                  </Text>
+                  <Text style={styles.textSection}>
+                    <Text style={styles.subSection}>Job: </Text>
+                    <Text style={styles.otherText}>
+                      {this.state.profile.occupation}
+                    </Text>
+                  </Text>
+                  <Text style={styles.textSection}>
+                    <Text style={{ ...styles.subSection, flex: 1 }}>
+                      Birthday:{" "}
+                    </Text>
+                    <Text style={{ ...styles.otherText, flex: 1 }}>
+                      {this.state.profile.dateOfBirth}
+                    </Text>
                   </Text>
                 </View>
               </View>
@@ -137,21 +159,21 @@ class OtherProfile extends Component {
                       style={{
                         flex: 1,
                         flexDirection: "row",
-                        justifyContent: "space-between"
+                        justifyContent: "flex-start",
+                        alignItems: "left"
                       }}
                     >
                       <Image
                         style={{
                           height: 100,
                           width: 100,
-                          marginTop: 10,
                           borderRadius: 5
                         }}
                         source={{
                           uri: `http://68.183.200.44:4000/${childPictureUri}`
                         }}
                       />
-                      <View style={{ marginRight: 80 }}>
+                      <View style={{ marginLeft: 20 }}>
                         <Text style={styles.subSection}>Name: </Text>
                         <Text style={styles.otherText}>
                           {this.state.kidInfo.kidFirstName}
@@ -176,12 +198,11 @@ class OtherProfile extends Component {
 const styles = StyleSheet.create({
   subSection: {
     fontWeight: "bold",
-    color: Colors.darkGunmetal,
-    marginBottom: 10
+    color: Colors.darkGunmetal
   },
   otherText: {
     color: Colors.darkGunmetal,
-    marginBottom: 10
+    marginBottom: 7
   },
   title: {
     marginTop: 15,
@@ -192,9 +213,12 @@ const styles = StyleSheet.create({
     color: Colors.darkGunmetal
   },
   card: {
-    padding: 20,
+    padding: 10,
     borderColor: "transparent",
     borderRadius: 5
+  },
+  textSection: {
+    marginBottom: 8
   }
 });
 

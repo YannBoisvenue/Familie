@@ -62,7 +62,9 @@ class DisplayEvent extends Component {
               {this.state.event.name}
             </Text>
             <Text>
-              {moment(this.state.event.time).format("MMM Do YYYY, h:mm a")}
+              {moment(new Date(this.state.event.time)).format(
+                "MMM Do YYYY, h:mm a"
+              )}
             </Text>
             <Text
               style={{

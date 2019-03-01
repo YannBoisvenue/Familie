@@ -145,7 +145,9 @@ class SingleEvent extends Component {
           />
         </CardItem>
         <CardItem style={styles.cardDate}>
-          <Text>{moment(this.props.time).format("MMM Do YYYY, h:mm a")}</Text>
+          <Text>
+            {moment(new Date(this.props.time)).format("MMM Do YYYY, h:mm a")}
+          </Text>
         </CardItem>
         <CardItem style={styles.location}>
           <Icon

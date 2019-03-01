@@ -59,7 +59,7 @@ const UnconnectedHostingEventContainer = ({ event, userId, dispatch }) => {
             style={styles.cardTitle}
           />
           <Text style={styles.cardDate}>
-            {moment(event.time).format("MMM Do YYYY, h:mm a")}
+            {moment(new Date(event.time)).format("MMM Do YYYY, h:mm a")}
           </Text>
           <Text>{description}</Text>
         </Container>

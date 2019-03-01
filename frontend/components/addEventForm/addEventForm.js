@@ -33,23 +33,22 @@ class addEventForm extends Component {
       picture: undefined,
       pictureType: "",
       time: new Date(),
-      guests: undefined,
+      guests: [this.props.userId],
       name: "",
       location: "",
       desc: "",
       coordinate: { lat: 0, lng: 0 },
       hasPicture: false
     };
-    this.setDate = this.setDate.bind(this);
   }
 
   static navigationOptions = {
     header: null
   };
 
-  setDate(newDate) {
+  setDate = newDate => {
     this.setState({ time: newDate });
-  }
+  };
 
   /*****************BUTTON PRESS *********************/
 
@@ -230,7 +229,7 @@ class addEventForm extends Component {
                     color: Colors.darkGunmetal,
                     opacity: 0.75
                   }}
-                  onDateChange={this.setDate}
+                  onDateChange={date => this.setDate(date)}
                   disabled={false}
                 />
               </StyledItem>

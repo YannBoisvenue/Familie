@@ -49,17 +49,6 @@ class EventScreen extends React.Component {
           </Tab>
 
           <Tab heading="Attending">
-            <StyledLink
-              content="Logout"
-              onPress={async () => {
-                await AsyncStorage.removeItem("userId");
-                this.props.dispatch({
-                  type: SET_USERID,
-                  payload: undefined
-                });
-                this.props.navigation.navigate("LoginScreen");
-              }}
-            />
             {/* Put the page component here*/}
             <AttendingScreen {...this.props} />
           </Tab>
