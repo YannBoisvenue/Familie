@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Platform, DatePickerIOS } from "react-native";
 import { Image } from "react-native";
 import {
   Item,
@@ -10,7 +11,8 @@ import {
   ActionSheet,
   Icon,
   Card,
-  Root
+  Root,
+  View
 } from "native-base";
 import { StyledButton } from "../../StyledComponents/button.js";
 import Colors from "../../constants/Colors";
@@ -114,7 +116,8 @@ class addEventForm extends Component {
         }),
         formData.append("name", this.state.name),
         formData.append("guests", [userId]),
-        formData.append("time", this.state.time),
+        // formData.append("time", this.state.time),
+        formData.append("time", new Date().toString()),
         formData.append("location", this.state.location),
         formData.append("desc", this.state.desc),
         formData.append("coordinate", this.state.coordinate);
@@ -214,12 +217,9 @@ class addEventForm extends Component {
               </StyledItem>
               <StyledItem type="inlineLabel" label="Choose a date">
                 <DatePicker
-                  sytle={styles.datePicker}
                   defaultDate={new Date(2019, 1, 1)}
                   minimumDate={new Date(2018, 2, 20)}
                   maximumDate={new Date(2021, 12, 31)}
-                  locale={"en"}
-                  timeZoneOffsetInMinutes={undefined}
                   modalTransparent={false}
                   animationType={"fade"}
                   androidMode={"default"}
