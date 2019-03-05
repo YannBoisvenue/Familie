@@ -14,7 +14,7 @@ Features include:
 -Create and browse profiles
 
 Login:
-![alt text](https://github.com/YannBoisvenue/Familie/to/familie1.png)
+![alt text](https://github.com/YannBoisvenue/Familie/path/to/familie1.png)
 
 
 
